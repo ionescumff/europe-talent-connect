@@ -83,7 +83,7 @@ export function CvForm() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <label className="block">
                 <span className="text-xs font-semibold text-brand/60">Preferred sector</span>
-                <select name="sector" required className="field mt-1" defaultValue={sectors[0].title}>
+                <select name="sector" required className="field mt-1" defaultValue="Warehousing & fulfilment">
                   {sectors.map((s) => (
                     <option key={s.n} value={s.title}>
                       {s.title}
