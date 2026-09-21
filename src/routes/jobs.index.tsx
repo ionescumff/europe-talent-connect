@@ -1,9 +1,20 @@
 import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { MapPin, Clock, Euro, Users, ArrowRight, Search } from "lucide-react";
+import { MapPin, Clock, Euro, Users, ArrowRight, Search, X } from "lucide-react";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
-import { jobs, jobSectors, jobCountries } from "@/lib/jobs";
+import {
+  jobs,
+  jobSectors,
+  jobCountries,
+  jobCities,
+  shiftTypes,
+  shiftType,
+  minPay,
+  isEntryLevel,
+  hasHousing,
+  startsSoon,
+} from "@/lib/jobs";
 
 const title = "Jobs in the Netherlands & Germany — IONMAN Workforce";
 const description =
@@ -23,23 +34,70 @@ export const Route = createFileRoute("/jobs/")({
   component: JobsPage,
 });
 
+const PAY_FLOOR = 13;
+const PAY_CEILING = 18;
+
+type Sort = "relevance" | "pay" | "start" | "openings";
+
 function JobsPage() {
   const [q, setQ] = useState("");
   const [sector, setSector] = useState("all");
   const [country, setCountry] = useState("all");
+  const [city, setCity] = useState("all");
+  const [shift, setShift] = useState("all");
+  const [pay, setPay] = useState(PAY_FLOOR);
+  const [entryLevel, setEntryLevel] = useState(false);
+  const [housing, setHousing] = useState(false);
+  const [soon, setSoon] = useState(false);
+  const [sort, setSort] = useState<Sort>("relevance");
 
-  const results = useMemo(
-    () =>
-      jobs.filter((j) => {
-        const text = `${j.title} ${j.city} ${j.sector} ${j.summary}`.toLowerCase();
-        return (
-          (sector === "all" || j.sector === sector) &&
-          (country === "all" || j.country === country) &&
-          (q.trim() === "" || text.includes(q.trim().toLowerCase()))
-        );
-      }),
-    [q, sector, country],
-  );
+  const activeCount =
+    (q.trim() ? 1 : 0) +
+    (sector !== "all" ? 1 : 0) +
+    (country !== "all" ? 1 : 0) +
+    (city !== "all" ? 1 : 0) +
+    (shift !== "all" ? 1 : 0) +
+    (pay > PAY_FLOOR ? 1 : 0) +
+    (entryLevel ? 1 : 0) +
+    (housing ? 1 : 0) +
+    (soon ? 1 : 0);
+
+  function reset() {
+    setQ("");
+    setSector("all");
+    setCountry("all");
+    setCity("all");
+    setShift("all");
+    setPay(PAY_FLOOR);
+    setEntryLevel(false);
+    setHousing(false);
+    setSoon(false);
+    setSort("relevance");
+  }
+
+  const results = useMemo(() => {
+    const list = jobs.filter((j) => {
+      const text = `${j.title} ${j.city} ${j.sector} ${j.summary}`.toLowerCase();
+      return (
+        (sector === "all" || j.sector === sector) &&
+        (country === "all" || j.country === country) &&
+        (city === "all" || j.city === city) &&
+        (shift === "all" || shiftType(j) === shift) &&
+        minPay(j) >= pay &&
+        (!entryLevel || isEntryLevel(j)) &&
+        (!housing || hasHousing(j)) &&
+        (!soon || startsSoon(j)) &&
+        (q.trim() === "" || text.includes(q.trim().toLowerCase()))
+      );
+    });
+
+    if (sort === "pay") list.sort((a, b) => minPay(b) - minPay(a));
+    if (sort === "openings") list.sort((a, b) => b.openings - a.openings);
+    if (sort === "start")
+      list.sort((a, b) => Number(startsSoon(b)) - Number(startsSoon(a)));
+
+    return list;
+  }, [q, sector, country, city, shift, pay, entryLevel, housing, soon, sort]);
 
   return (
     <div className="bg-page-glow relative min-h-screen overflow-x-clip text-brand">
@@ -59,43 +117,128 @@ function JobsPage() {
       </header>
 
       <section className="px-6 md:px-8 lg:px-14">
-        <div className="glass-card grid gap-4 rounded-[1.75rem] p-5 md:grid-cols-[1.4fr_1fr_1fr]">
-          <label className="relative block">
-            <Search className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-brand/40" />
-            <input
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder="Search role or city…"
-              className="field pl-11"
-              aria-label="Search jobs"
-            />
-          </label>
-          <select
-            value={sector}
-            onChange={(e) => setSector(e.target.value)}
-            className="field"
-            aria-label="Filter by sector"
-          >
-            <option value="all">All sectors</option>
-            {jobSectors.map((s) => (
-              <option key={s} value={s}>
-                {s}
-              </option>
-            ))}
-          </select>
-          <select
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
-            className="field"
-            aria-label="Filter by country"
-          >
-            <option value="all">All countries</option>
-            {jobCountries.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-          </select>
+        <div className="glass-card space-y-5 rounded-[1.75rem] p-5 md:p-6">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <label className="relative block lg:col-span-2">
+              <Search className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-brand/40" />
+              <input
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                placeholder="Search role, city or keyword…"
+                className="field pl-11"
+                aria-label="Search jobs"
+              />
+            </label>
+            <select
+              value={sector}
+              onChange={(e) => setSector(e.target.value)}
+              className="field"
+              aria-label="Filter by sector"
+            >
+              <option value="all">All sectors</option>
+              {jobSectors.map((s) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </select>
+            <select
+              value={country}
+              onChange={(e) => {
+                setCountry(e.target.value);
+                setCity("all");
+              }}
+              className="field"
+              aria-label="Filter by country"
+            >
+              <option value="all">All countries</option>
+              {jobCountries.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+            <select
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              className="field"
+              aria-label="Filter by city"
+            >
+              <option value="all">All cities</option>
+              {jobCities
+                .filter(
+                  (c) =>
+                    country === "all" ||
+                    jobs.some((j) => j.city === c && j.country === country),
+                )
+                .map((c) => (
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
+                ))}
+            </select>
+            <select
+              value={shift}
+              onChange={(e) => setShift(e.target.value)}
+              className="field"
+              aria-label="Filter by working hours"
+            >
+              <option value="all">Any working hours</option>
+              {shiftTypes.map((s) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
+            </select>
+            <select
+              value={sort}
+              onChange={(e) => setSort(e.target.value as Sort)}
+              className="field"
+              aria-label="Sort jobs"
+            >
+              <option value="relevance">Sort: default</option>
+              <option value="pay">Sort: highest pay</option>
+              <option value="start">Sort: starting soonest</option>
+              <option value="openings">Sort: most openings</option>
+            </select>
+            <label className="block">
+              <span className="flex items-center justify-between text-xs font-semibold text-brand/60">
+                Minimum pay
+                <span className="font-bold text-accent">€{pay.toFixed(2)}/h</span>
+              </span>
+              <input
+                type="range"
+                min={PAY_FLOOR}
+                max={PAY_CEILING}
+                step={0.5}
+                value={pay}
+                onChange={(e) => setPay(Number(e.target.value))}
+                className="mt-3 w-full accent-[var(--accent)]"
+                aria-label="Minimum hourly pay"
+              />
+            </label>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            <Toggle active={entryLevel} onClick={() => setEntryLevel(!entryLevel)}>
+              No experience needed
+            </Toggle>
+            <Toggle active={housing} onClick={() => setHousing(!housing)}>
+              Housing arranged
+            </Toggle>
+            <Toggle active={soon} onClick={() => setSoon(!soon)}>
+              Starts within 2 weeks
+            </Toggle>
+            {activeCount > 0 && (
+              <button
+                onClick={reset}
+                className="ml-auto inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-semibold text-brand/60 transition-colors hover:text-accent"
+              >
+                <X className="size-3.5" /> Clear {activeCount} filter
+                {activeCount === 1 ? "" : "s"}
+              </button>
+            )}
+          </div>
         </div>
         <p className="mt-4 text-xs font-semibold uppercase tracking-[0.18em] text-brand/45">
           {results.length} {results.length === 1 ? "job" : "jobs"} available
@@ -144,8 +287,8 @@ function JobsPage() {
         ))}
         {results.length === 0 && (
           <div className="glass-card rounded-[1.75rem] p-8 text-sm text-brand/60 md:col-span-2">
-            No jobs match those filters right now. Leave your CV and we'll contact you when a
-            matching vacancy opens.
+            No jobs match those filters right now. Clear a few filters, or leave your CV and we'll
+            contact you when a matching vacancy opens.
           </div>
         )}
       </section>
@@ -169,5 +312,30 @@ function JobsPage() {
 
       <Footer />
     </div>
+  );
+}
+
+function Toggle({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={active}
+      className={`rounded-full border px-4 py-2 text-xs font-semibold transition-colors ${
+        active
+          ? "border-transparent bg-accent text-accent-foreground shadow-accent"
+          : "border-border bg-glass text-brand/70 hover:text-accent"
+      }`}
+    >
+      {children}
+    </button>
   );
 }
