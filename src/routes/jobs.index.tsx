@@ -9,7 +9,7 @@ const title = "Jobs in the Netherlands & Germany — IONMAN Workforce";
 const description =
   "Open vacancies for warehousing, production, logistics and construction in the Netherlands and Germany. Pay, shifts, housing and transport listed for every job.";
 
-export const Route = createFileRoute("/jobs")({
+export const Route = createFileRoute("/jobs/")({
   head: () => ({
     meta: [
       { title },
