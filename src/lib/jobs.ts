@@ -213,8 +213,39 @@ export const jobs: Job[] = [
   },
 ];
 
-export const jobSectors = [...new Set(jobs.map((j) => j.sector))];
-export const jobCountries = [...new Set(jobs.map((j) => j.country))];
+export const jobSectors = [...new Set(jobs.map((j) => j.sector))].sort();
+export const jobCountries = [...new Set(jobs.map((j) => j.country))].sort();
+export const jobCities = [...new Set(jobs.map((j) => j.city))].sort();
+
+/** Lowest hourly rate in the pay range, in euros. */
+export function minPay(job: Job): number {
+  const match = job.pay.match(/\d+[.,]?\d*/);
+  return match ? Number(match[0].replace(",", ".")) : 0;
+}
+
+export type ShiftType = "Day shift" | "Two shifts" | "Three shifts / nights";
+
+export function shiftType(job: Job): ShiftType {
+  const s = job.schedule.toLowerCase();
+  if (s.includes("three shift") || s.includes("night")) return "Three shifts / nights";
+  if (s.includes("two shift") || s.includes("shift (")) return "Two shifts";
+  return "Day shift";
+}
+
+export const shiftTypes: ShiftType[] = ["Day shift", "Two shifts", "Three shifts / nights"];
+
+/** True when the listing explicitly needs no prior experience. */
+export function isEntryLevel(job: Job): boolean {
+  return job.requirements.some((r) => /no experience/i.test(r));
+}
+
+export function hasHousing(job: Job): boolean {
+  return !/no housing|not available/i.test(job.housing);
+}
+
+export function startsSoon(job: Job): boolean {
+  return /immediate|1 week|2 weeks/i.test(job.start);
+}
 
 export function getJob(slug: string) {
   return jobs.find((j) => j.slug === slug);
