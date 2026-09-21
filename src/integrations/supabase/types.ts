@@ -14,7 +14,84 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      cv_submissions: {
+        Row: {
+          country_preference: string
+          created_at: string
+          cv_filename: string | null
+          cv_path: string | null
+          email: string | null
+          full_name: string
+          id: string
+          message: string | null
+          phone: string
+          sector: string
+          status: string
+        }
+        Insert: {
+          country_preference?: string
+          created_at?: string
+          cv_filename?: string | null
+          cv_path?: string | null
+          email?: string | null
+          full_name: string
+          id?: string
+          message?: string | null
+          phone: string
+          sector: string
+          status?: string
+        }
+        Update: {
+          country_preference?: string
+          created_at?: string
+          cv_filename?: string | null
+          cv_path?: string | null
+          email?: string | null
+          full_name?: string
+          id?: string
+          message?: string | null
+          phone?: string
+          sector?: string
+          status?: string
+        }
+        Relationships: []
+      }
+      vacancy_enquiries: {
+        Row: {
+          company: string
+          contact_name: string
+          country: string
+          created_at: string
+          email: string
+          id: string
+          message: string
+          phone: string | null
+          status: string
+        }
+        Insert: {
+          company: string
+          contact_name: string
+          country: string
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          phone?: string | null
+          status?: string
+        }
+        Update: {
+          company?: string
+          contact_name?: string
+          country?: string
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          phone?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
