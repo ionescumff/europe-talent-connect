@@ -8,6 +8,13 @@
       "when": 1790001745306,
       "tag": "0000_create_candidate_and_employer_submissions",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1790200333246,
+      "tag": "0001_crm_roles_notes",
+      "breakpoints": true
     }
   ]
 }
