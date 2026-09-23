@@ -10,13 +10,34 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as PortalRouteImport } from './routes/portal'
+import { Route as AuthenticatedCrmRouteImport } from './routes/_authenticated/crm'
 import { Route as JobsIndexRouteImport } from './routes/jobs.index'
 import { Route as JobsSlugRouteImport } from './routes/jobs.$slug'
+import { Route as AuthenticatedCrmIndexRouteImport } from './routes/_authenticated/crm.index'
+import { Route as AuthenticatedCrmEmployersRouteImport } from './routes/_authenticated/crm.employers'
+import { Route as AuthenticatedCrmTeamRouteImport } from './routes/_authenticated/crm.team'
+import { Route as AuthenticatedCrmCandidatesIdRouteImport } from './routes/_authenticated/crm.candidates.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortalRoute = PortalRouteImport.update({
+  id: '/portal',
+  path: '/portal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedCrmRoute = AuthenticatedCrmRouteImport.update({
+  id: '/crm',
+  path: '/crm',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const JobsIndexRoute = JobsIndexRouteImport.update({
   id: '/jobs/',
@@ -28,33 +49,103 @@ const JobsSlugRoute = JobsSlugRouteImport.update({
   path: '/jobs/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedCrmIndexRoute = AuthenticatedCrmIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedCrmRoute,
+} as any)
+const AuthenticatedCrmEmployersRoute =
+  AuthenticatedCrmEmployersRouteImport.update({
+    id: '/employers',
+    path: '/employers',
+    getParentRoute: () => AuthenticatedCrmRoute,
+  } as any)
+const AuthenticatedCrmTeamRoute = AuthenticatedCrmTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => AuthenticatedCrmRoute,
+} as any)
+const AuthenticatedCrmCandidatesIdRoute =
+  AuthenticatedCrmCandidatesIdRouteImport.update({
+    id: '/candidates/$id',
+    path: '/candidates/$id',
+    getParentRoute: () => AuthenticatedCrmRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/portal': typeof PortalRoute
+  '/crm': typeof AuthenticatedCrmRouteWithChildren
   '/jobs/$slug': typeof JobsSlugRoute
   '/jobs/': typeof JobsIndexRoute
+  '/crm/employers': typeof AuthenticatedCrmEmployersRoute
+  '/crm/team': typeof AuthenticatedCrmTeamRoute
+  '/crm/': typeof AuthenticatedCrmIndexRoute
+  '/crm/candidates/$id': typeof AuthenticatedCrmCandidatesIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/portal': typeof PortalRoute
   '/jobs/$slug': typeof JobsSlugRoute
   '/jobs': typeof JobsIndexRoute
+  '/crm/employers': typeof AuthenticatedCrmEmployersRoute
+  '/crm/team': typeof AuthenticatedCrmTeamRoute
+  '/crm': typeof AuthenticatedCrmIndexRoute
+  '/crm/candidates/$id': typeof AuthenticatedCrmCandidatesIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/portal': typeof PortalRoute
+  '/_authenticated/crm': typeof AuthenticatedCrmRouteWithChildren
   '/jobs/$slug': typeof JobsSlugRoute
   '/jobs/': typeof JobsIndexRoute
+  '/_authenticated/crm/employers': typeof AuthenticatedCrmEmployersRoute
+  '/_authenticated/crm/team': typeof AuthenticatedCrmTeamRoute
+  '/_authenticated/crm/': typeof AuthenticatedCrmIndexRoute
+  '/_authenticated/crm/candidates/$id': typeof AuthenticatedCrmCandidatesIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/jobs/$slug' | '/jobs/'
+  fullPaths:
+    | '/'
+    | '/portal'
+    | '/crm'
+    | '/jobs/$slug'
+    | '/jobs/'
+    | '/crm/employers'
+    | '/crm/team'
+    | '/crm/'
+    | '/crm/candidates/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/jobs/$slug' | '/jobs'
-  id: '__root__' | '/' | '/jobs/$slug' | '/jobs/'
+  to:
+    | '/'
+    | '/portal'
+    | '/jobs/$slug'
+    | '/jobs'
+    | '/crm/employers'
+    | '/crm/team'
+    | '/crm'
+    | '/crm/candidates/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/portal'
+    | '/_authenticated/crm'
+    | '/jobs/$slug'
+    | '/jobs/'
+    | '/_authenticated/crm/employers'
+    | '/_authenticated/crm/team'
+    | '/_authenticated/crm/'
+    | '/_authenticated/crm/candidates/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  PortalRoute: typeof PortalRoute
   JobsSlugRoute: typeof JobsSlugRoute
   JobsIndexRoute: typeof JobsIndexRoute
 }
@@ -67,6 +158,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/portal': {
+      id: '/portal'
+      path: '/portal'
+      fullPath: '/portal'
+      preLoaderRoute: typeof PortalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/crm': {
+      id: '/_authenticated/crm'
+      path: '/crm'
+      fullPath: '/crm'
+      preLoaderRoute: typeof AuthenticatedCrmRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/jobs/': {
       id: '/jobs/'
@@ -82,11 +194,69 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JobsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/crm/': {
+      id: '/_authenticated/crm/'
+      path: '/'
+      fullPath: '/crm/'
+      preLoaderRoute: typeof AuthenticatedCrmIndexRouteImport
+      parentRoute: typeof AuthenticatedCrmRoute
+    }
+    '/_authenticated/crm/employers': {
+      id: '/_authenticated/crm/employers'
+      path: '/employers'
+      fullPath: '/crm/employers'
+      preLoaderRoute: typeof AuthenticatedCrmEmployersRouteImport
+      parentRoute: typeof AuthenticatedCrmRoute
+    }
+    '/_authenticated/crm/team': {
+      id: '/_authenticated/crm/team'
+      path: '/team'
+      fullPath: '/crm/team'
+      preLoaderRoute: typeof AuthenticatedCrmTeamRouteImport
+      parentRoute: typeof AuthenticatedCrmRoute
+    }
+    '/_authenticated/crm/candidates/$id': {
+      id: '/_authenticated/crm/candidates/$id'
+      path: '/candidates/$id'
+      fullPath: '/crm/candidates/$id'
+      preLoaderRoute: typeof AuthenticatedCrmCandidatesIdRouteImport
+      parentRoute: typeof AuthenticatedCrmRoute
+    }
   }
 }
 
+interface AuthenticatedCrmRouteChildren {
+  AuthenticatedCrmEmployersRoute: typeof AuthenticatedCrmEmployersRoute
+  AuthenticatedCrmTeamRoute: typeof AuthenticatedCrmTeamRoute
+  AuthenticatedCrmIndexRoute: typeof AuthenticatedCrmIndexRoute
+  AuthenticatedCrmCandidatesIdRoute: typeof AuthenticatedCrmCandidatesIdRoute
+}
+
+const AuthenticatedCrmRouteChildren: AuthenticatedCrmRouteChildren = {
+  AuthenticatedCrmEmployersRoute: AuthenticatedCrmEmployersRoute,
+  AuthenticatedCrmTeamRoute: AuthenticatedCrmTeamRoute,
+  AuthenticatedCrmIndexRoute: AuthenticatedCrmIndexRoute,
+  AuthenticatedCrmCandidatesIdRoute: AuthenticatedCrmCandidatesIdRoute,
+}
+
+const AuthenticatedCrmRouteWithChildren =
+  AuthenticatedCrmRoute._addFileChildren(AuthenticatedCrmRouteChildren)
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedCrmRoute: typeof AuthenticatedCrmRouteWithChildren
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedCrmRoute: AuthenticatedCrmRouteWithChildren,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  PortalRoute: PortalRoute,
   JobsSlugRoute: JobsSlugRoute,
   JobsIndexRoute: JobsIndexRoute,
 }
