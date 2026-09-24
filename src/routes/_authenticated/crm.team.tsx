@@ -28,10 +28,10 @@ function Team() {
 
   async function setRole(userId: string, role: Role | "none") {
     const { error: delErr } = await supabase.from("user_roles").delete().eq("user_id", userId);
-    if (delErr) return toast.error("Only admins can change roles");
+    if (delErr) { toast.error("Only admins can change roles"); return; }
     if (role !== "none") {
       const { error } = await supabase.from("user_roles").insert({ user_id: userId, role });
-      if (error) return toast.error("Could not set role");
+      if (error) { toast.error("Could not set role"); return; }
     }
     toast.success("Role updated");
     qc.invalidateQueries({ queryKey: ["team"] });
