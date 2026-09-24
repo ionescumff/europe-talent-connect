@@ -55,7 +55,7 @@ function CandidateDetail() {
   const addNote = useMutation({
     mutationFn: async () => {
       const { error } = await supabase.from("candidate_notes").insert({
-        candidate_id: id, body: note.trim(), kind, author_id: user.id, author_email: user.email,
+        candidate_id: id, body: note.trim(), kind, author_id: user.id, author_email: user.email ?? null,
       });
       if (error) throw error;
     },
@@ -75,7 +75,7 @@ function CandidateDetail() {
   async function openCv() {
     if (!cand.data?.cv_path) return;
     const { data, error } = await supabase.storage.from("cvs").createSignedUrl(cand.data.cv_path, 300);
-    if (error || !data) return toast.error("Could not open CV");
+    if (error || !data) { toast.error("Could not open CV"); return; }
     window.open(data.signedUrl, "_blank", "noopener");
   }
 
