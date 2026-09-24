@@ -20,10 +20,8 @@ export const matchCandidate = createServerFn({ method: "POST" })
       .single();
     if (error || !c) throw new Error("Candidate not found");
 
-    const content: Array<Record<string, unknown>> = [
-      {
-        type: "text",
-        text: `Candidate profile:
+    const prompt = `You are a recruiter assistant for a staffing agency placing Romanian workers in the Netherlands and Germany.
+Candidate profile:
 Name: ${c.full_name}
 Preferred sector: ${c.sector}
 Preferred country: ${c.country_preference}
@@ -37,67 +35,81 @@ ${JSON.stringify(
   })),
 )}
 
-Rank the 3 best-fitting jobs for this candidate based on their CV (attached if available) and profile. Be honest; low scores are fine.`,
-      },
-    ];
+Using the attached CV (if any) and the profile, write a 2-sentence summary of the candidate and rank the 3 best-fitting jobs with a 0-100 score and a short reason. Be honest; low scores are fine.`;
 
+    const content: Array<Record<string, unknown>> = [{ type: "input_text", text: prompt }];
     if (c.cv_path && c.cv_filename?.toLowerCase().endsWith(".pdf")) {
       const { data: file } = await context.supabase.storage.from("cvs").download(c.cv_path);
       if (file) {
         const b64 = Buffer.from(await file.arrayBuffer()).toString("base64");
-        content.push({ type: "image_url", image_url: { url: `data:application/pdf;base64,${b64}` } });
+        content.push({ type: "input_file", filename: c.cv_filename, file_data: `data:application/pdf;base64,${b64}` });
       }
     }
 
-    const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    const res = await fetch("https://ai.gateway.lovable.dev/v1/responses", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${process.env["LOVABLE_API_KEY"]}`,
         "Content-Type": "application/json",
+        "Lovable-API-Key": process.env["LOVABLE_API_KEY"] ?? "",
+        "X-Lovable-AIG-SDK": "fetch",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
-        messages: [
-          { role: "system", content: "You are a recruiter assistant for a staffing agency placing Romanian workers in the Netherlands and Germany." },
-          { role: "user", content },
-        ],
-        tools: [
-          {
-            type: "function",
-            function: {
-              name: "report_matches",
-              parameters: {
-                type: "object",
-                properties: {
-                  summary: { type: "string", description: "2-sentence summary of the candidate's experience and skills" },
-                  matches: {
-                    type: "array",
-                    items: {
-                      type: "object",
-                      properties: {
-                        slug: { type: "string" },
-                        score: { type: "number", description: "0-100 fit" },
-                        reason: { type: "string" },
-                      },
-                      required: ["slug", "score", "reason"],
-                    },
+        model: "openai/gpt-6-astra",
+        input: [{ role: "user", content }],
+        stream: true,
+        reasoning: { effort: "low" },
+        text: {
+          format: {
+            type: "json_schema",
+            name: "matches",
+            strict: true,
+            schema: {
+              type: "object",
+              additionalProperties: false,
+              required: ["summary", "matches"],
+              properties: {
+                summary: { type: "string" },
+                matches: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    additionalProperties: false,
+                    required: ["slug", "score", "reason"],
+                    properties: { slug: { type: "string" }, score: { type: "number" }, reason: { type: "string" } },
                   },
                 },
-                required: ["summary", "matches"],
               },
             },
           },
-        ],
-        tool_choice: { type: "function", function: { name: "report_matches" } },
+        },
       }),
     });
     if (res.status === 429) throw new Error("Too many requests, try again in a minute.");
     if (res.status === 402) throw new Error("AI credits are used up for this workspace.");
-    if (!res.ok) throw new Error("Matching failed");
-    const json = await res.json();
-    const args = json.choices?.[0]?.message?.tool_calls?.[0]?.function?.arguments;
-    if (!args) throw new Error("Matching failed");
-    const parsed = JSON.parse(args) as MatchResult;
+    if (!res.ok || !res.body) throw new Error(`Matching failed (${res.status})`);
+
+    let text = "";
+    const reader = res.body.getReader();
+    const dec = new TextDecoder();
+    let buf = "";
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, { stream: true });
+      const lines = buf.split("\n");
+      buf = lines.pop() ?? "";
+      for (const line of lines) {
+        if (!line.startsWith("data:")) continue;
+        const payload = line.slice(5).trim();
+        if (!payload || payload === "[DONE]") continue;
+        try {
+          const ev = JSON.parse(payload);
+          if (ev.type === "response.output_text.delta") text += ev.delta;
+        } catch { /* ignore */ }
+      }
+    }
+    if (!text) throw new Error("Matching returned no result");
+    const parsed = JSON.parse(text) as MatchResult;
     parsed.matches = parsed.matches
       .filter((m) => jobs.some((j) => j.slug === m.slug))
       .sort((a, b) => b.score - a.score);
