@@ -21,20 +21,27 @@ export const Route = createFileRoute("/portal")({
 
 function Portal() {
   const navigate = useNavigate();
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [mode, setMode] = useState<"signin" | "signup" | "reset">("signin");
   const [busy, setBusy] = useState(false);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const f = new FormData(e.currentTarget);
     const email = String(f.get("email"));
-    const password = String(f.get("password"));
+    const password = String(f.get("password") ?? "");
     setBusy(true);
     try {
       if (mode === "signin") {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
         await navigate({ to: "/crm" });
+      } else if (mode === "reset") {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: `${window.location.origin}/reset-password`,
+        });
+        if (error) throw error;
+        toast.success("If that email has an account, a reset link is on its way.");
+        setMode("signin");
       } else {
         const { error } = await supabase.auth.signUp({
           email,
@@ -59,37 +66,59 @@ function Portal() {
     <div className="bg-page-glow flex min-h-screen items-center justify-center px-4 text-brand">
       <div className="glass-card w-full max-w-md p-8">
         <Logo />
-        <h1 className="mt-6 font-display text-2xl font-bold">Staff portal</h1>
+        <h1 className="mt-6 font-display text-2xl font-bold">
+          {mode === "reset" ? "Reset password" : "Staff portal"}
+        </h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          {mode === "signin" ? "Sign in to the IONMAN CRM." : "Request a staff account."}
+          {mode === "signin"
+            ? "Sign in to the IONMAN CRM."
+            : mode === "signup"
+              ? "Request a staff account."
+              : "We'll email you a link to set a new password."}
         </p>
         <form onSubmit={onSubmit} className="mt-6 space-y-4">
           {mode === "signup" && (
             <input name="fullName" required placeholder="Full name" className="field w-full" />
           )}
           <input name="email" type="email" required placeholder="Work email" className="field w-full" autoComplete="email" />
-          <input
-            name="password"
-            type="password"
-            required
-            minLength={8}
-            placeholder="Password"
-            className="field w-full"
-            autoComplete={mode === "signin" ? "current-password" : "new-password"}
-          />
+          {mode !== "reset" && (
+            <input
+              name="password"
+              type="password"
+              required
+              minLength={8}
+              placeholder="Password"
+              className="field w-full"
+              autoComplete={mode === "signin" ? "current-password" : "new-password"}
+            />
+          )}
           <button
             disabled={busy}
             className="w-full rounded-full bg-accent py-3 text-sm font-semibold text-accent-foreground shadow-accent disabled:opacity-60"
           >
-            {busy ? "Please wait…" : mode === "signin" ? "Sign in" : "Create account"}
+            {busy
+              ? "Please wait…"
+              : mode === "signin"
+                ? "Sign in"
+                : mode === "signup"
+                  ? "Create account"
+                  : "Send reset link"}
           </button>
         </form>
-        <button
-          onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
-          className="mt-4 text-sm text-muted-foreground underline-offset-4 hover:underline"
-        >
-          {mode === "signin" ? "New team member? Request access" : "Already have an account? Sign in"}
-        </button>
+        <div className="mt-4 flex flex-col items-start gap-2 text-sm text-muted-foreground">
+          <button
+            onClick={() => setMode(mode === "signup" ? "signin" : "signup")}
+            className="underline-offset-4 hover:underline"
+          >
+            {mode === "signup" ? "Already have an account? Sign in" : "New team member? Request access"}
+          </button>
+          <button
+            onClick={() => setMode(mode === "reset" ? "signin" : "reset")}
+            className="underline-offset-4 hover:underline"
+          >
+            {mode === "reset" ? "Back to sign in" : "Forgot your password?"}
+          </button>
+        </div>
       </div>
     </div>
   );
