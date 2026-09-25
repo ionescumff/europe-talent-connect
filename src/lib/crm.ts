@@ -27,7 +27,7 @@ export type TeamMember = {
   full_name: string | null;
   manager_id: string | null;
   created_at: string;
-  role?: Role;
+  role?: Role | undefined;
 };
 
 export async function fetchTeam(): Promise<TeamMember[]> {

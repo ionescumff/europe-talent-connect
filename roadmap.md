@@ -1,5 +1,6 @@
 # Roadmap
 - [x] Clickable candidate rows in CRM
-- [ ] Admin panel: manage employees + roles (co-founder, manager, associate, partner agency…) — waiting on user answers
-- [ ] Assignment page: assign staff/agencies to candidates & employer leads
-- [ ] Staff page for managers/lower-tier employees (admins can view too)
+- [x] Admin panel: employees, roles (admin, co-founder, manager, associate, partner agency), managers, remove, performance, activity log
+- [x] Assignment page for candidates & employer leads
+- [x] "My work" page for staff (admins can view anyone's)
+- [ ] Manage job posts from the CRM (jobs still live in code; needs moving into the database)

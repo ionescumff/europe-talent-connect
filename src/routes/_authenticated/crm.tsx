@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { fetchMyRoles } from "@/lib/crm";
+import { fetchMyRoles, isAdminRole, ROLE_LABELS, type Role } from "@/lib/crm";
 import { supabase } from "@/integrations/supabase/client";
 import { Logo } from "@/components/site/Logo";
 
@@ -27,15 +27,18 @@ function CrmLayout() {
     navigate({ to: "/portal", replace: true });
   }
 
-  const isAdmin = roles.data?.includes("admin");
+  const isAdmin = isAdminRole(roles.data);
   const link = "rounded-full px-4 py-2 text-sm font-medium transition-colors hover:bg-glass";
 
   return (
     <div className="bg-page-glow min-h-screen text-brand">
       <header className="flex flex-wrap items-center justify-between gap-4 px-6 py-5 lg:px-10">
-        <div className="flex items-center gap-6">
+        <div className="flex flex-wrap items-center gap-6">
           <Logo />
-          <nav className="flex gap-1">
+          <nav className="flex flex-wrap gap-1">
+            <Link to="/crm/my" className={link} activeProps={{ className: "bg-glass-strong" }}>
+              My work
+            </Link>
             <Link to="/crm" activeOptions={{ exact: true }} className={link} activeProps={{ className: "bg-glass-strong" }}>
               Candidates
             </Link>
@@ -43,15 +46,20 @@ function CrmLayout() {
               Employer leads
             </Link>
             {isAdmin && (
-              <Link to="/crm/team" className={link} activeProps={{ className: "bg-glass-strong" }}>
-                Team
-              </Link>
+              <>
+                <Link to="/crm/assign" className={link} activeProps={{ className: "bg-glass-strong" }}>
+                  Assign leads
+                </Link>
+                <Link to="/crm/admin" className={link} activeProps={{ className: "bg-glass-strong" }}>
+                  Admin
+                </Link>
+              </>
             )}
           </nav>
         </div>
         <div className="flex items-center gap-3 text-sm">
           <span className="text-muted-foreground">
-            {user.email} · {roles.data?.join(", ") || "no access"}
+            {user.email} · {roles.data?.map((r) => ROLE_LABELS[r as Role] ?? r).join(", ") || "no access"}
           </span>
           <button onClick={handleSignOut} className="rounded-full border border-glass-border px-4 py-2 font-medium">
             Sign out
