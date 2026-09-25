@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { fetchTeam, ROLE_LABELS } from "@/lib/crm";
+import { fetchMyRoles, fetchTeam, isAdminRole, ROLE_LABELS } from "@/lib/crm";
 
 export const Route = createFileRoute("/_authenticated/crm/assign")({
   component: Assign,
@@ -157,7 +157,7 @@ function AllLeads() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="font-display text-3xl font-bold">Assign leads</h1>
+          <h2 className="font-display text-2xl font-bold">All leads</h2>
           <p className="text-sm text-muted-foreground">Give each candidate or employer lead to a team member or partner agency.</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
