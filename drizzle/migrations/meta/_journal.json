@@ -36,6 +36,13 @@
       "when": 1790377900364,
       "tag": "0004_claim_new_leads",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1790380056244,
+      "tag": "0005_job_posts",
+      "breakpoints": true
     }
   ]
 }

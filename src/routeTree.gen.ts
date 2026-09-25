@@ -24,6 +24,7 @@ import { Route as AuthenticatedCrmIndexRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedCrmAdminRouteImport } from './routes/_authenticated/crm.admin'
 import { Route as AuthenticatedCrmAssignRouteImport } from './routes/_authenticated/crm.assign'
 import { Route as AuthenticatedCrmEmployersRouteImport } from './routes/_authenticated/crm.employers'
+import { Route as AuthenticatedCrmJobsRouteImport } from './routes/_authenticated/crm.jobs'
 import { Route as AuthenticatedCrmMyRouteImport } from './routes/_authenticated/crm.my'
 import { Route as AuthenticatedCrmCandidatesIdRouteImport } from './routes/_authenticated/crm.candidates.$id'
 
@@ -102,6 +103,11 @@ const AuthenticatedCrmEmployersRoute =
     path: '/employers',
     getParentRoute: () => AuthenticatedCrmRoute,
   } as any)
+const AuthenticatedCrmJobsRoute = AuthenticatedCrmJobsRouteImport.update({
+  id: '/jobs',
+  path: '/jobs',
+  getParentRoute: () => AuthenticatedCrmRoute,
+} as any)
 const AuthenticatedCrmMyRoute = AuthenticatedCrmMyRouteImport.update({
   id: '/my',
   path: '/my',
@@ -128,6 +134,7 @@ export interface FileRoutesByFullPath {
   '/crm/admin': typeof AuthenticatedCrmAdminRoute
   '/crm/assign': typeof AuthenticatedCrmAssignRoute
   '/crm/employers': typeof AuthenticatedCrmEmployersRoute
+  '/crm/jobs': typeof AuthenticatedCrmJobsRoute
   '/crm/my': typeof AuthenticatedCrmMyRoute
   '/crm/': typeof AuthenticatedCrmIndexRoute
   '/crm/candidates/$id': typeof AuthenticatedCrmCandidatesIdRoute
@@ -145,6 +152,7 @@ export interface FileRoutesByTo {
   '/crm/admin': typeof AuthenticatedCrmAdminRoute
   '/crm/assign': typeof AuthenticatedCrmAssignRoute
   '/crm/employers': typeof AuthenticatedCrmEmployersRoute
+  '/crm/jobs': typeof AuthenticatedCrmJobsRoute
   '/crm/my': typeof AuthenticatedCrmMyRoute
   '/crm': typeof AuthenticatedCrmIndexRoute
   '/crm/candidates/$id': typeof AuthenticatedCrmCandidatesIdRoute
@@ -165,6 +173,7 @@ export interface FileRoutesById {
   '/_authenticated/crm/admin': typeof AuthenticatedCrmAdminRoute
   '/_authenticated/crm/assign': typeof AuthenticatedCrmAssignRoute
   '/_authenticated/crm/employers': typeof AuthenticatedCrmEmployersRoute
+  '/_authenticated/crm/jobs': typeof AuthenticatedCrmJobsRoute
   '/_authenticated/crm/my': typeof AuthenticatedCrmMyRoute
   '/_authenticated/crm/': typeof AuthenticatedCrmIndexRoute
   '/_authenticated/crm/candidates/$id': typeof AuthenticatedCrmCandidatesIdRoute
@@ -185,6 +194,7 @@ export interface FileRouteTypes {
     | '/crm/admin'
     | '/crm/assign'
     | '/crm/employers'
+    | '/crm/jobs'
     | '/crm/my'
     | '/crm/'
     | '/crm/candidates/$id'
@@ -202,6 +212,7 @@ export interface FileRouteTypes {
     | '/crm/admin'
     | '/crm/assign'
     | '/crm/employers'
+    | '/crm/jobs'
     | '/crm/my'
     | '/crm'
     | '/crm/candidates/$id'
@@ -221,6 +232,7 @@ export interface FileRouteTypes {
     | '/_authenticated/crm/admin'
     | '/_authenticated/crm/assign'
     | '/_authenticated/crm/employers'
+    | '/_authenticated/crm/jobs'
     | '/_authenticated/crm/my'
     | '/_authenticated/crm/'
     | '/_authenticated/crm/candidates/$id'
@@ -346,6 +358,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCrmEmployersRouteImport
       parentRoute: typeof AuthenticatedCrmRoute
     }
+    '/_authenticated/crm/jobs': {
+      id: '/_authenticated/crm/jobs'
+      path: '/jobs'
+      fullPath: '/crm/jobs'
+      preLoaderRoute: typeof AuthenticatedCrmJobsRouteImport
+      parentRoute: typeof AuthenticatedCrmRoute
+    }
     '/_authenticated/crm/my': {
       id: '/_authenticated/crm/my'
       path: '/my'
@@ -367,6 +386,7 @@ interface AuthenticatedCrmRouteChildren {
   AuthenticatedCrmAdminRoute: typeof AuthenticatedCrmAdminRoute
   AuthenticatedCrmAssignRoute: typeof AuthenticatedCrmAssignRoute
   AuthenticatedCrmEmployersRoute: typeof AuthenticatedCrmEmployersRoute
+  AuthenticatedCrmJobsRoute: typeof AuthenticatedCrmJobsRoute
   AuthenticatedCrmMyRoute: typeof AuthenticatedCrmMyRoute
   AuthenticatedCrmIndexRoute: typeof AuthenticatedCrmIndexRoute
   AuthenticatedCrmCandidatesIdRoute: typeof AuthenticatedCrmCandidatesIdRoute
@@ -376,6 +396,7 @@ const AuthenticatedCrmRouteChildren: AuthenticatedCrmRouteChildren = {
   AuthenticatedCrmAdminRoute: AuthenticatedCrmAdminRoute,
   AuthenticatedCrmAssignRoute: AuthenticatedCrmAssignRoute,
   AuthenticatedCrmEmployersRoute: AuthenticatedCrmEmployersRoute,
+  AuthenticatedCrmJobsRoute: AuthenticatedCrmJobsRoute,
   AuthenticatedCrmMyRoute: AuthenticatedCrmMyRoute,
   AuthenticatedCrmIndexRoute: AuthenticatedCrmIndexRoute,
   AuthenticatedCrmCandidatesIdRoute: AuthenticatedCrmCandidatesIdRoute,
