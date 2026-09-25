@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Building2, Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import type { ReactNode } from "react";
 import { InformationPage, InformationSection } from "@/components/site/InformationPage";
 
