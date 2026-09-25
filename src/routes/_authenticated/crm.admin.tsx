@@ -1,9 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { fetchMyRoles, fetchTeam, isAdminRole, memberName, ROLE_LABELS, ROLES, type Role } from "@/lib/crm";
+import { CANDIDATE_STATUSES, fetchMyRoles, fetchTeam, isAdminRole, memberName, ROLE_LABELS, ROLES, type Role } from "@/lib/crm";
 
 export const Route = createFileRoute("/_authenticated/crm/admin")({
   component: Admin,
@@ -11,7 +11,7 @@ export const Route = createFileRoute("/_authenticated/crm/admin")({
 
 function Admin() {
   const roles = useQuery({ queryKey: ["my-roles"], queryFn: fetchMyRoles });
-  const [tab, setTab] = useState<"team" | "performance" | "activity">("team");
+  const [tab, setTab] = useState<"overview" | "team" | "performance" | "activity">("overview");
   if (roles.isLoading) return <p className="text-muted-foreground">Loading…</p>;
   if (!isAdminRole(roles.data)) return <p className="text-muted-foreground">Only admins and co-founders can open the admin panel.</p>;
   const cls = (t: string) => `rounded-full px-4 py-2 text-sm font-medium ${tab === t ? "bg-glass-strong" : "hover:bg-glass"}`;
@@ -19,15 +19,109 @@ function Admin() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <h1 className="font-display text-3xl font-bold">Admin panel</h1>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
+          <button className={cls("overview")} onClick={() => setTab("overview")}>Overview</button>
           <button className={cls("team")} onClick={() => setTab("team")}>Employees</button>
           <button className={cls("performance")} onClick={() => setTab("performance")}>Performance</button>
           <button className={cls("activity")} onClick={() => setTab("activity")}>Activity log</button>
         </div>
       </div>
+      {tab === "overview" && <OverviewTab />}
       {tab === "team" && <TeamTab />}
       {tab === "performance" && <PerformanceTab />}
       {tab === "activity" && <ActivityTab />}
+    </div>
+  );
+}
+
+function OverviewTab() {
+  const team = useQuery({ queryKey: ["team"], queryFn: fetchTeam });
+  const data = useQuery({
+    queryKey: ["admin-overview"],
+    queryFn: async () => {
+      const [{ data: c }, { data: e }] = await Promise.all([
+        supabase.from("cv_submissions").select("id, status, assigned_to, created_at, next_follow_up"),
+        supabase.from("vacancy_enquiries").select("id, status, assigned_to, created_at"),
+      ]);
+      return { cands: c ?? [], enqs: e ?? [] };
+    },
+  });
+  if (data.isLoading || team.isLoading) return <p className="text-muted-foreground">Loading…</p>;
+  const cands = data.data?.cands ?? [];
+  const enqs = data.data?.enqs ?? [];
+  const today = new Date().toISOString().slice(0, 10);
+  const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+  const newCands = cands.filter((c) => c.status === "new");
+  const unassignedCands = newCands.filter((c) => !c.assigned_to);
+  const unassignedEnqs = enqs.filter((e) => e.status === "new" && !e.assigned_to);
+  const overdue = cands.filter((c) => c.next_follow_up && c.next_follow_up < today && c.status !== "placed" && c.status !== "rejected");
+  const dueToday = cands.filter((c) => c.next_follow_up === today);
+  const newThisWeek = cands.filter((c) => new Date(c.created_at).getTime() >= weekAgo).length;
+  const enqsThisWeek = enqs.filter((e) => new Date(e.created_at).getTime() >= weekAgo).length;
+  const pendingAccess = (team.data ?? []).filter((m) => !m.role);
+
+  const stat = (label: string, value: number, hint?: string) => (
+    <div className="glass-card p-5">
+      <p className="text-3xl font-bold text-accent">{value}</p>
+      <p className="mt-1 text-sm font-medium">{label}</p>
+      {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
+    </div>
+  );
+
+  return (
+    <div className="space-y-6">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {stat("New candidates waiting", newCands.length, `${unassignedCands.length} not assigned to anyone`)}
+        {stat("New employer leads", enqs.filter((e) => e.status === "new").length, `${unassignedEnqs.length} not assigned`)}
+        {stat("Follow-ups overdue", overdue.length, `${dueToday.length} due today`)}
+        {stat("Placed candidates", cands.filter((c) => c.status === "placed").length, "signed a work contract")}
+      </div>
+
+      <div className="grid gap-4 lg:grid-cols-2">
+        <div className="glass-card p-5">
+          <h2 className="font-display text-lg font-semibold">Candidate pipeline</h2>
+          <div className="mt-3 space-y-2 text-sm">
+            {CANDIDATE_STATUSES.map((s) => {
+              const n = cands.filter((c) => c.status === s).length;
+              const pct = cands.length ? Math.round((n / cands.length) * 100) : 0;
+              return (
+                <div key={s} className="flex items-center gap-3">
+                  <span className="w-24 capitalize text-muted-foreground">{s}</span>
+                  <div className="h-2 flex-1 rounded-full bg-glass">
+                    <div className="h-2 rounded-full bg-accent" style={{ width: `${pct}%` }} />
+                  </div>
+                  <span className="w-8 text-right font-semibold">{n}</span>
+                </div>
+              );
+            })}
+          </div>
+          <p className="mt-3 text-xs text-muted-foreground">{cands.length} candidates in total · {newThisWeek} new in the last 7 days</p>
+        </div>
+
+        <div className="space-y-4">
+          <div className="glass-card p-5">
+            <h2 className="font-display text-lg font-semibold">Employer leads</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {enqs.length} in total · {enqsThisWeek} new in the last 7 days · {enqs.filter((e) => e.status === "new").length} still new
+            </p>
+          </div>
+          <div className="glass-card p-5">
+            <h2 className="font-display text-lg font-semibold">Needs your attention</h2>
+            <ul className="mt-2 space-y-1 text-sm">
+              {pendingAccess.length > 0 && (
+                <li>· {pendingAccess.length} staff {pendingAccess.length === 1 ? "account" : "accounts"} waiting for a role ({pendingAccess.map((m) => m.full_name || m.email).join(", ")}) — see the Employees tab</li>
+              )}
+              {unassignedCands.length + unassignedEnqs.length > 0 && (
+                <li>· {unassignedCands.length + unassignedEnqs.length} new leads have no owner — <Link to="/crm/assign" className="text-accent underline">assign them</Link></li>
+              )}
+              {overdue.length > 0 && <li>· {overdue.length} follow-ups are overdue across the team</li>}
+              {pendingAccess.length === 0 && unassignedCands.length + unassignedEnqs.length === 0 && overdue.length === 0 && (
+                <li className="text-muted-foreground">Nothing outstanding right now.</li>
+              )}
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
