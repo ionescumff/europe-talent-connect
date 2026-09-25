@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      activity_log: {
+        Row: {
+          action: string
+          actor_email: string | null
+          actor_id: string | null
+          created_at: string
+          details: Json | null
+          entity: string
+          entity_id: string | null
+          id: string
+        }
+        Insert: {
+          action: string
+          actor_email?: string | null
+          actor_id?: string | null
+          created_at?: string
+          details?: Json | null
+          entity: string
+          entity_id?: string | null
+          id?: string
+        }
+        Update: {
+          action?: string
+          actor_email?: string | null
+          actor_id?: string | null
+          created_at?: string
+          details?: Json | null
+          entity?: string
+          entity_id?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
       candidate_notes: {
         Row: {
           author_email: string | null
@@ -55,6 +88,7 @@ export type Database = {
       cv_submissions: {
         Row: {
           applied_job: string | null
+          assigned_to: string | null
           country_preference: string
           created_at: string
           cv_filename: string | null
@@ -70,6 +104,7 @@ export type Database = {
         }
         Insert: {
           applied_job?: string | null
+          assigned_to?: string | null
           country_preference?: string
           created_at?: string
           cv_filename?: string | null
@@ -85,6 +120,7 @@ export type Database = {
         }
         Update: {
           applied_job?: string | null
+          assigned_to?: string | null
           country_preference?: string
           created_at?: string
           cv_filename?: string | null
@@ -105,18 +141,21 @@ export type Database = {
           created_at: string
           email: string
           full_name: string | null
+          manager_id: string | null
           user_id: string
         }
         Insert: {
           created_at?: string
           email: string
           full_name?: string | null
+          manager_id?: string | null
           user_id: string
         }
         Update: {
           created_at?: string
           email?: string
           full_name?: string | null
+          manager_id?: string | null
           user_id?: string
         }
         Relationships: []
@@ -141,6 +180,7 @@ export type Database = {
       }
       vacancy_enquiries: {
         Row: {
+          assigned_to: string | null
           company: string
           contact_name: string
           country: string
@@ -152,6 +192,7 @@ export type Database = {
           status: string
         }
         Insert: {
+          assigned_to?: string | null
           company: string
           contact_name: string
           country: string
@@ -163,6 +204,7 @@ export type Database = {
           status?: string
         }
         Update: {
+          assigned_to?: string | null
           company?: string
           contact_name?: string
           country?: string
@@ -180,6 +222,18 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      can_edit_candidate: {
+        Args: { _candidate: string; _user_id: string }
+        Returns: boolean
+      }
+      can_edit_lead: {
+        Args: { _assignee: string; _user_id: string }
+        Returns: boolean
+      }
+      can_view_candidate: {
+        Args: { _candidate: string; _user_id: string }
+        Returns: boolean
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -187,10 +241,13 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_admin: { Args: { _user_id: string }; Returns: boolean }
+      is_internal: { Args: { _user_id: string }; Returns: boolean }
       is_staff: { Args: { _user_id: string }; Returns: boolean }
+      role_of: { Args: { _user_id: string }; Returns: string }
     }
     Enums: {
-      app_role: "admin" | "recruiter"
+      app_role: "admin" | "recruiter" | "cofounder" | "manager" | "agency"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -318,7 +375,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "recruiter"],
+      app_role: ["admin", "recruiter", "cofounder", "manager", "agency"],
     },
   },
 } as const
