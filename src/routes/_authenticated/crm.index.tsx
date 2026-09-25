@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { CANDIDATE_STATUSES } from "@/lib/crm";
+import { getJob, suggestedJobs } from "@/lib/jobs";
 
 export const Route = createFileRoute("/_authenticated/crm/")({
   component: Candidates,
@@ -72,6 +73,8 @@ function Candidates() {
               <th className="p-4">Name</th>
               <th className="p-4">Sector</th>
               <th className="p-4">Country</th>
+              <th className="p-4">Applied for</th>
+              <th className="p-4">Matching jobs</th>
               <th className="p-4">Status</th>
               <th className="p-4">Follow-up</th>
               <th className="p-4">Received</th>
@@ -88,6 +91,8 @@ function Candidates() {
                 </td>
                 <td className="p-4">{c.sector}</td>
                 <td className="p-4 capitalize">{c.country_preference}</td>
+                <td className="p-4">{c.applied_job ? getJob(c.applied_job)?.title ?? "—" : "Open CV"}</td>
+                <td className="p-4 font-semibold text-accent">{suggestedJobs(c).length}</td>
                 <td className="p-4"><span className="rounded-full bg-glass-strong px-3 py-1 text-xs capitalize">{c.status}</span></td>
                 <td className={`p-4 ${c.next_follow_up && c.next_follow_up <= today ? "font-semibold text-accent" : ""}`}>
                   {c.next_follow_up ?? "—"}
@@ -96,7 +101,7 @@ function Candidates() {
               </tr>
             ))}
             {!isLoading && rows.length === 0 && (
-              <tr><td colSpan={6} className="p-8 text-center text-muted-foreground">No candidates match.</td></tr>
+              <tr><td colSpan={8} className="p-8 text-center text-muted-foreground">No candidates match.</td></tr>
             )}
           </tbody>
         </table>
