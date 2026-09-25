@@ -1,0 +1,1 @@
+ALTER TABLE public.cv_submissions ADD COLUMN IF NOT EXISTS applied_job text;

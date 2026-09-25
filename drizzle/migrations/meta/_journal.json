@@ -15,6 +15,13 @@
       "when": 1790200333246,
       "tag": "0001_crm_roles_notes",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1790322289553,
+      "tag": "0002_cv_applied_job",
+      "breakpoints": true
     }
   ]
 }
