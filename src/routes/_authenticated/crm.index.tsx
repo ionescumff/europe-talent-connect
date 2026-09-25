@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -10,6 +10,7 @@ export const Route = createFileRoute("/_authenticated/crm/")({
 });
 
 function Candidates() {
+  const navigate = useNavigate();
   const [q, setQ] = useState("");
   const [status, setStatus] = useState("all");
   const [dueOnly, setDueOnly] = useState(false);
@@ -82,7 +83,11 @@ function Candidates() {
           </thead>
           <tbody>
             {rows.map((c) => (
-              <tr key={c.id} className="border-t border-glass-border hover:bg-glass">
+              <tr
+                key={c.id}
+                onClick={() => navigate({ to: "/crm/candidates/$id", params: { id: c.id } })}
+                className="cursor-pointer border-t border-glass-border hover:bg-glass"
+              >
                 <td className="p-4 font-semibold">
                   <Link to="/crm/candidates/$id" params={{ id: c.id }} className="hover:text-accent">
                     {c.full_name}
