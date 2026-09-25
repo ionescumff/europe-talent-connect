@@ -20,6 +20,7 @@ function CandidateDetail() {
   const [note, setNote] = useState("");
   const [kind, setKind] = useState("note");
   const [result, setResult] = useState<MatchResult | null>(null);
+  const team = useQuery({ queryKey: ["team"], queryFn: fetchTeam });
 
   const cand = useQuery({
     queryKey: ["candidate", id],
@@ -49,7 +50,7 @@ function CandidateDetail() {
       qc.invalidateQueries({ queryKey: ["candidates"] });
       toast.success("Saved");
     },
-    onError: () => toast.error("Could not save"),
+    onError: () => toast.error("You can only edit candidates assigned to you"),
   });
 
   const addNote = useMutation({
