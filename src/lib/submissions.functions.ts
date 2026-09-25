@@ -11,6 +11,7 @@ const cvSchema = z.object({
   sector: z.string().trim().min(2).max(80),
   country: z.enum(["netherlands", "germany", "both"]),
   message: z.string().trim().max(1000).optional().default(""),
+  appliedJob: z.string().trim().max(120).optional().default(""),
 });
 
 export const submitCv = createServerFn({ method: "POST" })
@@ -23,6 +24,7 @@ export const submitCv = createServerFn({ method: "POST" })
       sector: data.get("sector"),
       country: data.get("country"),
       message: data.get("message") ?? "",
+      appliedJob: data.get("appliedJob") ?? "",
     });
     const file = data.get("cv");
     if (!(file instanceof File) || file.size === 0) throw new Error("Please attach your CV");
@@ -58,6 +60,7 @@ export const submitCv = createServerFn({ method: "POST" })
       message: fields.message || null,
       cv_path: path,
       cv_filename: file.name,
+      applied_job: fields.appliedJob || null,
     });
     if (insertError) {
       console.error("CV insert failed", insertError);
