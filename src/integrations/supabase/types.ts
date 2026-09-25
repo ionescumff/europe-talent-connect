@@ -234,6 +234,7 @@ export type Database = {
         Args: { _candidate: string; _user_id: string }
         Returns: boolean
       }
+      claim_lead: { Args: { _id: string; _table: string }; Returns: boolean }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

@@ -29,6 +29,13 @@
       "when": 1790330728262,
       "tag": "0003_team_roles_assignments_activity",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1790377900364,
+      "tag": "0004_claim_new_leads",
+      "breakpoints": true
     }
   ]
 }

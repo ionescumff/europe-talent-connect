@@ -45,11 +45,13 @@ function CrmLayout() {
             <Link to="/crm/employers" className={link} activeProps={{ className: "bg-glass-strong" }}>
               Employer leads
             </Link>
+            {roles.data?.some((r) => r !== "agency") && (
+              <Link to="/crm/assign" className={link} activeProps={{ className: "bg-glass-strong" }}>
+                {isAdmin || roles.data?.includes("manager") ? "Assign leads" : "New leads"}
+              </Link>
+            )}
             {isAdmin && (
               <>
-                <Link to="/crm/assign" className={link} activeProps={{ className: "bg-glass-strong" }}>
-                  Assign leads
-                </Link>
                 <Link to="/crm/admin" className={link} activeProps={{ className: "bg-glass-strong" }}>
                   Admin
                 </Link>
