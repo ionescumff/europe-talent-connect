@@ -69,6 +69,21 @@ export function Hero() {
             <div className="font-display text-2xl font-bold leading-tight text-brand-foreground">
               Direct access, no middlemen.
             </div>
+            <ul className="flex flex-col gap-2.5">
+              {["Vacancy brief", "Search & screening", "Client selection", "Start & review"].map(
+                (step, i) => (
+                  <li
+                    key={step}
+                    className="flex items-center gap-3 border-t border-brand-foreground/10 pt-2.5 text-sm text-brand-foreground/85"
+                  >
+                    <span className="font-display text-xs font-bold text-accent">
+                      0{i + 1}
+                    </span>
+                    {step}
+                  </li>
+                ),
+              )}
+            </ul>
             <div className="text-sm text-brand-foreground/70">
               Our Romanian team screens every CV before it reaches the client selection stage.
             </div>
