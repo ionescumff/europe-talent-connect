@@ -136,6 +136,78 @@ export type Database = {
         }
         Relationships: []
       }
+      job_post_candidates: {
+        Row: {
+          candidate_id: string
+          created_at: string
+          job_id: string
+        }
+        Insert: {
+          candidate_id: string
+          created_at?: string
+          job_id: string
+        }
+        Update: {
+          candidate_id?: string
+          created_at?: string
+          job_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_post_candidates_candidate_id_fkey"
+            columns: ["candidate_id"]
+            isOneToOne: false
+            referencedRelation: "cv_submissions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_post_candidates_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "job_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_posts: {
+        Row: {
+          city: string
+          country: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          salary: string
+          sector: string
+          status: string
+          title: string
+        }
+        Insert: {
+          city: string
+          country: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          salary: string
+          sector: string
+          status?: string
+          title: string
+        }
+        Update: {
+          city?: string
+          country?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          salary?: string
+          sector?: string
+          status?: string
+          title?: string
+        }
+        Relationships: []
+      }
       staff_profiles: {
         Row: {
           created_at: string
