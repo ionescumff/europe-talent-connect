@@ -3,10 +3,11 @@ import { ArrowLeft, Check } from "lucide-react";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 import { getJob, jobs } from "@/lib/jobs";
+import { listPublishedJobs } from "@/lib/jobposts.functions";
 
 export const Route = createFileRoute("/jobs/$slug")({
-  loader: ({ params }) => {
-    const job = getJob(params.slug);
+  loader: async ({ params }) => {
+    const job = getJob(params.slug) ?? (await listPublishedJobs()).find((j) => j.slug === params.slug);
     if (!job) throw notFound();
     return { job };
   },
@@ -58,6 +59,7 @@ function JobDetail() {
   const related = jobs.filter((j) => j.slug !== job.slug && j.sector === job.sector).slice(0, 2);
 
   const facts: [string, string][] = [
+    ...(job.company ? [["Employer", job.company] as [string, string]] : []),
     ["Location", `${job.city}, ${job.country}`],
     ["Pay", job.pay],
     ["Contract", job.contract],
@@ -95,10 +97,17 @@ function JobDetail() {
           {job.title} — {job.city}
         </h1>
         <p className="mt-4 max-w-2xl text-sm text-brand/60">{job.summary}</p>
+        {job.image && <img src={job.image} alt={job.title} className="mt-6 max-h-96 w-full max-w-3xl rounded-[1.75rem] object-cover" />}
       </header>
 
       <div className="grid gap-6 px-6 pb-16 md:px-8 lg:grid-cols-[1.3fr_1fr] lg:px-14">
         <div className="space-y-6">
+          {job.company && (
+            <section className="glass-card rounded-[1.75rem] p-7">
+              <h2 className="font-display text-xl font-bold">About {job.company}</h2>
+              {job.companyDetails && <p className="mt-3 whitespace-pre-line text-sm text-brand/75">{job.companyDetails}</p>}
+            </section>
+          )}
           <section className="glass-card rounded-[1.75rem] p-7">
             <h2 className="font-display text-xl font-bold">What you'll do</h2>
             <ul className="mt-4 space-y-3 text-sm text-brand/75">

@@ -16,6 +16,9 @@ export type Job = {
   tasks: string[];
   requirements: string[];
   offer: string[];
+  image?: string | undefined;
+  company?: string | undefined;
+  companyDetails?: string | undefined;
 };
 
 export const jobs: Job[] = [

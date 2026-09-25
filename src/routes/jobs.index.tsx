@@ -15,6 +15,7 @@ import {
   hasHousing,
   startsSoon,
 } from "@/lib/jobs";
+import { listPublishedJobs } from "@/lib/jobposts.functions";
 
 const title = "Jobs in the Netherlands & Germany — IONMAN Workforce";
 const description =
@@ -31,6 +32,7 @@ export const Route = createFileRoute("/jobs/")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
+  loader: () => listPublishedJobs(),
   component: JobsPage,
 });
 
@@ -40,6 +42,9 @@ const PAY_CEILING = 18;
 type Sort = "relevance" | "pay" | "start" | "openings";
 
 function JobsPage() {
+  const extra = Route.useLoaderData();
+  const all = useMemo(() => [...extra, ...jobs], [extra]);
+  const cityList = useMemo(() => [...new Set([...jobCities, ...extra.map((j) => j.city)])].sort(), [extra]);
   const [q, setQ] = useState("");
   const [sector, setSector] = useState("all");
   const [country, setCountry] = useState("all");
@@ -76,7 +81,7 @@ function JobsPage() {
   }
 
   const results = useMemo(() => {
-    const list = jobs.filter((j) => {
+    const list = all.filter((j) => {
       const text = `${j.title} ${j.city} ${j.sector} ${j.summary}`.toLowerCase();
       return (
         (sector === "all" || j.sector === sector) &&
@@ -97,7 +102,7 @@ function JobsPage() {
       list.sort((a, b) => Number(startsSoon(b)) - Number(startsSoon(a)));
 
     return list;
-  }, [q, sector, country, city, shift, pay, entryLevel, housing, soon, sort]);
+  }, [all, q, sector, country, city, shift, pay, entryLevel, housing, soon, sort]);
 
   return (
     <div className="bg-page-glow relative min-h-screen overflow-x-clip text-brand">
@@ -169,7 +174,7 @@ function JobsPage() {
                 .filter(
                   (c) =>
                     country === "all" ||
-                    jobs.some((j) => j.city === c && j.country === country),
+                    all.some((j) => j.city === c && j.country === country),
                 )
                 .map((c) => (
                   <option key={c} value={c}>
@@ -253,6 +258,7 @@ function JobsPage() {
             params={{ slug: j.slug }}
             className="glass-card group flex flex-col rounded-[1.75rem] p-6 transition-transform hover:-translate-y-1"
           >
+            {j.image && <img src={j.image} alt="" className="-mx-2 -mt-2 mb-4 h-40 w-[calc(100%+1rem)] rounded-2xl object-cover" />}
             <div className="flex items-start justify-between gap-4">
               <div>
                 <div className="text-xs font-semibold uppercase tracking-[0.16em] text-accent">
