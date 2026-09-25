@@ -14,7 +14,7 @@ type JobPost = {
   salary: string; description: string | null; status: string;
 };
 const SECTORS = ["Warehousing & fulfilment", "Production & food", "Logistics & site work", "Construction support"];
-const empty = { title: "", sector: SECTORS[0], country: "Netherlands", city: "", salary: "", description: "", status: "open" };
+const empty = { title: "", sector: SECTORS[0] as string, country: "Netherlands", city: "", salary: "", description: "", status: "open" };
 
 function JobsAdmin() {
   const roles = useQuery({ queryKey: ["my-roles"], queryFn: fetchMyRoles });
