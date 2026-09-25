@@ -205,8 +205,8 @@ async function exportCsv(table: "candidates" | "vacancy_enquiries" | "job_posts"
       ? supabase.from("job_posts").select("created_at, title, company_name, sector, country, city, salary, openings, status, published")
       : supabase.from(table).select("*");
   const { data, error } = await q;
-  if (error || !data) return toast.error("Download failed");
-  if (!data.length) return toast.info("Nothing to download yet");
+  if (error || !data) { toast.error("Download failed"); return; }
+  if (!data.length) { toast.info("Nothing to download yet"); return; }
   const rows = data as Record<string, unknown>[];
   const cols = Object.keys(rows[0]!);
   const esc = (v: unknown) => `"${String(Array.isArray(v) ? v.join("; ") : (v ?? "")).replace(/"/g, '""')}"`;

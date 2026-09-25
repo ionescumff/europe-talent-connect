@@ -8,4 +8,4 @@
 - [x] Add Privacy, Terms, Contact, and EU candidate information pages
 - [x] Add privacy acknowledgement to candidate and employer forms
 - [x] Job posts: AI import from photos/spreadsheets, preview, publish to website
-- [ ] Admin page: daily tasks/to-dos at top, employer messages, admin info
+- [x] Admin page: daily tasks/to-dos at top, employer messages, admin info
