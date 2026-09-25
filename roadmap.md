@@ -4,3 +4,6 @@
 - [x] Assignment page for candidates & employer leads
 - [x] "My work" page for staff (admins can view anyone's)
 - [ ] Manage job posts from the CRM (jobs still live in code; needs moving into the database)
+- [ ] Add discreet CRM access and verified business/contact details to footer
+- [ ] Add Privacy, Terms, Contact, and EU candidate information pages
+- [ ] Add privacy acknowledgement to candidate and employer forms
