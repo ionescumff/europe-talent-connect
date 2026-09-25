@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { CANDIDATE_STATUSES } from "@/lib/crm";
+import { CANDIDATE_STATUSES, fetchTeam, ROLE_LABELS } from "@/lib/crm";
 import { getJob, suggestedJobs } from "@/lib/jobs";
 
 export const Route = createFileRoute("/_authenticated/crm/")({
@@ -42,6 +42,7 @@ function Candidates() {
 
   return (
     <div className="space-y-6">
+      <TeamSummary placed={(data ?? []).filter((c) => c.status === "placed").length} />
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <h1 className="font-display text-3xl font-bold">Candidates</h1>
@@ -110,6 +111,51 @@ function Candidates() {
             )}
           </tbody>
         </table>
+      </div>
+    </div>
+  );
+}
+
+function TeamSummary({ placed }: { placed: number }) {
+  const team = useQuery({ queryKey: ["team"], queryFn: fetchTeam });
+  const notes = useQuery({
+    queryKey: ["contact-notes"],
+    queryFn: async () => {
+      const { data } = await supabase.from("candidate_notes").select("author_id, candidate_id, kind").neq("kind", "note");
+      return data ?? [];
+    },
+  });
+  const rows = (team.data ?? [])
+    .filter((m) => m.role)
+    .map((m) => ({
+      m,
+      contacted: new Set((notes.data ?? []).filter((n) => n.author_id === m.user_id).map((n) => n.candidate_id)).size,
+    }))
+    .sort((a, b) => b.contacted - a.contacted);
+
+  return (
+    <div className="grid gap-4 md:grid-cols-[1fr_260px]">
+      <div className="glass-card overflow-hidden">
+        <table className="w-full text-left text-sm">
+          <thead className="text-xs uppercase text-muted-foreground">
+            <tr><th className="px-4 py-3">Team member</th><th className="px-4 py-3">Role</th><th className="px-4 py-3 text-right">Leads contacted</th></tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr key={r.m.user_id} className="border-t border-glass-border">
+                <td className="px-4 py-2 font-semibold">{r.m.full_name || r.m.email}</td>
+                <td className="px-4 py-2 text-muted-foreground">{ROLE_LABELS[r.m.role!]}</td>
+                <td className="px-4 py-2 text-right font-semibold">{r.contacted}</td>
+              </tr>
+            ))}
+            {rows.length === 0 && <tr><td colSpan={3} className="px-4 py-4 text-muted-foreground">No team members yet.</td></tr>}
+          </tbody>
+        </table>
+      </div>
+      <div className="glass-card flex flex-col justify-center p-6">
+        <p className="text-xs font-semibold uppercase text-muted-foreground">Placed & signed a contract</p>
+        <p className="font-display mt-2 text-5xl font-bold text-accent">{placed}</p>
+        <p className="mt-1 text-sm text-muted-foreground">candidates with status “placed”</p>
       </div>
     </div>
   );
