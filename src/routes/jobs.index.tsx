@@ -170,7 +170,7 @@ function JobsPage() {
               aria-label="Filter by city"
             >
               <option value="all">All cities</option>
-              {jobCities
+              {cityList
                 .filter(
                   (c) =>
                     country === "all" ||

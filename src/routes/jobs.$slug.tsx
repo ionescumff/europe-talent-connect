@@ -108,7 +108,7 @@ function JobDetail() {
               {job.companyDetails && <p className="mt-3 whitespace-pre-line text-sm text-brand/75">{job.companyDetails}</p>}
             </section>
           )}
-          <section className="glass-card rounded-[1.75rem] p-7">
+          {job.tasks.length > 0 && <section className="glass-card rounded-[1.75rem] p-7">
             <h2 className="font-display text-xl font-bold">What you'll do</h2>
             <ul className="mt-4 space-y-3 text-sm text-brand/75">
               {job.tasks.map((t) => (
@@ -118,9 +118,9 @@ function JobDetail() {
                 </li>
               ))}
             </ul>
-          </section>
+          </section>}
 
-          <section className="glass-card rounded-[1.75rem] p-7">
+          {job.requirements.length > 0 && <section className="glass-card rounded-[1.75rem] p-7">
             <h2 className="font-display text-xl font-bold">What you need</h2>
             <ul className="mt-4 space-y-3 text-sm text-brand/75">
               {job.requirements.map((t) => (
@@ -130,9 +130,9 @@ function JobDetail() {
                 </li>
               ))}
             </ul>
-          </section>
+          </section>}
 
-          <section className="glass-card rounded-[1.75rem] p-7">
+          {job.offer.length > 0 && <section className="glass-card rounded-[1.75rem] p-7">
             <h2 className="font-display text-xl font-bold">What we offer</h2>
             <ul className="mt-4 space-y-3 text-sm text-brand/75">
               {job.offer.map((t) => (
@@ -142,7 +142,7 @@ function JobDetail() {
                 </li>
               ))}
             </ul>
-          </section>
+          </section>}
         </div>
 
         <aside className="space-y-6 lg:sticky lg:top-6 lg:self-start">
