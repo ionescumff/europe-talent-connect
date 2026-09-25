@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Building2, Mail, MapPin, Phone } from "lucide-react";
+import type { ReactNode } from "react";
 import { InformationPage, InformationSection } from "@/components/site/InformationPage";
 
 const title = "Company & contact details — IONMAN Workforce";
@@ -52,7 +53,7 @@ function ContactPage() {
   );
 }
 
-function ContactItem({ icon, label, children }: { icon: React.ReactNode; label: string; children: React.ReactNode }) {
+function ContactItem({ icon, label, children }: { icon: ReactNode; label: string; children: ReactNode }) {
   return (
     <div className="glass-card rounded-xl p-5">
       <div className="flex items-center gap-3 text-accent">{icon}<span className="text-xs font-bold uppercase tracking-[0.12em] text-brand/55">{label}</span></div>
