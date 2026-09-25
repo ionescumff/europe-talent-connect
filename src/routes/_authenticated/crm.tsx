@@ -52,6 +52,10 @@ function CrmLayout() {
             )}
             {isAdmin && (
               <>
+                <Link to="/crm/jobs" className={link} activeProps={{ className: "bg-glass-strong" }}>
+                  Job posts
+                </Link>
+
                 <Link to="/crm/admin" className={link} activeProps={{ className: "bg-glass-strong" }}>
                   Admin
                 </Link>
