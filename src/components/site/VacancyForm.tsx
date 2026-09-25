@@ -3,6 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import { CheckCircle2 } from "lucide-react";
 import { submitVacancy } from "@/lib/submissions.functions";
+import { Link } from "@tanstack/react-router";
 
 const points = [
   "Placement fee agreed before candidate selection",
@@ -29,6 +30,7 @@ export function VacancyForm() {
           phone: String(fd.get("phone") ?? ""),
           country: String(fd.get("country") ?? "both") as "netherlands" | "germany" | "both",
           message: String(fd.get("message") ?? ""),
+          privacyAccepted: fd.get("privacyAccepted") === "on",
         },
       });
       setDone(true);
@@ -113,6 +115,12 @@ export function VacancyForm() {
                   className="field mt-1 h-auto py-3"
                   placeholder="Role, headcount, start date, schedule, pay, housing…"
                 />
+              </label>
+              <label className="flex items-start gap-3 text-xs leading-5 text-brand/60">
+                <input name="privacyAccepted" type="checkbox" required className="mt-1 size-4 accent-brand" />
+                <span>
+                  I have read the <Link to="/privacy" className="font-semibold text-brand underline underline-offset-2">privacy notice</Link> and agree to be contacted about this enquiry.
+                </span>
               </label>
               <button
                 type="submit"

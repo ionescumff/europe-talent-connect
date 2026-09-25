@@ -12,6 +12,7 @@ const cvSchema = z.object({
   country: z.enum(["netherlands", "germany", "both"]),
   message: z.string().trim().max(1000).optional().default(""),
   appliedJob: z.string().trim().max(120).optional().default(""),
+  privacyAccepted: z.literal("on", { error: "Please acknowledge the privacy notice" }),
 });
 
 export const submitCv = createServerFn({ method: "POST" })
@@ -25,6 +26,7 @@ export const submitCv = createServerFn({ method: "POST" })
       country: data.get("country"),
       message: data.get("message") ?? "",
       appliedJob: data.get("appliedJob") ?? "",
+      privacyAccepted: data.get("privacyAccepted"),
     });
     const file = data.get("cv");
     if (!(file instanceof File) || file.size === 0) throw new Error("Please attach your CV");
@@ -77,6 +79,7 @@ const vacancySchema = z.object({
   phone: z.string().trim().max(40).optional().default(""),
   country: z.enum(["netherlands", "germany", "both"]),
   message: z.string().trim().min(10).max(2000),
+  privacyAccepted: z.literal(true, { error: "Please acknowledge the privacy notice" }),
 });
 
 export const submitVacancy = createServerFn({ method: "POST" })
