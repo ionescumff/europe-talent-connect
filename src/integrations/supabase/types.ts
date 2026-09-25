@@ -54,6 +54,7 @@ export type Database = {
       }
       cv_submissions: {
         Row: {
+          applied_job: string | null
           country_preference: string
           created_at: string
           cv_filename: string | null
@@ -68,6 +69,7 @@ export type Database = {
           status: string
         }
         Insert: {
+          applied_job?: string | null
           country_preference?: string
           created_at?: string
           cv_filename?: string | null
@@ -82,6 +84,7 @@ export type Database = {
           status?: string
         }
         Update: {
+          applied_job?: string | null
           country_preference?: string
           created_at?: string
           cv_filename?: string | null

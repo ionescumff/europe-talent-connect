@@ -148,7 +148,7 @@ function JobDetail() {
               ))}
             </dl>
             <a
-              href="/#cv"
+              href={`/?job=${job.slug}#cv`}
               className="mt-6 block rounded-xl bg-accent px-6 py-3.5 text-center text-sm font-semibold text-accent-foreground shadow-accent transition-transform hover:-translate-y-0.5"
             >
               Apply — leave your CV

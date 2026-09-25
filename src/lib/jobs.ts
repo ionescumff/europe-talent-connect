@@ -250,3 +250,23 @@ export function startsSoon(job: Job): boolean {
 export function getJob(slug: string) {
   return jobs.find((j) => j.slug === slug);
 }
+
+export type CandidateProfile = { sector: string; country_preference: string; applied_job?: string | null };
+
+/** Rule-based fit between a candidate's CV filters and a job (0–100). */
+export function profileScore(c: CandidateProfile, job: Job): number {
+  let score = 0;
+  if (c.applied_job === job.slug) score += 50;
+  if (c.sector === job.sector) score += 35;
+  const pref = c.country_preference.toLowerCase();
+  if (pref === "both" || pref === job.country.toLowerCase()) score += 15;
+  return Math.min(score, 100);
+}
+
+/** Jobs that fit the candidate's filters, best first. */
+export function suggestedJobs(c: CandidateProfile): { job: Job; score: number }[] {
+  return jobs
+    .map((job) => ({ job, score: profileScore(c, job) }))
+    .filter((m) => m.score >= 35 || m.job.slug === c.applied_job)
+    .sort((a, b) => b.score - a.score || b.job.openings - a.job.openings);
+}

@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { CANDIDATE_STATUSES } from "@/lib/crm";
 import { matchCandidate, type MatchResult } from "@/lib/match.functions";
-import { getJob } from "@/lib/jobs";
+import { getJob, suggestedJobs } from "@/lib/jobs";
 
 export const Route = createFileRoute("/_authenticated/crm/candidates/$id")({
   component: CandidateDetail,
@@ -94,6 +94,7 @@ function CandidateDetail() {
             <Item k="Email" v={c.email ? <a href={`mailto:${c.email}`} className="underline">{c.email}</a> : "—"} />
             <Item k="Sector" v={c.sector} />
             <Item k="Country" v={<span className="capitalize">{c.country_preference}</span>} />
+            <Item k="Applied for" v={c.applied_job ? (getJob(c.applied_job) ? <Link to="/jobs/$slug" params={{ slug: c.applied_job }} target="_blank" className="underline">{getJob(c.applied_job)!.title}</Link> : c.applied_job) : "Open CV (no specific job)"} />
             <Item k="Received" v={new Date(c.created_at).toLocaleString()} />
             <Item k="CV" v={c.cv_path ? <button onClick={openCv} className="font-semibold text-accent underline">{c.cv_filename ?? "Open"}</button> : "—"} />
           </dl>
@@ -150,7 +151,30 @@ function CandidateDetail() {
         </section>
       </div>
 
-      <section className="glass-card h-fit space-y-4 p-6 lg:mt-9">
+      <div className="space-y-6 lg:mt-9">
+      <section className="glass-card space-y-4 p-6">
+        <div>
+          <h2 className="font-display text-lg font-bold">Suggested vacancies</h2>
+          <p className="text-sm text-muted-foreground">Based on the sector, country and job chosen in their CV form.</p>
+        </div>
+        <ul className="space-y-2">
+          {suggestedJobs(c).map(({ job, score }) => (
+            <li key={job.slug} className="flex items-center justify-between gap-3 rounded-xl border border-glass-border p-3 text-sm">
+              <div>
+                <Link to="/jobs/$slug" params={{ slug: job.slug }} target="_blank" className="font-semibold hover:text-accent">
+                  {job.title} · {job.city}, {job.country}
+                </Link>
+                <div className="text-xs text-muted-foreground">
+                  {job.pay} · {job.openings} openings{job.slug === c.applied_job ? " · Applied for this" : ""}
+                </div>
+              </div>
+              <span className="shrink-0 rounded-full bg-glass-strong px-3 py-1 text-xs font-bold">{score}%</span>
+            </li>
+          ))}
+          {suggestedJobs(c).length === 0 && <li className="text-sm text-muted-foreground">No open jobs match this profile yet — try "Find best jobs" below.</li>}
+        </ul>
+      </section>
+      <section className="glass-card h-fit space-y-4 p-6">
         <div className="flex items-center justify-between gap-4">
           <div>
             <h2 className="font-display text-lg font-bold">Best job matches</h2>
@@ -187,6 +211,7 @@ function CandidateDetail() {
           </>
         )}
       </section>
+      </div>
     </div>
   );
 }

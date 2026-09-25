@@ -1,9 +1,10 @@
-import { useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import { CheckCircle2, Paperclip } from "lucide-react";
 import { submitCv } from "@/lib/submissions.functions";
 import { sectors } from "./Sectors";
+import { getJob, type Job } from "@/lib/jobs";
 
 export function CvForm() {
   const send = useServerFn(submitCv);
@@ -11,6 +12,13 @@ export function CvForm() {
   const [fileName, setFileName] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
+  const [job, setJob] = useState<Job | null>(null);
+
+  useEffect(() => {
+    const slug = new URLSearchParams(window.location.search).get("job");
+    const j = slug ? getJob(slug) : undefined;
+    if (j) setJob(j);
+  }, []);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -65,7 +73,18 @@ export function CvForm() {
             </button>
           </div>
         ) : (
-          <form ref={formRef} onSubmit={onSubmit} className="space-y-4">
+          <form key={job?.slug ?? "general"} ref={formRef} onSubmit={onSubmit} className="space-y-4">
+            {job && (
+              <div className="flex items-center justify-between gap-3 rounded-xl bg-accent/10 px-4 py-3 text-sm">
+                <span>
+                  Applying for <strong>{job.title}</strong> · {job.city}
+                </span>
+                <button type="button" onClick={() => setJob(null)} className="text-xs font-semibold underline">
+                  Remove
+                </button>
+                <input type="hidden" name="appliedJob" value={job.slug} />
+              </div>
+            )}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <label className="block">
                 <span className="text-xs font-semibold text-brand/60">Full name</span>
@@ -83,7 +102,7 @@ export function CvForm() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <label className="block">
                 <span className="text-xs font-semibold text-brand/60">Preferred sector</span>
-                <select name="sector" required className="field mt-1" defaultValue="Warehousing & fulfilment">
+                <select name="sector" required className="field mt-1" defaultValue={job?.sector ?? "Warehousing & fulfilment"}>
                   {sectors.map((s) => (
                     <option key={s.n} value={s.title}>
                       {s.title}
@@ -94,7 +113,7 @@ export function CvForm() {
               </label>
               <label className="block">
                 <span className="text-xs font-semibold text-brand/60">Country</span>
-                <select name="country" required className="field mt-1" defaultValue="both">
+                <select name="country" required className="field mt-1" defaultValue={job ? job.country.toLowerCase() : "both"}>
                   <option value="netherlands">Netherlands</option>
                   <option value="germany">Germany</option>
                   <option value="both">Both NL &amp; DE</option>
