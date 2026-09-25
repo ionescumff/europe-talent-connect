@@ -39,11 +39,13 @@ function OverviewTab() {
   const data = useQuery({
     queryKey: ["admin-overview"],
     queryFn: async () => {
-      const [{ data: c }, { data: e }] = await Promise.all([
-        supabase.from("cv_submissions").select("id, status, assigned_to, created_at, next_follow_up"),
-        supabase.from("vacancy_enquiries").select("id, status, assigned_to, created_at"),
+      const [{ data: c }, { data: e }, { data: j }, { data: l }] = await Promise.all([
+        supabase.from("cv_submissions").select("id, full_name, status, assigned_to, created_at, next_follow_up, cv_path"),
+        supabase.from("vacancy_enquiries").select("*").order("created_at", { ascending: false }),
+        supabase.from("job_posts").select("id, title, city, published, status"),
+        supabase.from("job_post_candidates").select("job_id"),
       ]);
-      return { cands: c ?? [], enqs: e ?? [] };
+      return { cands: c ?? [], enqs: e ?? [], jobs: j ?? [], links: l ?? [] };
     },
   });
   if (data.isLoading || team.isLoading) return <p className="text-muted-foreground">Loading…</p>;
@@ -59,6 +61,22 @@ function OverviewTab() {
   const newThisWeek = cands.filter((c) => new Date(c.created_at).getTime() >= weekAgo).length;
   const enqsThisWeek = enqs.filter((e) => new Date(e.created_at).getTime() >= weekAgo).length;
   const pendingAccess = (team.data ?? []).filter((m) => !m.role);
+  const jobsList = data.data?.jobs ?? [];
+  const linkedJobs = new Set((data.data?.links ?? []).map((l) => l.job_id));
+  const liveNoCandidates = jobsList.filter((j) => j.published && j.status === "open" && !linkedJobs.has(j.id));
+  const noCv = newCands.filter((c) => !c.cv_path);
+  const newEnqs = enqs.filter((e) => e.status === "new");
+  const todos: { done: boolean; text: string; to?: "/crm/assign" | "/crm/employers" | "/crm/jobs" | "/crm/my" | "/crm" }[] = [
+    { done: newEnqs.length === 0, text: `Reply to ${newEnqs.length} new employer ${newEnqs.length === 1 ? "message" : "messages"}`, to: "/crm/employers" },
+    { done: unassignedCands.length + unassignedEnqs.length === 0, text: `Give ${unassignedCands.length + unassignedEnqs.length} unowned leads to someone`, to: "/crm/assign" },
+    { done: dueToday.length === 0, text: `${dueToday.length} candidate follow-ups due today`, to: "/crm/my" },
+    { done: overdue.length === 0, text: `Chase ${overdue.length} overdue follow-ups with the team`, to: "/crm/my" },
+    { done: pendingAccess.length === 0, text: `Give a role to ${pendingAccess.length} new staff ${pendingAccess.length === 1 ? "account" : "accounts"} (Employees tab)` },
+    { done: liveNoCandidates.length === 0, text: `Link candidates to ${liveNoCandidates.length} live job ${liveNoCandidates.length === 1 ? "post" : "posts"} with nobody linked`, to: "/crm/jobs" },
+    { done: noCv.length === 0, text: `Ask ${noCv.length} new candidates to send their CV`, to: "/crm" },
+  ];
+  const openTodos = todos.filter((t) => !t.done).length;
+  const owner = (id: string | null) => (id ? memberName(team.data ?? [], id) : "Unassigned");
 
   const stat = (label: string, value: number, hint?: string) => (
     <div className="glass-card p-5">
@@ -70,6 +88,48 @@ function OverviewTab() {
 
   return (
     <div className="space-y-6">
+      <div className="grid gap-4 lg:grid-cols-[1fr_1.3fr]">
+        <div className="glass-card p-5">
+          <div className="flex items-baseline justify-between">
+            <h2 className="font-display text-lg font-semibold">Today's to-do</h2>
+            <span className="text-xs text-muted-foreground">{new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" })}</span>
+          </div>
+          <p className="text-xs text-muted-foreground">{openTodos === 0 ? "All clear — nothing waiting." : `${openTodos} things need doing`}</p>
+          <ul className="mt-3 space-y-2 text-sm">
+            {todos.map((t) => (
+              <li key={t.text} className={`flex items-center gap-3 ${t.done ? "text-muted-foreground line-through" : ""}`}>
+                <span className={`grid size-5 shrink-0 place-items-center rounded-full border text-xs ${t.done ? "border-accent bg-accent text-accent-foreground" : "border-glass-border"}`}>{t.done ? "✓" : ""}</span>
+                <span className="flex-1">{t.text}</span>
+                {!t.done && t.to && <Link to={t.to} className="text-xs text-accent underline">Open</Link>}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="glass-card p-5">
+          <div className="flex items-baseline justify-between">
+            <h2 className="font-display text-lg font-semibold">Messages from employers</h2>
+            <Link to="/crm/employers" className="text-xs text-accent underline">All employer leads</Link>
+          </div>
+          <ul className="mt-3 max-h-96 space-y-3 overflow-auto pr-1">
+            {enqs.slice(0, 8).map((e) => (
+              <li key={e.id} className="rounded-xl bg-glass p-3 text-sm">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="font-semibold">{e.company} <span className="font-normal text-muted-foreground">· {e.contact_name} · {e.country}</span></span>
+                  <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${e.status === "new" ? "bg-accent/20 text-accent" : "bg-glass-strong"}`}>{e.status}</span>
+                </div>
+                <p className="mt-1 line-clamp-3 whitespace-pre-line text-muted-foreground">{e.message}</p>
+                <div className="mt-2 flex flex-wrap gap-3 text-xs">
+                  <a href={`mailto:${e.email}`} className="text-accent underline">{e.email}</a>
+                  {e.phone && <a href={`tel:${e.phone}`} className="underline">{e.phone}</a>}
+                  <span className="text-muted-foreground">{new Date(e.created_at).toLocaleDateString("en-GB")} · {owner(e.assigned_to)}</span>
+                </div>
+              </li>
+            ))}
+            {enqs.length === 0 && <li className="text-sm text-muted-foreground">No employer messages yet.</li>}
+          </ul>
+        </div>
+      </div>
+
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {stat("New candidates waiting", newCands.length, `${unassignedCands.length} not assigned to anyone`)}
         {stat("New employer leads", enqs.filter((e) => e.status === "new").length, `${unassignedEnqs.length} not assigned`)}
@@ -115,6 +175,7 @@ function OverviewTab() {
                 <li>· {unassignedCands.length + unassignedEnqs.length} new leads have no owner — <Link to="/crm/assign" className="text-accent underline">assign them</Link></li>
               )}
               {overdue.length > 0 && <li>· {overdue.length} follow-ups are overdue across the team</li>}
+              {jobsList.filter((j) => !j.published).length > 0 && <li>· {jobsList.filter((j) => !j.published).length} job posts are hidden from the website — <Link to="/crm/jobs" className="text-accent underline">review</Link></li>}
               {pendingAccess.length === 0 && unassignedCands.length + unassignedEnqs.length === 0 && overdue.length === 0 && (
                 <li className="text-muted-foreground">Nothing outstanding right now.</li>
               )}
@@ -122,8 +183,38 @@ function OverviewTab() {
           </div>
         </div>
       </div>
+
+      <div className="glass-card p-5">
+        <h2 className="font-display text-lg font-semibold">Download for your records</h2>
+        <p className="text-sm text-muted-foreground">Spreadsheet files (CSV) you can open in Excel for reports, accounting or backups.</p>
+        <div className="mt-3 flex flex-wrap gap-2 text-sm">
+          <button onClick={() => exportCsv("candidates")} className="rounded-full border border-glass-border px-4 py-2">Candidates</button>
+          <button onClick={() => exportCsv("vacancy_enquiries")} className="rounded-full border border-glass-border px-4 py-2">Employer leads</button>
+          <button onClick={() => exportCsv("job_posts")} className="rounded-full border border-glass-border px-4 py-2">Job posts</button>
+          <button onClick={() => exportCsv("staff_profiles")} className="rounded-full border border-glass-border px-4 py-2">Employees</button>
+        </div>
+      </div>
     </div>
   );
+}
+
+async function exportCsv(table: "candidates" | "vacancy_enquiries" | "job_posts" | "staff_profiles") {
+  const q = table === "candidates"
+    ? supabase.from("cv_submissions").select("created_at, full_name, phone, email, sector, country_preference, status, applied_job, next_follow_up, message")
+    : table === "job_posts"
+      ? supabase.from("job_posts").select("created_at, title, company_name, sector, country, city, salary, openings, status, published")
+      : supabase.from(table).select("*");
+  const { data, error } = await q;
+  if (error || !data) { toast.error("Download failed"); return; }
+  if (!data.length) { toast.info("Nothing to download yet"); return; }
+  const rows = data as Record<string, unknown>[];
+  const cols = Object.keys(rows[0]!);
+  const esc = (v: unknown) => `"${String(Array.isArray(v) ? v.join("; ") : (v ?? "")).replace(/"/g, '""')}"`;
+  const csv = [cols.join(","), ...rows.map((r) => cols.map((c) => esc(r[c])).join(","))].join("\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob(["\ufeff" + csv], { type: "text/csv" }));
+  a.download = `${table}-${new Date().toISOString().slice(0, 10)}.csv`;
+  a.click();
 }
 
 function TeamTab() {

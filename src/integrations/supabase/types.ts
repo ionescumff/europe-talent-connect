@@ -171,40 +171,85 @@ export type Database = {
       }
       job_posts: {
         Row: {
+          benefits: string[]
           city: string
+          company_details: string | null
+          company_name: string | null
+          contract: string | null
           country: string
           created_at: string
           created_by: string | null
           description: string | null
+          housing: string | null
           id: string
+          image_url: string | null
+          language: string | null
+          openings: number
+          published: boolean
+          requirements: string[]
           salary: string
+          schedule: string | null
           sector: string
+          slug: string | null
+          start_date: string | null
           status: string
+          tasks: string[]
           title: string
+          transport: string | null
         }
         Insert: {
+          benefits?: string[]
           city: string
+          company_details?: string | null
+          company_name?: string | null
+          contract?: string | null
           country: string
           created_at?: string
           created_by?: string | null
           description?: string | null
+          housing?: string | null
           id?: string
+          image_url?: string | null
+          language?: string | null
+          openings?: number
+          published?: boolean
+          requirements?: string[]
           salary: string
+          schedule?: string | null
           sector: string
+          slug?: string | null
+          start_date?: string | null
           status?: string
+          tasks?: string[]
           title: string
+          transport?: string | null
         }
         Update: {
+          benefits?: string[]
           city?: string
+          company_details?: string | null
+          company_name?: string | null
+          contract?: string | null
           country?: string
           created_at?: string
           created_by?: string | null
           description?: string | null
+          housing?: string | null
           id?: string
+          image_url?: string | null
+          language?: string | null
+          openings?: number
+          published?: boolean
+          requirements?: string[]
           salary?: string
+          schedule?: string | null
           sector?: string
+          slug?: string | null
+          start_date?: string | null
           status?: string
+          tasks?: string[]
           title?: string
+          transport?: string | null
         }
         Relationships: []
       }
