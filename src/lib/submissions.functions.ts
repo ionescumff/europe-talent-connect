@@ -12,7 +12,7 @@ const cvSchema = z.object({
   country: z.enum(["netherlands", "germany", "both"]),
   message: z.string().trim().max(1000).optional().default(""),
   appliedJob: z.string().trim().max(120).optional().default(""),
-  privacyAccepted: z.literal("on", { error: "Please acknowledge the privacy notice" }),
+  privacyAccepted: z.literal("on", { message: "Please acknowledge the privacy notice" }),
 });
 
 export const submitCv = createServerFn({ method: "POST" })
@@ -79,7 +79,7 @@ const vacancySchema = z.object({
   phone: z.string().trim().max(40).optional().default(""),
   country: z.enum(["netherlands", "germany", "both"]),
   message: z.string().trim().min(10).max(2000),
-  privacyAccepted: z.literal(true, { error: "Please acknowledge the privacy notice" }),
+  privacyAccepted: z.literal(true, { message: "Please acknowledge the privacy notice" }),
 });
 
 export const submitVacancy = createServerFn({ method: "POST" })
