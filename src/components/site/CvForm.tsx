@@ -5,6 +5,7 @@ import { CheckCircle2, Paperclip } from "lucide-react";
 import { submitCv } from "@/lib/submissions.functions";
 import { sectors } from "./Sectors";
 import { getJob, type Job } from "@/lib/jobs";
+import { Link } from "@tanstack/react-router";
 
 export function CvForm() {
   const send = useServerFn(submitCv);
@@ -132,6 +133,12 @@ export function CvForm() {
                 className="sr-only"
                 onChange={(e) => setFileName(e.target.files?.[0]?.name ?? null)}
               />
+            </label>
+            <label className="flex items-start gap-3 text-xs leading-5 text-brand/60">
+              <input name="privacyAccepted" type="checkbox" required className="mt-1 size-4 accent-brand" />
+              <span>
+                I have read the <Link to="/privacy" className="font-semibold text-brand underline underline-offset-2">privacy notice</Link> and understand how my details and CV will be used for recruitment.
+              </span>
             </label>
             <button
               type="submit"
