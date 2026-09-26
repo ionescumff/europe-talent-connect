@@ -1,6 +1,6 @@
 import heroImage from "@/assets/hero-warehouse.jpg";
 
-const trust = ["Free for candidates", "Housing confirmed in brief", "Start & review support"];
+const trustRaw = ["Free for candidates", "Housing confirmed in brief", "Start & review support"];
 
 export function Hero() {
   return (

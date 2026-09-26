@@ -1,4 +1,4 @@
-export const sectors = [
+const sectorsRaw = [
   {
     n: "01",
     title: "Warehousing & fulfilment",

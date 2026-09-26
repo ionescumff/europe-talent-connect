@@ -1,4 +1,4 @@
-const steps = [
+const stepsRaw = [
   {
     title: "Vacancy brief",
     text: "Role, location, conditions, headcount and start date — housing details confirmed upfront.",
