@@ -12,4 +12,18 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  vite: {
+    // Pre-bundle deps discovered late so Vite doesn't re-optimize mid-session
+    // (which breaks open tabs with "Importing a module script failed").
+    optimizeDeps: {
+      include: [
+        "@tanstack/router-core",
+        "@tanstack/router-core/isServer",
+        "@tanstack/router-core/ssr/client",
+        "@tanstack/history",
+        "seroval",
+        "xlsx",
+      ],
+    },
+  },
 });
