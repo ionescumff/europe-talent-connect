@@ -50,7 +50,7 @@ export function VacancyForm() {
             For employers &amp; staffing agencies
           </div>
           <h2 className="mt-3 font-display text-3xl font-extrabold leading-tight md:text-4xl">
-            Hiring in NL or DE? Share your vacancies.
+            Hiring in the Netherlands or Germany? Share your vacancies.
           </h2>
           <p className="mt-4 text-sm text-brand/60">
             Tell us the role, headcount, start date, location, schedule, language and experience

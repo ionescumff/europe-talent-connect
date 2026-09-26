@@ -47,21 +47,21 @@ export function CvForm() {
       <div className="glass-card grid items-center gap-10 rounded-[2rem] p-8 lg:grid-cols-[1.2fr_1fr] lg:p-12">
         <div>
           <div className="font-display text-xs font-bold uppercase tracking-[0.2em] text-accent">
-            For candidates · Pentru candidați
+            For candidates
           </div>
           <h2 className="mt-3 font-display text-3xl font-extrabold leading-tight md:text-4xl">
             Ready to work in the Netherlands or Germany? Leave your CV — we'll call you.
           </h2>
           <p className="mt-4 max-w-md text-sm text-brand/60">
             Free for candidates, always. Housing details are confirmed in the job brief before you
-            commit. Lasă-ți CV-ul și te contactăm noi.
+            commit. Leave your CV and our team will contact you.
           </p>
         </div>
 
         {done ? (
           <div className="flex flex-col items-center gap-3 rounded-2xl bg-glass p-8 text-center">
             <CheckCircle2 className="size-10 text-accent" />
-            <div className="font-display text-xl font-bold">CV received. Mulțumim!</div>
+            <div className="font-display text-xl font-bold">CV received. Thank you!</div>
             <p className="text-sm text-brand/60">
               Our team will review your profile and contact you about matching vacancies.
             </p>
@@ -117,7 +117,7 @@ export function CvForm() {
                 <select name="country" required className="field mt-1" defaultValue={job ? job.country.toLowerCase() : "both"}>
                   <option value="netherlands">Netherlands</option>
                   <option value="germany">Germany</option>
-                  <option value="both">Both NL &amp; DE</option>
+                  <option value="both">Both countries</option>
                 </select>
               </label>
             </div>
