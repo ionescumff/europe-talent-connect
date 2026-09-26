@@ -42,8 +42,8 @@ function JobNotFound() {
     <div className="bg-page-glow min-h-screen text-brand">
       <Nav />
       <div className="px-6 py-24 text-center md:px-8">
-        <h1 className="font-display text-3xl font-extrabold">{t(t("This job is no longer listed", "Acest job nu mai este disponibil"), "Acest job nu mai este disponibil")}</h1>
-        <p className="mt-3 text-sm text-brand/60">{t(t("It may have been filled. See what else is open.", "Este posibil să fi fost ocupat. Vezi ce alte posturi sunt deschise."), "Este posibil să fi fost ocupat. Vezi ce alte posturi sunt deschise.")}</p>
+        <h1 className="font-display text-3xl font-extrabold">{t("This job is no longer listed", "Acest job nu mai este disponibil")}</h1>
+        <p className="mt-3 text-sm text-brand/60">{t("It may have been filled. See what else is open.", "Este posibil să fi fost ocupat. Vezi ce alte posturi sunt deschise.")}</p>
         <Link
           to="/jobs"
           className="mt-6 inline-block rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground shadow-accent"
@@ -112,7 +112,7 @@ function JobDetail() {
             </section>
           )}
           {job.tasks.length > 0 && <section className="glass-card rounded-[1.75rem] p-7">
-            <h2 className="font-display text-xl font-bold">{t(t("What you'll do", "Ce vei face"), "Ce vei face")}</h2>
+            <h2 className="font-display text-xl font-bold">{t("What you'll do", "Ce vei face")}</h2>
             <ul className="mt-4 space-y-3 text-sm text-brand/75">
               {job.tasks.map((t) => (
                 <li key={t} className="flex gap-3">
@@ -124,7 +124,7 @@ function JobDetail() {
           </section>}
 
           {job.requirements.length > 0 && <section className="glass-card rounded-[1.75rem] p-7">
-            <h2 className="font-display text-xl font-bold">{t(t("What you need", "Ce ai nevoie"), "Ce ai nevoie")}</h2>
+            <h2 className="font-display text-xl font-bold">{t("What you need", "Ce ai nevoie")}</h2>
             <ul className="mt-4 space-y-3 text-sm text-brand/75">
               {job.requirements.map((t) => (
                 <li key={t} className="flex gap-3">
@@ -136,7 +136,7 @@ function JobDetail() {
           </section>}
 
           {job.offer.length > 0 && <section className="glass-card rounded-[1.75rem] p-7">
-            <h2 className="font-display text-xl font-bold">{t(t("What we offer", "Ce oferim"), "Ce oferim")}</h2>
+            <h2 className="font-display text-xl font-bold">{t("What we offer", "Ce oferim")}</h2>
             <ul className="mt-4 space-y-3 text-sm text-brand/75">
               {job.offer.map((t) => (
                 <li key={t} className="flex gap-3">
@@ -150,7 +150,7 @@ function JobDetail() {
 
         <aside className="space-y-6 lg:sticky lg:top-6 lg:self-start">
           <div className="glass-card rounded-[1.75rem] p-7">
-            <h2 className="font-display text-lg font-bold">{t(t("Job details", "Detaliile jobului"), "Detaliile jobului")}</h2>
+            <h2 className="font-display text-lg font-bold">{t("Job details", "Detaliile jobului")}</h2>
             <dl className="mt-4 space-y-3 text-sm">
               {facts.map(([k, v]) => (
                 <div key={k} className="flex justify-between gap-6 border-b border-border pb-3 last:border-0 last:pb-0">
@@ -172,7 +172,7 @@ function JobDetail() {
 
           {related.length > 0 && (
             <div className="glass-card rounded-[1.75rem] p-7">
-              <h2 className="font-display text-lg font-bold">{t(t("Similar jobs", "Joburi similare"), "Joburi similare")}</h2>
+              <h2 className="font-display text-lg font-bold">{t("Similar jobs", "Joburi similare")}</h2>
               <div className="mt-4 space-y-3">
                 {related.map((r) => (
                   <Link
