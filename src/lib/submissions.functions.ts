@@ -100,3 +100,28 @@ export const submitVacancy = createServerFn({ method: "POST" })
     }
     return { ok: true as const };
   });
+
+const employerMessageSchema = z.object({
+  name: z.string().trim().min(2).max(120),
+  company: z.string().trim().min(2).max(160),
+  email: z.string().trim().email().max(200),
+  phone: z.string().trim().max(40).optional(),
+  subject: z.string().trim().min(2).max(160),
+  body: z.string().trim().min(5).max(4000),
+  privacyAccepted: z.literal(true),
+});
+
+export const submitEmployerMessage = createServerFn({ method: "POST" })
+  .inputValidator((data: unknown) => employerMessageSchema.parse(data))
+  .handler(async ({ data }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { error } = await supabaseAdmin.from("employer_messages").insert({
+      name: data.name, company: data.company, email: data.email,
+      phone: data.phone || null, subject: data.subject, body: data.body,
+    });
+    if (error) {
+      console.error("Employer message insert failed", error);
+      throw new Error("We couldn't send your message. Please try again.");
+    }
+    return { ok: true as const };
+  });

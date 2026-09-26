@@ -35,10 +35,23 @@ function NotFoundComponent() {
   );
 }
 
+const STALE_CHUNK = /Importing a module script failed|Failed to fetch dynamically imported module|error loading dynamically imported module|Unable to preload CSS/i;
+
+function reloadOnceForStaleChunk(message: string) {
+  if (typeof window === "undefined" || !STALE_CHUNK.test(message)) return false;
+  const key = "stale-chunk-reload";
+  const last = Number(sessionStorage.getItem(key) || 0);
+  if (Date.now() - last < 10_000) return false; // avoid reload loops
+  sessionStorage.setItem(key, String(Date.now()));
+  window.location.reload();
+  return true;
+}
+
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
   useEffect(() => {
+    if (reloadOnceForStaleChunk(String(error?.message ?? error))) return;
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
   }, [error]);
 
@@ -120,6 +133,19 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  useEffect(() => {
+    const onPreload = (e: Event) => {
+      e.preventDefault();
+      reloadOnceForStaleChunk("Failed to fetch dynamically imported module");
+    };
+    const onRejection = (e: PromiseRejectionEvent) => reloadOnceForStaleChunk(String(e.reason?.message ?? e.reason));
+    window.addEventListener("vite:preloadError", onPreload);
+    window.addEventListener("unhandledrejection", onRejection);
+    return () => {
+      window.removeEventListener("vite:preloadError", onPreload);
+      window.removeEventListener("unhandledrejection", onRejection);
+    };
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
