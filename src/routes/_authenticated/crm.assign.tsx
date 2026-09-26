@@ -88,14 +88,14 @@ function NewLeads({ canAssign }: { canAssign: boolean }) {
         {newC.map((c) => (
           <div key={c.id} className="grid items-center gap-3 p-4 text-sm md:grid-cols-[1fr_1fr_240px]">
             <Link to="/crm/candidates/$id" params={{ id: c.id }} className="font-semibold hover:text-accent">{c.full_name} <span className="text-xs text-muted-foreground">· candidate</span></Link>
-            <span className="text-muted-foreground">{c.sector} · <span className="capitalize">{c.country_preference}</span> · {new Date(c.created_at).toLocaleDateString()}</span>
+            <span className="text-muted-foreground">{c.sector} · <span className="capitalize">{c.country_preference}</span> · {new Date(c.created_at).toLocaleDateString("en-GB")}</span>
             {action("cv_submissions", c.id)}
           </div>
         ))}
         {newE.map((e) => (
           <div key={e.id} className="grid items-center gap-3 p-4 text-sm md:grid-cols-[1fr_1fr_240px]">
             <span className="font-semibold">{e.company} <span className="text-xs text-muted-foreground">· employer</span></span>
-            <span className="text-muted-foreground">{e.contact_name} · {e.country} · {new Date(e.created_at).toLocaleDateString()}</span>
+            <span className="text-muted-foreground">{e.contact_name} · {e.country} · {new Date(e.created_at).toLocaleDateString("en-GB")}</span>
             {action("vacancy_enquiries", e.id)}
           </div>
         ))}

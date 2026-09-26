@@ -44,7 +44,7 @@ function PrivacyPage() {
         <p>The public website does not currently use advertising or analytics cookies. The private staff portal uses essential sign-in and security storage required to keep authorised team members signed in and protect recruitment records. These essential technologies cannot be switched off while using the portal.</p>
       </InformationSection>
       <InformationSection title="Contacting the controller">
-        <p>ION MAN WORKFORCE S.R.L., Strada Jimbolia 65, Romania · Trade Register J2022021461408 · CUI/VAT 47083118.</p>
+        <p>ION MAN WORKFORCE S.R.L., Strada Jimbolia 65, Romania · Trade Register J2022021461408 · Tax ID/VAT 47083118.</p>
         <p>Email: <a href="mailto:contact@imworkforce.eu" className="font-semibold text-brand underline">contact@imworkforce.eu</a> · Phone/WhatsApp: <a href="tel:+40741699011" className="font-semibold text-brand underline">+40 741 699 011</a>.</p>
       </InformationSection>
     </InformationPage>

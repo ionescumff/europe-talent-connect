@@ -96,7 +96,7 @@ function CandidateDetail() {
             <Item k="Sector" v={c.sector} />
             <Item k="Country" v={<span className="capitalize">{c.country_preference}</span>} />
             <Item k="Applied for" v={c.applied_job ? (getJob(c.applied_job) ? <Link to="/jobs/$slug" params={{ slug: c.applied_job }} target="_blank" className="underline">{getJob(c.applied_job)!.title}</Link> : c.applied_job) : "Open CV (no specific job)"} />
-            <Item k="Received" v={new Date(c.created_at).toLocaleString()} />
+            <Item k="Received" v={new Date(c.created_at).toLocaleString("en-GB")} />
             <Item k="Assigned to" v={memberName(team.data, c.assigned_to)} />
             <Item k="CV" v={c.cv_path ? <button onClick={openCv} className="font-semibold text-accent underline">{c.cv_filename ?? "Open"}</button> : "—"} />
           </dl>
@@ -143,7 +143,7 @@ function CandidateDetail() {
               <li key={n.id} className="rounded-xl bg-glass p-3 text-sm">
                 <div className="mb-1 flex justify-between text-xs text-muted-foreground">
                   <span className="font-semibold uppercase">{n.kind}</span>
-                  <span>{n.author_email} · {new Date(n.created_at).toLocaleString()}</span>
+                  <span>{n.author_email} · {new Date(n.created_at).toLocaleString("en-GB")}</span>
                 </div>
                 <p className="whitespace-pre-wrap">{n.body}</p>
               </li>

@@ -45,7 +45,7 @@ function Employers() {
               {e.phone && <a href={`tel:${e.phone}`} className="underline">{e.phone}</a>}
             </p>
             <p className="whitespace-pre-wrap rounded-xl bg-glass p-3">{e.message}</p>
-            <p className="text-xs text-muted-foreground">{new Date(e.created_at).toLocaleString()}</p>
+            <p className="text-xs text-muted-foreground">{new Date(e.created_at).toLocaleString("en-GB")}</p>
           </div>
         ))}
         {data?.length === 0 && <p className="text-muted-foreground">No enquiries yet.</p>}

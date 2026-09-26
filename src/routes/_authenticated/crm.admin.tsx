@@ -68,7 +68,7 @@ function OverviewTab() {
   const newEnqs = enqs.filter((e) => e.status === "new");
   const todos: { done: boolean; text: string; to?: "/crm/assign" | "/crm/employers" | "/crm/jobs" | "/crm/my" | "/crm" }[] = [
     { done: newEnqs.length === 0, text: `Reply to ${newEnqs.length} new employer ${newEnqs.length === 1 ? "message" : "messages"}`, to: "/crm/employers" },
-    { done: unassignedCands.length + unassignedEnqs.length === 0, text: `Give ${unassignedCands.length + unassignedEnqs.length} unowned leads to someone`, to: "/crm/assign" },
+    { done: unassignedCands.length + unassignedEnqs.length === 0, text: `Assign ${unassignedCands.length + unassignedEnqs.length} unowned leads to a team member`, to: "/crm/assign" },
     { done: dueToday.length === 0, text: `${dueToday.length} candidate follow-ups due today`, to: "/crm/my" },
     { done: overdue.length === 0, text: `Chase ${overdue.length} overdue follow-ups with the team`, to: "/crm/my" },
     { done: pendingAccess.length === 0, text: `Give a role to ${pendingAccess.length} new staff ${pendingAccess.length === 1 ? "account" : "accounts"} (Employees tab)` },
@@ -353,7 +353,7 @@ function ActivityTab() {
             <b>{a.actor_email ?? "System"}</b> {a.action} {a.entity === "staff" ? memberName(team.data, a.entity_id) : a.entity === "cv_submissions" ? "a candidate" : "an employer lead"}
             <span className="text-muted-foreground"> {describe(a.details)}</span>
           </span>
-          <span className="text-muted-foreground">{new Date(a.created_at).toLocaleString()}</span>
+          <span className="text-muted-foreground">{new Date(a.created_at).toLocaleString("en-GB")}</span>
         </div>
       ))}
       {log.data?.length === 0 && <p className="p-8 text-center text-muted-foreground">No activity yet.</p>}

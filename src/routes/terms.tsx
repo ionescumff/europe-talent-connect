@@ -32,7 +32,7 @@ function TermsPage() {
         <p>Nothing on this website is legal, tax, immigration or social-security advice. Mandatory rights under applicable consumer, employment and data protection law are not excluded or limited by these terms.</p>
       </InformationSection>
       <InformationSection title="Company and contact">
-        <p>ION MAN WORKFORCE S.R.L., registered in Romania at Strada Jimbolia 65. Trade Register J2022021461408 · CUI/VAT 47083118.</p>
+        <p>ION MAN WORKFORCE S.R.L., registered in Romania at Strada Jimbolia 65. Trade Register J2022021461408 · Tax ID/VAT 47083118.</p>
         <p>Questions: <a href="mailto:contact@imworkforce.eu" className="font-semibold text-brand underline">contact@imworkforce.eu</a> · <a href="tel:+40741699011" className="font-semibold text-brand underline">+40 741 699 011</a>.</p>
       </InformationSection>
     </InformationPage>

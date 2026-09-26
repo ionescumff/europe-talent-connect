@@ -69,7 +69,7 @@ function MyWork() {
               <span className="text-muted-foreground">{c.phone} · {c.next_follow_up}</span>
             </li>
           ))}
-          {due.length === 0 && <li className="py-2 text-muted-foreground">Nothing due. Nice.</li>}
+          {due.length === 0 && <li className="py-2 text-muted-foreground">No follow-ups due.</li>}
         </ul>
       </section>
 

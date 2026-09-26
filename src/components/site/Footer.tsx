@@ -13,7 +13,7 @@ export function Footer() {
           </p>
           <div className="mt-4 space-y-1 text-xs leading-5">
             <p>ION MAN WORKFORCE S.R.L. · Romania</p>
-            <p>Trade Register: J2022021461408 · CUI/VAT: 47083118</p>
+            <p>Trade Register: J2022021461408 · Tax ID/VAT: 47083118</p>
           </div>
         </div>
         <div>
