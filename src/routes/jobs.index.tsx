@@ -1,3 +1,4 @@
+import { useLang } from "@/lib/i18n";
 import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MapPin, Clock, Euro, Users, ArrowRight, Search, X } from "lucide-react";
@@ -42,6 +43,7 @@ const PAY_CEILING = 18;
 type Sort = "relevance" | "pay" | "start" | "openings";
 
 function JobsPage() {
+  const { t } = useLang();
   const extra = Route.useLoaderData();
   const all = useMemo(() => [...extra, ...jobs], [extra]);
   const cityList = useMemo(() => [...new Set([...jobCities, ...extra.map((j) => j.city)])].sort(), [extra]);
@@ -110,14 +112,13 @@ function JobsPage() {
 
       <header className="px-6 pb-8 pt-6 md:px-8 lg:px-14">
         <div className="font-display text-xs font-bold uppercase tracking-[0.2em] text-accent">
-          Open vacancies
+          {t("Open vacancies", "Locuri de muncă disponibile")}
         </div>
         <h1 className="mt-3 max-w-3xl font-display text-4xl font-extrabold leading-tight md:text-5xl">
-          Jobs waiting in the Netherlands &amp; Germany
+          {t("Jobs waiting in the Netherlands & Germany", "Locuri de muncă în Olanda și Germania")}
         </h1>
         <p className="mt-4 max-w-2xl text-sm text-brand/60">
-          Every listing shows pay, shifts, housing and transport before you apply. Open a job to see
-          the full details — applying is always free for candidates.
+          {t("Every listing shows pay, shifts, housing and transport before you apply. Open a job to see the full details — applying is always free for candidates.", "Fiecare anunț afișează salariul, turele, cazarea și transportul înainte de a aplica. Deschide un job pentru detalii complete — aplicarea este mereu gratuită pentru candidați.")}
         </p>
       </header>
 
@@ -129,18 +130,18 @@ function JobsPage() {
               <input
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
-                placeholder="Search role, city or keyword…"
+                placeholder={t("Search role, city or keyword…", "Caută rol, oraș sau cuvânt cheie...")}
                 className="field pl-11"
-                aria-label="Search jobs"
+                aria-label={t("Search jobs", "Caută locuri de muncă")}
               />
             </label>
             <select
               value={sector}
               onChange={(e) => setSector(e.target.value)}
               className="field"
-              aria-label="Filter by sector"
+              aria-label={t("Filter by sector", "Filtrează după sector")}
             >
-              <option value="all">All sectors</option>
+              <option value="all">{t("All sectors", "Toate sectoarele")}</option>
               {jobSectors.map((s) => (
                 <option key={s} value={s}>
                   {s}
@@ -154,12 +155,12 @@ function JobsPage() {
                 setCity("all");
               }}
               className="field"
-              aria-label="Filter by country"
+              aria-label={t("Filter by country", "Filtrează după țară")}
             >
-              <option value="all">All countries</option>
+              <option value="all">{t("All countries", "Toate țările")}</option>
               {jobCountries.map((c) => (
                 <option key={c} value={c}>
-                  {c}
+                  {c === "Netherlands" ? t("Netherlands", "Olanda") : c === "Germany" ? t("Germany", "Germania") : c}
                 </option>
               ))}
             </select>
@@ -167,9 +168,9 @@ function JobsPage() {
               value={city}
               onChange={(e) => setCity(e.target.value)}
               className="field"
-              aria-label="Filter by city"
+              aria-label={t("Filter by city", "Filtrează după oraș")}
             >
-              <option value="all">All cities</option>
+              <option value="all">{t("All cities", "Toate orașele")}</option>
               {cityList
                 .filter(
                   (c) =>
@@ -186,12 +187,14 @@ function JobsPage() {
               value={shift}
               onChange={(e) => setShift(e.target.value)}
               className="field"
-              aria-label="Filter by working hours"
+              aria-label={t("Filter by working hours", "Filtrează după programul de lucru")}
             >
-              <option value="all">Any working hours</option>
+              <option value="all">{t("Any working hours", "Orice program de lucru")}</option>
               {shiftTypes.map((s) => (
                 <option key={s} value={s}>
-                  {s}
+                  {s === "Day shift" ? t("Day shift", "Tură de zi") : 
+                   s === "Two shifts" ? t("Two shifts", "Două ture") : 
+                   t("Three shifts / nights", "Trei ture / de noapte")}
                 </option>
               ))}
             </select>
@@ -199,16 +202,16 @@ function JobsPage() {
               value={sort}
               onChange={(e) => setSort(e.target.value as Sort)}
               className="field"
-              aria-label="Sort jobs"
+              aria-label={t("Sort jobs", "Sortează joburile")}
             >
-              <option value="relevance">Sort: default</option>
-              <option value="pay">Sort: highest pay</option>
-              <option value="start">Sort: starting soonest</option>
-              <option value="openings">Sort: most openings</option>
+              <option value="relevance">{t("Sort: default", "Sortare: implicită")}</option>
+              <option value="pay">{t("Sort: highest pay", "Sortare: cel mai mare salariu")}</option>
+              <option value="start">{t("Sort: starting soonest", "Sortare: începere rapidă")}</option>
+              <option value="openings">{t("Sort: most openings", "Sortare: cele mai multe posturi")}</option>
             </select>
             <label className="block">
               <span className="flex items-center justify-between text-xs font-semibold text-brand/60">
-                Minimum pay
+                {t("Minimum pay", "Salariu minim")}
                 <span className="font-bold text-accent">€{pay.toFixed(2)}/h</span>
               </span>
               <input
@@ -219,34 +222,33 @@ function JobsPage() {
                 value={pay}
                 onChange={(e) => setPay(Number(e.target.value))}
                 className="mt-3 w-full accent-[var(--accent)]"
-                aria-label="Minimum hourly pay"
+                aria-label={t("Minimum hourly pay", "Salariu orar minim")}
               />
             </label>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
             <Toggle active={entryLevel} onClick={() => setEntryLevel(!entryLevel)}>
-              No experience needed
+              {t("No experience needed", "Fără experiență necesară")}
             </Toggle>
             <Toggle active={housing} onClick={() => setHousing(!housing)}>
-              Housing arranged
+              {t("Housing arranged", "Cazare asigurată")}
             </Toggle>
             <Toggle active={soon} onClick={() => setSoon(!soon)}>
-              Starts within 2 weeks
+              {t("Starts within 2 weeks", "Începe în maxim 2 săptămâni")}
             </Toggle>
             {activeCount > 0 && (
               <button
                 onClick={reset}
                 className="ml-auto inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-semibold text-brand/60 transition-colors hover:text-accent"
               >
-                <X className="size-3.5" /> Clear {activeCount} filter
-                {activeCount === 1 ? "" : "s"}
+                <X className="size-3.5" /> {t("Clear", "Șterge")} {activeCount} {activeCount === 1 ? t("filter", "filtru") : t("filters", "filtre")}
               </button>
             )}
           </div>
         </div>
         <p className="mt-4 text-xs font-semibold uppercase tracking-[0.18em] text-brand/45">
-          {results.length} {results.length === 1 ? "job" : "jobs"} available
+          {results.length} {results.length === 1 ? t("job available", "loc de muncă disponibil") : t("jobs available", "locuri de muncă disponibile")}
         </p>
       </section>
 
@@ -282,19 +284,18 @@ function JobsPage() {
                 <Clock className="size-3.5 text-accent" /> {j.start}
               </div>
               <div className="flex items-center gap-2">
-                <Users className="size-3.5 text-accent" /> {j.openings} openings
+                <Users className="size-3.5 text-accent" /> {j.openings} {t("openings", "locuri libere")}
               </div>
             </dl>
             <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand">
-              View job details
+              {t("View job details", "Vezi detaliile jobului")}
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
             </span>
           </Link>
         ))}
         {results.length === 0 && (
           <div className="glass-card rounded-[1.75rem] p-8 text-sm text-brand/60 md:col-span-2">
-            No jobs match those filters right now. Clear a few filters, or leave your CV and we'll
-            contact you when a matching vacancy opens.
+            {t("No jobs match those filters right now. Clear a few filters, or leave your CV and we'll contact you when a matching vacancy opens.", "Nu am găsit joburi care să corespundă acestor filtre. Șterge din filtre sau lasă-ne CV-ul tău și te vom contacta când apare un post potrivit.")}
           </div>
         )}
       </section>
@@ -302,16 +303,16 @@ function JobsPage() {
       <section className="px-6 pb-16 md:px-8 lg:px-14">
         <div className="glass-card flex flex-col items-start gap-4 rounded-[2rem] p-8 md:flex-row md:items-center md:justify-between">
           <div>
-            <h2 className="font-display text-2xl font-bold">Don't see the right job?</h2>
+            <h2 className="font-display text-2xl font-bold">{t("Don't see the right job?", "Nu găsești jobul potrivit?")}</h2>
             <p className="mt-2 text-sm text-brand/60">
-              Leave your CV once — we'll match you to new vacancies as they open.
+              {t("Leave your CV once — we'll match you to new vacancies as they open.", "Lasă-ne CV-ul tău o singură dată — te vom anunța când apar noi locuri de muncă potrivite.")}
             </p>
           </div>
           <a
             href="/#cv"
             className="rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground shadow-accent transition-transform hover:-translate-y-0.5"
           >
-            Leave your CV
+            {t("Leave your CV", "Lasă CV-ul tău")}
           </a>
         </div>
       </section>

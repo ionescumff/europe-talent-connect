@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { Footer } from "./Footer";
 import { Nav } from "./Nav";
+import { useLang } from "@/lib/i18n";
 
 export function InformationPage({
   eyebrow,
@@ -14,12 +15,13 @@ export function InformationPage({
   intro: string;
   children: ReactNode;
 }) {
+  const { t } = useLang();
   return (
     <div id="top" className="bg-page-glow min-h-screen text-brand">
       <Nav />
       <main className="mx-auto max-w-5xl px-6 pb-20 pt-12 md:px-8 lg:pt-20">
         <Link to="/" className="text-sm font-semibold text-brand/60 transition-colors hover:text-brand">
-          ← Back to home
+          {t("← Back to home", "← Înapoi la pagina principală")}
         </Link>
         <header className="max-w-3xl py-10">
           <p className="font-display text-xs font-bold uppercase tracking-[0.2em] text-accent">{eyebrow}</p>

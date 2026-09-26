@@ -1,3 +1,4 @@
+import { useLang } from "@/lib/i18n";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, Check } from "lucide-react";
 import { Nav } from "@/components/site/Nav";
@@ -36,17 +37,18 @@ export const Route = createFileRoute("/jobs/$slug")({
 });
 
 function JobNotFound() {
+  const { t } = useLang();
   return (
     <div className="bg-page-glow min-h-screen text-brand">
       <Nav />
       <div className="px-6 py-24 text-center md:px-8">
-        <h1 className="font-display text-3xl font-extrabold">This job is no longer listed</h1>
-        <p className="mt-3 text-sm text-brand/60">It may have been filled. See what else is open.</p>
+        <h1 className="font-display text-3xl font-extrabold">{t("This job is no longer listed", "Acest job nu mai este disponibil")}</h1>
+        <p className="mt-3 text-sm text-brand/60">{t("It may have been filled. See what else is open.", "Este posibil să fi fost ocupat. Vezi ce alte posturi sunt deschise.")}</p>
         <Link
           to="/jobs"
           className="mt-6 inline-block rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground shadow-accent"
         >
-          Back to all jobs
+          {t("Back to all jobs", "Înapoi la toate joburile")}
         </Link>
       </div>
       <Footer />
@@ -55,20 +57,21 @@ function JobNotFound() {
 }
 
 function JobDetail() {
+  const { t } = useLang();
   const { job } = Route.useLoaderData();
   const related = jobs.filter((j) => j.slug !== job.slug && j.sector === job.sector).slice(0, 2);
 
   const facts: [string, string][] = [
-    ...(job.company ? [["Employer", job.company] as [string, string]] : []),
-    ["Location", `${job.city}, ${job.country}`],
-    ["Pay", job.pay],
-    ["Contract", job.contract],
-    ["Schedule", job.schedule],
-    ["Start date", job.start],
-    ["Housing", job.housing],
-    ["Transport", job.transport],
-    ["Language", job.language],
-    ["Openings", String(job.openings)],
+    ...(job.company ? [[t("Employer", "Angajator"), job.company] as [string, string]] : []),
+    [t("Location", "Locație"), `${job.city}, ${job.country}`],
+    [t("Pay", "Salariu"), job.pay],
+    [t("Contract", "Contract"), job.contract],
+    [t("Schedule", "Program"), job.schedule],
+    [t("Start date", "Data începerii"), job.start],
+    [t("Housing", "Cazare"), job.housing],
+    [t("Transport", "Transport"), job.transport],
+    [t("Language", "Limbă"), job.language],
+    [t("Openings", "Locuri libere"), String(job.openings)],
   ];
 
   return (
@@ -80,7 +83,7 @@ function JobDetail() {
           to="/jobs"
           className="inline-flex items-center gap-2 text-sm font-semibold text-brand/60 transition-colors hover:text-accent"
         >
-          <ArrowLeft className="size-4" /> All jobs
+          <ArrowLeft className="size-4" /> {t("All jobs", "Toate joburile")}
         </Link>
       </div>
 
@@ -104,12 +107,12 @@ function JobDetail() {
         <div className="space-y-6">
           {job.company && (
             <section className="glass-card rounded-[1.75rem] p-7">
-              <h2 className="font-display text-xl font-bold">About {job.company}</h2>
+              <h2 className="font-display text-xl font-bold">{t("About", "Despre")} {job.company}</h2>
               {job.companyDetails && <p className="mt-3 whitespace-pre-line text-sm text-brand/75">{job.companyDetails}</p>}
             </section>
           )}
           {job.tasks.length > 0 && <section className="glass-card rounded-[1.75rem] p-7">
-            <h2 className="font-display text-xl font-bold">What you'll do</h2>
+            <h2 className="font-display text-xl font-bold">{t("What you'll do", "Ce vei face")}</h2>
             <ul className="mt-4 space-y-3 text-sm text-brand/75">
               {job.tasks.map((t) => (
                 <li key={t} className="flex gap-3">
@@ -121,7 +124,7 @@ function JobDetail() {
           </section>}
 
           {job.requirements.length > 0 && <section className="glass-card rounded-[1.75rem] p-7">
-            <h2 className="font-display text-xl font-bold">What you need</h2>
+            <h2 className="font-display text-xl font-bold">{t("What you need", "Ce ai nevoie")}</h2>
             <ul className="mt-4 space-y-3 text-sm text-brand/75">
               {job.requirements.map((t) => (
                 <li key={t} className="flex gap-3">
@@ -133,7 +136,7 @@ function JobDetail() {
           </section>}
 
           {job.offer.length > 0 && <section className="glass-card rounded-[1.75rem] p-7">
-            <h2 className="font-display text-xl font-bold">What we offer</h2>
+            <h2 className="font-display text-xl font-bold">{t("What we offer", "Ce oferim")}</h2>
             <ul className="mt-4 space-y-3 text-sm text-brand/75">
               {job.offer.map((t) => (
                 <li key={t} className="flex gap-3">
@@ -147,7 +150,7 @@ function JobDetail() {
 
         <aside className="space-y-6 lg:sticky lg:top-6 lg:self-start">
           <div className="glass-card rounded-[1.75rem] p-7">
-            <h2 className="font-display text-lg font-bold">Job details</h2>
+            <h2 className="font-display text-lg font-bold">{t("Job details", "Detaliile jobului")}</h2>
             <dl className="mt-4 space-y-3 text-sm">
               {facts.map(([k, v]) => (
                 <div key={k} className="flex justify-between gap-6 border-b border-border pb-3 last:border-0 last:pb-0">
@@ -160,16 +163,16 @@ function JobDetail() {
               href={`/?job=${job.slug}#cv`}
               className="mt-6 block rounded-xl bg-accent px-6 py-3.5 text-center text-sm font-semibold text-accent-foreground shadow-accent transition-transform hover:-translate-y-0.5"
             >
-              Apply — leave your CV
+              {t("Apply — leave your CV", "Aplică — lasă CV-ul tău")}
             </a>
             <p className="mt-3 text-center text-xs text-brand/50">
-              Free for candidates. Mention this job and we'll call you back.
+              {t("Free for candidates. Mention this job and we'll call you back.", "Gratuit pentru candidați. Menționează acest job și te vom sună înapoi.")}
             </p>
           </div>
 
           {related.length > 0 && (
             <div className="glass-card rounded-[1.75rem] p-7">
-              <h2 className="font-display text-lg font-bold">Similar jobs</h2>
+              <h2 className="font-display text-lg font-bold">{t("Similar jobs", "Joburi similare")}</h2>
               <div className="mt-4 space-y-3">
                 {related.map((r) => (
                   <Link
