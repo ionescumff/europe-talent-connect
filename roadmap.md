@@ -10,3 +10,7 @@
 - [x] Add privacy acknowledgement to candidate and employer forms
 - [x] Job posts: AI import from photos/spreadsheets, preview, publish to website
 - [x] Admin page: daily tasks/to-dos at top, employer messages, admin info
+- [x] Auto-reload on stale page files instead of "This page didn't load"
+- [x] Published job posts show live on /jobs with image
+- [x] Employer message inbox (Contact page form → Admin Inbox tab)
+- [x] Admin dashboard: job post stats, quick candidate flagging

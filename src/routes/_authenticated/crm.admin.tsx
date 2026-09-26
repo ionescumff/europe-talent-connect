@@ -11,7 +11,7 @@ export const Route = createFileRoute("/_authenticated/crm/admin")({
 
 function Admin() {
   const roles = useQuery({ queryKey: ["my-roles"], queryFn: fetchMyRoles });
-  const [tab, setTab] = useState<"overview" | "team" | "performance" | "activity">("overview");
+  const [tab, setTab] = useState<"overview" | "inbox" | "team" | "performance" | "activity">("overview");
   if (roles.isLoading) return <p className="text-muted-foreground">Loading…</p>;
   if (!isAdminRole(roles.data)) return <p className="text-muted-foreground">Only admins and co-founders can open the admin panel.</p>;
   const cls = (t: string) => `rounded-full px-4 py-2 text-sm font-medium ${tab === t ? "bg-glass-strong" : "hover:bg-glass"}`;
@@ -21,12 +21,14 @@ function Admin() {
         <h1 className="font-display text-3xl font-bold">Admin panel</h1>
         <div className="flex flex-wrap gap-2">
           <button className={cls("overview")} onClick={() => setTab("overview")}>Overview</button>
+          <button className={cls("inbox")} onClick={() => setTab("inbox")}>Inbox</button>
           <button className={cls("team")} onClick={() => setTab("team")}>Employees</button>
           <button className={cls("performance")} onClick={() => setTab("performance")}>Performance</button>
           <button className={cls("activity")} onClick={() => setTab("activity")}>Activity log</button>
         </div>
       </div>
-      {tab === "overview" && <OverviewTab />}
+      {tab === "overview" && <OverviewTab openInbox={() => setTab("inbox")} />}
+      {tab === "inbox" && <InboxTab />}
       {tab === "team" && <TeamTab />}
       {tab === "performance" && <PerformanceTab />}
       {tab === "activity" && <ActivityTab />}
@@ -34,18 +36,19 @@ function Admin() {
   );
 }
 
-function OverviewTab() {
+function OverviewTab({ openInbox }: { openInbox: () => void }) {
   const team = useQuery({ queryKey: ["team"], queryFn: fetchTeam });
   const data = useQuery({
     queryKey: ["admin-overview"],
     queryFn: async () => {
-      const [{ data: c }, { data: e }, { data: j }, { data: l }] = await Promise.all([
-        supabase.from("cv_submissions").select("id, full_name, status, assigned_to, created_at, next_follow_up, cv_path"),
+      const [{ data: c }, { data: e }, { data: j }, { data: l }, { data: m }] = await Promise.all([
+        supabase.from("cv_submissions").select("id, full_name, status, assigned_to, created_at, next_follow_up, cv_path, flagged, flag_note"),
         supabase.from("vacancy_enquiries").select("*").order("created_at", { ascending: false }),
         supabase.from("job_posts").select("id, title, city, published, status"),
         supabase.from("job_post_candidates").select("job_id"),
+        supabase.from("employer_messages").select("id, status"),
       ]);
-      return { cands: c ?? [], enqs: e ?? [], jobs: j ?? [], links: l ?? [] };
+      return { cands: c ?? [], enqs: e ?? [], jobs: j ?? [], links: l ?? [], msgs: m ?? [] };
     },
   });
   if (data.isLoading || team.isLoading) return <p className="text-muted-foreground">Loading…</p>;
@@ -75,6 +78,9 @@ function OverviewTab() {
     { done: liveNoCandidates.length === 0, text: `Link candidates to ${liveNoCandidates.length} live job ${liveNoCandidates.length === 1 ? "post" : "posts"} with nobody linked`, to: "/crm/jobs" },
     { done: noCv.length === 0, text: `Ask ${noCv.length} new candidates to send their CV`, to: "/crm" },
   ];
+  const unreadMsgs = (data.data?.msgs ?? []).filter((m) => m.status === "unread").length;
+  todos.unshift({ done: unreadMsgs === 0, text: `Answer ${unreadMsgs} unread ${unreadMsgs === 1 ? "message" : "messages"} in the Inbox` });
+  const flagged = cands.filter((c) => c.flagged);
   const openTodos = todos.filter((t) => !t.done).length;
   const owner = (id: string | null) => (id ? memberName(team.data ?? [], id) : "Unassigned");
 
@@ -100,6 +106,7 @@ function OverviewTab() {
               <li key={t.text} className={`flex items-center gap-3 ${t.done ? "text-muted-foreground line-through" : ""}`}>
                 <span className={`grid size-5 shrink-0 place-items-center rounded-full border text-xs ${t.done ? "border-accent bg-accent text-accent-foreground" : "border-glass-border"}`}>{t.done ? "✓" : ""}</span>
                 <span className="flex-1">{t.text}</span>
+                {!t.done && t.text.includes("Inbox") && <button onClick={openInbox} className="text-xs text-accent underline">Open</button>}
                 {!t.done && t.to && <Link to={t.to} className="text-xs text-accent underline">Open</Link>}
               </li>
             ))}
@@ -135,6 +142,30 @@ function OverviewTab() {
         {stat("New employer leads", enqs.filter((e) => e.status === "new").length, `${unassignedEnqs.length} not assigned`)}
         {stat("Follow-ups overdue", overdue.length, `${dueToday.length} due today`)}
         {stat("Placed candidates", cands.filter((c) => c.status === "placed").length, "signed a work contract")}
+      </div>
+
+      <div className="grid gap-4 lg:grid-cols-2">
+        <div className="glass-card p-5">
+          <div className="flex items-baseline justify-between">
+            <h2 className="font-display text-lg font-semibold">Job posts</h2>
+            <Link to="/crm/jobs" className="text-xs text-accent underline">Manage job posts</Link>
+          </div>
+          <div className="mt-3 grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
+            {[
+              ["Live on website", jobsList.filter((j) => j.published && j.status === "open").length],
+              ["Hidden", jobsList.filter((j) => !j.published).length],
+              ["Closed", jobsList.filter((j) => j.status !== "open").length],
+              ["With candidates", jobsList.filter((j) => linkedJobs.has(j.id)).length],
+            ].map(([label, n]) => (
+              <div key={label as string} className="rounded-xl bg-glass p-3">
+                <p className="text-2xl font-bold text-accent">{n}</p>
+                <p className="text-xs text-muted-foreground">{label}</p>
+              </div>
+            ))}
+          </div>
+          <p className="mt-3 text-xs text-muted-foreground">{jobsList.length} job posts in total · {data.data?.links.length ?? 0} candidate links</p>
+        </div>
+        <FlagCard cands={cands} flagged={flagged} />
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
@@ -357,6 +388,146 @@ function ActivityTab() {
         </div>
       ))}
       {log.data?.length === 0 && <p className="p-8 text-center text-muted-foreground">No activity yet.</p>}
+    </div>
+  );
+}
+
+type FlagCand = { id: string; full_name: string; status: string; flagged: boolean; flag_note: string | null };
+
+function FlagCard({ cands, flagged }: { cands: FlagCand[]; flagged: FlagCand[] }) {
+  const qc = useQueryClient();
+  const [q, setQ] = useState("");
+  const [note, setNote] = useState("");
+  const matches = q.trim().length >= 2 ? cands.filter((c) => !c.flagged && c.full_name.toLowerCase().includes(q.trim().toLowerCase())).slice(0, 5) : [];
+  async function setFlag(id: string, on: boolean) {
+    const { error } = await supabase.from("cv_submissions").update({ flagged: on, flag_note: on ? note.trim() || null : null }).eq("id", id);
+    if (error) { toast.error(error.message); return; }
+    toast.success(on ? "Candidate flagged" : "Flag removed");
+    setQ(""); setNote("");
+    qc.invalidateQueries({ queryKey: ["admin-overview"] });
+    qc.invalidateQueries({ queryKey: ["candidates"] });
+  }
+  return (
+    <div className="glass-card p-5">
+      <h2 className="font-display text-lg font-semibold">Flagged candidates</h2>
+      <div className="mt-3 flex flex-wrap gap-2">
+        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Find a candidate to flag…" className="field flex-1" />
+        <input value={note} onChange={(e) => setNote(e.target.value)} placeholder="Reason (optional)" className="field flex-1" />
+      </div>
+      {matches.length > 0 && (
+        <ul className="mt-2 space-y-1 text-sm">
+          {matches.map((c) => (
+            <li key={c.id} className="flex items-center justify-between rounded-xl bg-glass px-3 py-2">
+              <span>{c.full_name} <span className="text-xs capitalize text-muted-foreground">· {c.status}</span></span>
+              <button onClick={() => setFlag(c.id, true)} className="text-xs font-semibold text-accent underline">Flag</button>
+            </li>
+          ))}
+        </ul>
+      )}
+      <ul className="mt-3 max-h-60 space-y-1 overflow-auto text-sm">
+        {flagged.map((c) => (
+          <li key={c.id} className="flex items-center justify-between gap-2 rounded-xl border border-glass-border px-3 py-2">
+            <Link to="/crm/candidates/$id" params={{ id: c.id }} className="flex-1">
+              <span className="font-medium">⚑ {c.full_name}</span>
+              {c.flag_note && <span className="block text-xs text-muted-foreground">{c.flag_note}</span>}
+            </Link>
+            <button onClick={() => setFlag(c.id, false)} className="text-xs underline">Unflag</button>
+          </li>
+        ))}
+        {flagged.length === 0 && <li className="text-muted-foreground">No flagged candidates.</li>}
+      </ul>
+    </div>
+  );
+}
+
+function InboxTab() {
+  const qc = useQueryClient();
+  const team = useQuery({ queryKey: ["team"], queryFn: fetchTeam });
+  const msgs = useQuery({
+    queryKey: ["employer-messages"],
+    queryFn: async () => (await supabase.from("employer_messages").select("*").order("created_at", { ascending: false })).data ?? [],
+    refetchInterval: 30_000,
+  });
+  const [openId, setOpenId] = useState<string | null>(null);
+  const [reply, setReply] = useState("");
+  const [filter, setFilter] = useState<"active" | "archived">("active");
+  const list = (msgs.data ?? []).filter((m) => (filter === "archived" ? m.status === "archived" : m.status !== "archived"));
+  const open = list.find((m) => m.id === openId) ?? null;
+
+  async function update(id: string, patch: { status?: string; reply?: string; replied_at?: string; replied_by?: string | null }) {
+    const { error } = await supabase.from("employer_messages").update(patch).eq("id", id);
+    if (error) { toast.error(error.message); return; }
+    qc.invalidateQueries({ queryKey: ["employer-messages"] });
+    qc.invalidateQueries({ queryKey: ["admin-overview"] });
+  }
+  async function select(id: string, status: string) {
+    setOpenId(id); setReply("");
+    if (status === "unread") await update(id, { status: "read" });
+  }
+  async function sendReply() {
+    if (!open || !reply.trim()) return;
+    const { data: u } = await supabase.auth.getUser();
+    await update(open.id, { status: "replied", reply: reply.trim(), replied_at: new Date().toISOString(), replied_by: u.user?.id ?? null });
+    window.location.href = `mailto:${open.email}?subject=${encodeURIComponent("Re: " + open.subject)}&body=${encodeURIComponent(reply.trim())}`;
+    toast.success("Reply saved — your email app opens to send it");
+  }
+
+  if (msgs.isLoading) return <p className="text-muted-foreground">Loading…</p>;
+  return (
+    <div className="grid gap-4 lg:grid-cols-[1fr_1.4fr]">
+      <div className="glass-card p-4">
+        <div className="mb-3 flex gap-2 text-sm">
+          {(["active", "archived"] as const).map((f) => (
+            <button key={f} onClick={() => setFilter(f)} className={`rounded-full px-3 py-1 capitalize ${filter === f ? "bg-glass-strong" : "hover:bg-glass"}`}>{f}</button>
+          ))}
+        </div>
+        <ul className="max-h-[32rem] space-y-2 overflow-auto">
+          {list.map((m) => (
+            <li key={m.id}>
+              <button onClick={() => select(m.id, m.status)} className={`w-full rounded-xl p-3 text-left text-sm ${openId === m.id ? "bg-glass-strong" : "bg-glass"}`}>
+                <div className="flex items-center justify-between gap-2">
+                  <span className={m.status === "unread" ? "font-bold" : "font-medium"}>{m.company}</span>
+                  <span className="text-xs text-muted-foreground">{new Date(m.created_at).toLocaleDateString("en-GB")}</span>
+                </div>
+                <p className="truncate">{m.subject}</p>
+                <span className={`text-xs ${m.status === "unread" ? "text-accent" : "text-muted-foreground"}`}>{m.status}</span>
+              </button>
+            </li>
+          ))}
+          {list.length === 0 && <li className="text-sm text-muted-foreground">No messages. Employers can write to you from the Contact page.</li>}
+        </ul>
+      </div>
+      <div className="glass-card p-5">
+        {!open ? (
+          <p className="text-sm text-muted-foreground">Select a message to read it.</p>
+        ) : (
+          <div className="space-y-4 text-sm">
+            <div>
+              <h2 className="font-display text-xl font-semibold">{open.subject}</h2>
+              <p className="text-muted-foreground">{open.name} · {open.company} · {new Date(open.created_at).toLocaleString("en-GB")}</p>
+              <div className="mt-1 flex flex-wrap gap-3 text-xs">
+                <a href={`mailto:${open.email}`} className="text-accent underline">{open.email}</a>
+                {open.phone && <a href={`tel:${open.phone}`} className="underline">{open.phone}</a>}
+              </div>
+            </div>
+            <p className="whitespace-pre-line rounded-xl bg-glass p-4">{open.body}</p>
+            {open.reply && (
+              <div className="rounded-xl border border-glass-border p-4">
+                <p className="text-xs text-muted-foreground">Replied by {memberName(team.data, open.replied_by)} · {open.replied_at && new Date(open.replied_at).toLocaleString("en-GB")}</p>
+                <p className="mt-1 whitespace-pre-line">{open.reply}</p>
+              </div>
+            )}
+            <textarea value={reply} onChange={(e) => setReply(e.target.value)} rows={5} placeholder="Write a reply…" className="field w-full" />
+            <div className="flex flex-wrap gap-2">
+              <button onClick={sendReply} disabled={!reply.trim()} className="rounded-full bg-accent px-5 py-2 font-semibold text-accent-foreground disabled:opacity-50">Reply by email</button>
+              <button onClick={() => update(open.id, { status: open.status === "archived" ? "read" : "archived" })} className="rounded-full border border-glass-border px-5 py-2">
+                {open.status === "archived" ? "Move to inbox" : "Archive"}
+              </button>
+              {open.status !== "unread" && <button onClick={() => update(open.id, { status: "unread" })} className="rounded-full border border-glass-border px-5 py-2">Mark unread</button>}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

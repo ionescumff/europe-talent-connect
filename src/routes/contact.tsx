@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Mail, MapPin, Phone } from "lucide-react";
 import type { ReactNode } from "react";
+import { EmployerMessageForm } from "@/components/site/EmployerMessageForm";
 import { InformationPage, InformationSection } from "@/components/site/InformationPage";
 
 const title = "Company & contact details — IONMAN Workforce";
@@ -37,6 +38,7 @@ function ContactPage() {
           <p className="font-semibold">Strada Jimbolia 65, Romania</p>
         </ContactItem>
       </section>
+      <EmployerMessageForm />
       <InformationSection title="Registered business">
         <div className="grid gap-x-8 gap-y-3 sm:grid-cols-2">
           <p><strong className="text-brand">Legal name:</strong><br />ION MAN WORKFORCE S.R.L.</p>
