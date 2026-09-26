@@ -1,4 +1,5 @@
 # Roadmap
+- [x] Audit public and CRM text for English-only wording and English date formatting
 - [x] Clickable candidate rows in CRM
 - [x] Admin panel: employees, roles (admin, co-founder, manager, associate, partner agency), managers, remove, performance, activity log
 - [x] Assignment page for candidates & employer leads
