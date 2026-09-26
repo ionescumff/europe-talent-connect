@@ -42,7 +42,7 @@ function ContactPage() {
           <p><strong className="text-brand">Legal name:</strong><br />ION MAN WORKFORCE S.R.L.</p>
           <p><strong className="text-brand">Country of registration:</strong><br />Romania</p>
           <p><strong className="text-brand">Trade Register number:</strong><br />J2022021461408</p>
-          <p><strong className="text-brand">CUI / VAT number:</strong><br />47083118</p>
+          <p><strong className="text-brand">Tax ID / VAT number:</strong><br />47083118</p>
         </div>
       </InformationSection>
       <InformationSection title="Leadership">

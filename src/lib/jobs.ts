@@ -93,7 +93,7 @@ export const jobs: Job[] = [
     country: "Germany",
     city: "Duisburg",
     pay: "€14.50 – €16.50 gross / hour",
-    contract: "Arbeitnehmerüberlassung (temporary employment)",
+    contract: "Temporary agency employment",
     schedule: "Day shift, 40h/week, occasional Saturdays",
     start: "Within 3 weeks",
     housing: "Shared apartment within 20 minutes of the depot",

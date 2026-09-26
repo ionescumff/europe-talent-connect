@@ -103,7 +103,7 @@ function Candidates() {
                 <td className={`p-4 ${c.next_follow_up && c.next_follow_up <= today ? "font-semibold text-accent" : ""}`}>
                   {c.next_follow_up ?? "—"}
                 </td>
-                <td className="p-4 text-muted-foreground">{new Date(c.created_at).toLocaleDateString()}</td>
+                <td className="p-4 text-muted-foreground">{new Date(c.created_at).toLocaleDateString("en-GB")}</td>
               </tr>
             ))}
             {!isLoading && rows.length === 0 && (
