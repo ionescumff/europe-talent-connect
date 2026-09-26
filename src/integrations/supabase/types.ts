@@ -94,6 +94,8 @@ export type Database = {
           cv_filename: string | null
           cv_path: string | null
           email: string | null
+          flag_note: string | null
+          flagged: boolean
           full_name: string
           id: string
           message: string | null
@@ -110,6 +112,8 @@ export type Database = {
           cv_filename?: string | null
           cv_path?: string | null
           email?: string | null
+          flag_note?: string | null
+          flagged?: boolean
           full_name: string
           id?: string
           message?: string | null
@@ -126,6 +130,8 @@ export type Database = {
           cv_filename?: string | null
           cv_path?: string | null
           email?: string | null
+          flag_note?: string | null
+          flagged?: boolean
           full_name?: string
           id?: string
           message?: string | null
@@ -133,6 +139,51 @@ export type Database = {
           phone?: string
           sector?: string
           status?: string
+        }
+        Relationships: []
+      }
+      employer_messages: {
+        Row: {
+          body: string
+          company: string
+          created_at: string
+          email: string
+          id: string
+          name: string
+          phone: string | null
+          replied_at: string | null
+          replied_by: string | null
+          reply: string | null
+          status: string
+          subject: string
+        }
+        Insert: {
+          body: string
+          company: string
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          phone?: string | null
+          replied_at?: string | null
+          replied_by?: string | null
+          reply?: string | null
+          status?: string
+          subject: string
+        }
+        Update: {
+          body?: string
+          company?: string
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          phone?: string | null
+          replied_at?: string | null
+          replied_by?: string | null
+          reply?: string | null
+          status?: string
+          subject?: string
         }
         Relationships: []
       }
