@@ -401,7 +401,7 @@ function FlagCard({ cands, flagged }: { cands: FlagCand[]; flagged: FlagCand[] }
   const matches = q.trim().length >= 2 ? cands.filter((c) => !c.flagged && c.full_name.toLowerCase().includes(q.trim().toLowerCase())).slice(0, 5) : [];
   async function setFlag(id: string, on: boolean) {
     const { error } = await supabase.from("cv_submissions").update({ flagged: on, flag_note: on ? note.trim() || null : null }).eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success(on ? "Candidate flagged" : "Flag removed");
     setQ(""); setNote("");
     qc.invalidateQueries({ queryKey: ["admin-overview"] });
@@ -454,9 +454,9 @@ function InboxTab() {
   const list = (msgs.data ?? []).filter((m) => (filter === "archived" ? m.status === "archived" : m.status !== "archived"));
   const open = list.find((m) => m.id === openId) ?? null;
 
-  async function update(id: string, patch: { status?: string; reply?: string; replied_at?: string; replied_by?: string }) {
+  async function update(id: string, patch: { status?: string; reply?: string; replied_at?: string; replied_by?: string | null }) {
     const { error } = await supabase.from("employer_messages").update(patch).eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     qc.invalidateQueries({ queryKey: ["employer-messages"] });
     qc.invalidateQueries({ queryKey: ["admin-overview"] });
   }
@@ -467,7 +467,7 @@ function InboxTab() {
   async function sendReply() {
     if (!open || !reply.trim()) return;
     const { data: u } = await supabase.auth.getUser();
-    await update(open.id, { status: "replied", reply: reply.trim(), replied_at: new Date().toISOString(), replied_by: u.user?.id });
+    await update(open.id, { status: "replied", reply: reply.trim(), replied_at: new Date().toISOString(), replied_by: u.user?.id ?? null });
     window.location.href = `mailto:${open.email}?subject=${encodeURIComponent("Re: " + open.subject)}&body=${encodeURIComponent(reply.trim())}`;
     toast.success("Reply saved — your email app opens to send it");
   }
