@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { InformationPage, InformationSection } from "@/components/site/InformationPage";
+import { useLang } from "@/lib/i18n";
 
 const title = "Privacy & cookies — IONMAN Workforce";
 const description = "How ION MAN WORKFORCE S.R.L. handles candidate, employer and website information under European data protection rules.";
@@ -14,38 +15,43 @@ export const Route = createFileRoute("/privacy")({
 });
 
 function PrivacyPage() {
+  const { t } = useLang();
   return (
-    <InformationPage eyebrow="Privacy notice" title="Your information, handled responsibly" intro="ION MAN WORKFORCE S.R.L. is the controller of personal information submitted through this website. This notice explains what we collect and how we use it.">
-      <InformationSection title="Information we collect">
-        <p>For candidates, this may include your name, contact details, CV, work history, skills, preferred sector and country, the vacancy you applied for, and later recruitment communications.</p>
-        <p>For employers and partners, this may include your name, company, business contact details, vacancy requirements and our communications with you.</p>
+    <InformationPage 
+      eyebrow={t("Privacy notice", "Notă de confidențialitate")} 
+      title={t("Your information, handled responsibly", "Informațiile tale, gestionate cu responsabilitate")} 
+      intro={t("ION MAN WORKFORCE S.R.L. is the controller of personal information submitted through this website. This notice explains what we collect and how we use it.", "ION MAN WORKFORCE S.R.L. este operatorul informațiilor cu caracter personal transmise prin intermediul acestui site. Această notă explică ce colectăm și cum utilizăm aceste date.")}
+    >
+      <InformationSection title={t("Information we collect", "Informații pe care le colectăm")}>
+        <p>{t("For candidates, this may include your name, contact details, CV, work history, skills, preferred sector and country, the vacancy you applied for, and later recruitment communications.", "Pentru candidați, acestea pot include numele, datele de contact, CV-ul, istoricul profesional, competențele, sectorul și țara preferate, postul pentru care ați aplicat și comunicările ulterioare privind recrutarea.")}</p>
+        <p>{t("For employers and partners, this may include your name, company, business contact details, vacancy requirements and our communications with you.", "Pentru angajatori și parteneri, acestea pot include numele, compania, datele de contact profesionale, cerințele postului vacant și comunicările noastre cu dumneavoastră.")}</p>
       </InformationSection>
-      <InformationSection title="Why and how we use it">
+      <InformationSection title={t("Why and how we use it", "De ce și cum le folosim")}>
         <ul className="list-disc space-y-2 pl-5">
-          <li>To respond to enquiries and take steps toward a possible work placement or business agreement.</li>
-          <li>To screen candidates, identify suitable vacancies and manage recruitment communications.</li>
-          <li>To present a candidate to a potential employer only for a relevant recruitment opportunity.</li>
-          <li>To operate securely, keep appropriate records and meet legal obligations.</li>
+          <li>{t("To respond to enquiries and take steps toward a possible work placement or business agreement.", "Pentru a răspunde la solicitări și a face demersuri în vederea unei posibile plasări în muncă sau a unui acord comercial.")}</li>
+          <li>{t("To screen candidates, identify suitable vacancies and manage recruitment communications.", "Pentru a selecta candidații, a identifica posturile vacante potrivite și a gestiona comunicările privind recrutarea.")}</li>
+          <li>{t("To present a candidate to a potential employer only for a relevant recruitment opportunity.", "Pentru a prezenta un candidat unui potențial angajator numai pentru o oportunitate relevantă de recrutare.")}</li>
+          <li>{t("To operate securely, keep appropriate records and meet legal obligations.", "Pentru a opera în siguranță, a păstra evidențe corespunzătoare și a îndeplini obligațiile legale.")}</li>
         </ul>
-        <p>Depending on the activity, our legal basis is taking steps at your request before a contract, performing a contract, complying with law, our legitimate interests in operating a responsible recruitment service, or consent where the law requires it.</p>
+        <p>{t("Depending on the activity, our legal basis is taking steps at your request before a contract, performing a contract, complying with law, our legitimate interests in operating a responsible recruitment service, or consent where the law requires it.", "În funcție de activitate, temeiul nostru juridic este efectuarea demersurilor la cererea dumneavoastră înainte de un contract, executarea unui contract, respectarea legii, interesele noastre legitime în operarea unui serviciu de recrutare responsabil sau consimțământul acolo unde legea o cere.")}</p>
       </InformationSection>
-      <InformationSection title="Who receives information">
-        <p>Candidate information may be shared with prospective employers or staffing partners for a relevant vacancy. We may also use carefully selected service providers for hosting, secure storage and communications. We do not sell personal information.</p>
-        <p>Where information is processed outside the European Economic Area, we use an approved legal safeguard when required.</p>
+      <InformationSection title={t("Who receives information", "Cine primește informațiile")}>
+        <p>{t("Candidate information may be shared with prospective employers or staffing partners for a relevant vacancy. We may also use carefully selected service providers for hosting, secure storage and communications. We do not sell personal information.", "Informațiile despre candidați pot fi partajate cu potențialii angajatori sau partenerii de personal pentru un post vacant relevant. De asemenea, putem folosi furnizori de servicii selectați cu atenție pentru găzduire, stocare securizată și comunicare. Nu vindem informații cu caracter personal.")}</p>
+        <p>{t("Where information is processed outside the European Economic Area, we use an approved legal safeguard when required.", "Atunci când informațiile sunt procesate în afara Spațiului Economic European, utilizăm o măsură de protecție legală aprobată, atunci când este necesar.")}</p>
       </InformationSection>
-      <InformationSection title="How long we keep it">
-        <p>We keep information only for as long as it is needed for the recruitment or business purpose described here, to maintain necessary records, resolve disputes and meet legal duties. The period depends on the relationship, whether an application remains active, and applicable limitation or record-keeping rules. Information is then deleted or anonymised.</p>
+      <InformationSection title={t("How long we keep it", "Cât timp le păstrăm")}>
+        <p>{t("We keep information only for as long as it is needed for the recruitment or business purpose described here, to maintain necessary records, resolve disputes and meet legal duties. The period depends on the relationship, whether an application remains active, and applicable limitation or record-keeping rules. Information is then deleted or anonymised.", "Păstrăm informațiile doar atât timp cât este necesar pentru scopul de recrutare sau de afaceri descris aici, pentru a menține evidențele necesare, a rezolva disputele și a îndeplini obligațiile legale. Perioada depinde de relație, de faptul dacă o candidatură rămâne activă și de regulile aplicabile privind prescripția sau păstrarea înregistrărilor. Ulterior, informațiile sunt șterse sau anonimizate.")}</p>
       </InformationSection>
-      <InformationSection title="Your rights">
-        <p>Subject to the conditions in data protection law, you may ask to access, correct, erase or restrict your information, object to certain processing, receive portable information, or withdraw consent without affecting earlier lawful use. You may also complain to the Romanian data protection authority or the authority where you live or work.</p>
-        <p>Send requests to <a href="mailto:contact@imworkforce.eu" className="font-semibold text-brand underline">contact@imworkforce.eu</a>. We may need to verify your identity before acting.</p>
+      <InformationSection title={t("Your rights", "Drepturile tale")}>
+        <p>{t("Subject to the conditions in data protection law, you may ask to access, correct, erase or restrict your information, object to certain processing, receive portable information, or withdraw consent without affecting earlier lawful use. You may also complain to the Romanian data protection authority or the authority where you live or work.", "În condițiile prevăzute de legislația privind protecția datelor, puteți solicita accesul, corectarea, ștergerea sau restricționarea informațiilor dumneavoastră, vă puteți opune anumitor prelucrări, puteți primi informații portabile sau vă puteți retrage consimțământul fără a afecta utilizarea legală anterioară. De asemenea, puteți depune o plângere la autoritatea română de protecție a datelor (ANSPDCP) sau la autoritatea din locul în care locuiți sau lucrați.")}</p>
+        <p>{t("Send requests to", "Trimiteți cererile la")} <a href="mailto:contact@imworkforce.eu" className="font-semibold text-brand underline">contact@imworkforce.eu</a>. {t("We may need to verify your identity before acting.", "Este posibil să fie necesar să vă verificăm identitatea înainte de a acționa.")}</p>
       </InformationSection>
-      <InformationSection title="Cookies and staff access">
-        <p>The public website does not currently use advertising or analytics cookies. The private staff portal uses essential sign-in and security storage required to keep authorised team members signed in and protect recruitment records. These essential technologies cannot be switched off while using the portal.</p>
+      <InformationSection title={t("Cookies and staff access", "Cookie-uri și accesul personalului")}>
+        <p>{t("The public website does not currently use advertising or analytics cookies. The private staff portal uses essential sign-in and security storage required to keep authorised team members signed in and protect recruitment records. These essential technologies cannot be switched off while using the portal.", "Site-ul public nu utilizează în prezent cookie-uri de publicitate sau analiză. Portalul privat al personalului utilizează stocarea esențială pentru autentificare și securitate, necesară pentru a menține membrii echipei autorizați autentificați și pentru a proteja înregistrările de recrutare. Aceste tehnologii esențial nu pot fi dezactivate în timpul utilizării portalului.")}</p>
       </InformationSection>
-      <InformationSection title="Contacting the controller">
+      <InformationSection title={t("Contacting the controller", "Contactarea operatorului")}>
         <p>ION MAN WORKFORCE S.R.L., Strada Jimbolia 65, Romania · Trade Register J2022021461408 · Tax ID/VAT 47083118.</p>
-        <p>Email: <a href="mailto:contact@imworkforce.eu" className="font-semibold text-brand underline">contact@imworkforce.eu</a> · Phone/WhatsApp: <a href="tel:+40741699011" className="font-semibold text-brand underline">+40 741 699 011</a>.</p>
+        <p>{t("Email:", "Email:")} <a href="mailto:contact@imworkforce.eu" className="font-semibold text-brand underline">contact@imworkforce.eu</a> · {t("Phone/WhatsApp:", "Telefon/WhatsApp:")} <a href="tel:+40741699011" className="font-semibold text-brand underline">+40 741 699 011</a>.</p>
       </InformationSection>
     </InformationPage>
   );
