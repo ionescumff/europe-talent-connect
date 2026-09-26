@@ -1,3 +1,4 @@
+import { useLang } from "@/lib/i18n";
 import { useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MapPin, Clock, Euro, Users, ArrowRight, Search, X } from "lucide-react";
@@ -39,9 +40,10 @@ export const Route = createFileRoute("/jobs/")({
 const PAY_FLOOR = 13;
 const PAY_CEILING = 18;
 
-type Sort = "relevance" | "pay" | "start" | "openings";
+type Sort = "relevance" | "pay" | "start" | t("openings", "locuri libere");
 
 function JobsPage() {
+  const { t } = useLang();
   const extra = Route.useLoaderData();
   const all = useMemo(() => [...extra, ...jobs], [extra]);
   const cityList = useMemo(() => [...new Set([...jobCities, ...extra.map((j) => j.city)])].sort(), [extra]);
@@ -97,7 +99,7 @@ function JobsPage() {
     });
 
     if (sort === "pay") list.sort((a, b) => minPay(b) - minPay(a));
-    if (sort === "openings") list.sort((a, b) => b.openings - a.openings);
+    if (sort === t("openings", "locuri libere")) list.sort((a, b) => b.openings - a.openings);
     if (sort === "start")
       list.sort((a, b) => Number(startsSoon(b)) - Number(startsSoon(a)));
 
@@ -129,20 +131,20 @@ function JobsPage() {
               <input
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
-                placeholder="Search role, city or keyword…"
+                placeholder={t(t("Search role, city or keyword…", "Caută rol, oraș sau cuvânt cheie..."), "Caută rol, oraș sau cuvânt cheie...")}
                 className="field pl-11"
-                aria-label="Search jobs"
+                aria-label={t(t("Search jobs", "Caută locuri de muncă"), "Caută locuri de muncă")}
               />
             </label>
             <select
               value={sector}
               onChange={(e) => setSector(e.target.value)}
               className="field"
-              aria-label="Filter by sector"
+              aria-label={t(t("Filter by sector", "Filtrează după sector"), "Filtrează după sector")}
             >
-              <option value="all">All sectors</option>
+              <option value="all">{t(t("All sectors", "Toate sectoarele"), "Toate sectoarele")}</option>
               {jobSectors.map((s) => (
-                <option key={s} value={s}>
+                <option key={s === "Day shift" ? t("Day shift", "Tură de zi") : s === "Two shifts" ? t("Two shifts", "Două ture") : s === "Three shifts / nights" ? t("Three shifts / nights", "Trei ture / de noapte") : t(s, s)} value={s}>
                   {s}
                 </option>
               ))}
@@ -154,12 +156,12 @@ function JobsPage() {
                 setCity("all");
               }}
               className="field"
-              aria-label="Filter by country"
+              aria-label={t(t("Filter by country", "Filtrează după țară"), "Filtrează după țară")}
             >
-              <option value="all">All countries</option>
+              <option value="all">{t(t("All countries", "Toate țările"), "Toate țările")}</option>
               {jobCountries.map((c) => (
-                <option key={c} value={c}>
-                  {c}
+                <option key={c === "Netherlands" ? t("Netherlands", "Olanda") : c === "Germany" ? t("Germany", "Germania") : c} value={c === "Netherlands" ? t("Netherlands", "Olanda") : c === "Germany" ? t("Germany", "Germania") : c}>
+                  {c === "Netherlands" ? t("Netherlands", "Olanda") : c === "Germany" ? t("Germany", "Germania") : c}
                 </option>
               ))}
             </select>
@@ -167,9 +169,9 @@ function JobsPage() {
               value={city}
               onChange={(e) => setCity(e.target.value)}
               className="field"
-              aria-label="Filter by city"
+              aria-label={t(t("Filter by city", "Filtrează după oraș"), "Filtrează după oraș")}
             >
-              <option value="all">All cities</option>
+              <option value="all">{t(t("All cities", "Toate orașele"), "Toate orașele")}</option>
               {cityList
                 .filter(
                   (c) =>
@@ -177,8 +179,8 @@ function JobsPage() {
                     all.some((j) => j.city === c && j.country === country),
                 )
                 .map((c) => (
-                  <option key={c} value={c}>
-                    {c}
+                  <option key={c === "Netherlands" ? t("Netherlands", "Olanda") : c === "Germany" ? t("Germany", "Germania") : c} value={c === "Netherlands" ? t("Netherlands", "Olanda") : c === "Germany" ? t("Germany", "Germania") : c}>
+                    {c === "Netherlands" ? t("Netherlands", "Olanda") : c === "Germany" ? t("Germany", "Germania") : c}
                   </option>
                 ))}
             </select>
@@ -186,9 +188,9 @@ function JobsPage() {
               value={shift}
               onChange={(e) => setShift(e.target.value)}
               className="field"
-              aria-label="Filter by working hours"
+              aria-label={t(t("Filter by working hours", "Filtrează după programul de lucru"), "Filtrează după programul de lucru")}
             >
-              <option value="all">Any working hours</option>
+              <option value="all">{t(t("Any working hours", "Orice program de lucru"), "Orice program de lucru")}</option>
               {shiftTypes.map((s) => (
                 <option key={s} value={s}>
                   {s}
@@ -199,12 +201,12 @@ function JobsPage() {
               value={sort}
               onChange={(e) => setSort(e.target.value as Sort)}
               className="field"
-              aria-label="Sort jobs"
+              aria-label={t(t("Sort jobs", "Sortează joburile"), "Sortează joburile")}
             >
-              <option value="relevance">Sort: default</option>
-              <option value="pay">Sort: highest pay</option>
-              <option value="start">Sort: starting soonest</option>
-              <option value="openings">Sort: most openings</option>
+              <option value="relevance">{t(t("Sort: default", "Sortare: implicită"), "Sortare: implicită")}</option>
+              <option value="pay">{t(t("Sort: highest pay", "Sortare: cel mai mare salariu"), "Sortare: cel mai mare salariu")}</option>
+              <option value="start">{t(t("Sort: starting soonest", "Sortare: începere rapidă"), "Sortare: începere rapidă")}</option>
+              <option value=t("openings", "locuri libere")>{t(t("Sort: most openings", "Sortare: cele mai multe posturi"), "Sortare: cele mai multe posturi")}</option>
             </select>
             <label className="block">
               <span className="flex items-center justify-between text-xs font-semibold text-brand/60">
@@ -219,7 +221,7 @@ function JobsPage() {
                 value={pay}
                 onChange={(e) => setPay(Number(e.target.value))}
                 className="mt-3 w-full accent-[var(--accent)]"
-                aria-label="Minimum hourly pay"
+                aria-label={t(t("Minimum hourly pay", "Salariu orar minim"), "Salariu orar minim")}
               />
             </label>
           </div>
@@ -239,14 +241,14 @@ function JobsPage() {
                 onClick={reset}
                 className="ml-auto inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-semibold text-brand/60 transition-colors hover:text-accent"
               >
-                <X className="size-3.5" /> Clear {activeCount} filter
-                {activeCount === 1 ? "" : "s"}
+                <X className="size-3.5" /> {t("Clear", "Șterge")} {activeCount} {activeCount === 1 ? t("filter", "filtru") : t("filters", "filtre")}
+                
               </button>
             )}
           </div>
         </div>
         <p className="mt-4 text-xs font-semibold uppercase tracking-[0.18em] text-brand/45">
-          {results.length} {results.length === 1 ? "job" : "jobs"} available
+          {results.length} {results.length === 1 ? t("job available", "loc de muncă disponibil") : t("jobs available", "locuri de muncă disponibile")}
         </p>
       </section>
 
@@ -302,7 +304,7 @@ function JobsPage() {
       <section className="px-6 pb-16 md:px-8 lg:px-14">
         <div className="glass-card flex flex-col items-start gap-4 rounded-[2rem] p-8 md:flex-row md:items-center md:justify-between">
           <div>
-            <h2 className="font-display text-2xl font-bold">Don't see the right job?</h2>
+            <h2 className="font-display text-2xl font-bold">{t(t("Don't see the right job?", "Nu găsești jobul potrivit?"), "Nu găsești jobul potrivit?")}</h2>
             <p className="mt-2 text-sm text-brand/60">
               Leave your CV once — we'll match you to new vacancies as they open.
             </p>
