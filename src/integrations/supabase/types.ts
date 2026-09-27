@@ -220,6 +220,36 @@ export type Database = {
           },
         ]
       }
+      job_post_events: {
+        Row: {
+          action: string
+          city: string | null
+          country: string | null
+          created_at: string
+          id: string
+          job_slug: string | null
+          title: string
+        }
+        Insert: {
+          action: string
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          id?: string
+          job_slug?: string | null
+          title: string
+        }
+        Update: {
+          action?: string
+          city?: string | null
+          country?: string | null
+          created_at?: string
+          id?: string
+          job_slug?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
       job_posts: {
         Row: {
           benefits: string[]
