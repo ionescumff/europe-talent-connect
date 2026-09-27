@@ -304,6 +304,51 @@ export type Database = {
         }
         Relationships: []
       }
+      staff_notifications: {
+        Row: {
+          actor_email: string | null
+          actor_id: string | null
+          body: string | null
+          created_at: string
+          emailed: boolean
+          entity: string | null
+          entity_id: string | null
+          id: string
+          kind: string
+          read: boolean
+          title: string
+          user_id: string
+        }
+        Insert: {
+          actor_email?: string | null
+          actor_id?: string | null
+          body?: string | null
+          created_at?: string
+          emailed?: boolean
+          entity?: string | null
+          entity_id?: string | null
+          id?: string
+          kind?: string
+          read?: boolean
+          title: string
+          user_id: string
+        }
+        Update: {
+          actor_email?: string | null
+          actor_id?: string | null
+          body?: string | null
+          created_at?: string
+          emailed?: boolean
+          entity?: string | null
+          entity_id?: string | null
+          id?: string
+          kind?: string
+          read?: boolean
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       staff_profiles: {
         Row: {
           created_at: string
