@@ -15,3 +15,5 @@
 - [x] Employer message inbox (Contact page form → Admin Inbox tab)
 - [x] Admin dashboard: job post stats, quick candidate flagging
 - [x] Romanian version of candidate pages (EN/RO switch); employer sections stay English
+
+- [ ] Email alerts on lead assignment — blocked: needs sender email domain set up
