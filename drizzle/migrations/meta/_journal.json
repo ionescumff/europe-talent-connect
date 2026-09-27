@@ -64,6 +64,13 @@
       "when": 1790507754751,
       "tag": "0008_staff_notifications",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1790508543809,
+      "tag": "0009_job_post_events_feed",
+      "breakpoints": true
     }
   ]
 }

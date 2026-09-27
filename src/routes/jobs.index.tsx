@@ -4,6 +4,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { MapPin, Clock, Euro, Users, ArrowRight, Search, X } from "lucide-react";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
+import { JobFeed } from "@/components/site/JobFeed";
 import {
   jobs,
   jobSectors,
@@ -121,6 +122,8 @@ function JobsPage() {
           {t("Every listing shows pay, shifts, housing and transport before you apply. Open a job to see the full details — applying is always free for candidates.", "Fiecare anunț afișează salariul, turele, cazarea și transportul înainte de a aplica. Deschide un job pentru detalii complete — aplicarea este mereu gratuită pentru candidați.")}
         </p>
       </header>
+
+      <JobFeed />
 
       <section className="px-6 md:px-8 lg:px-14">
         <div className="glass-card space-y-5 rounded-[1.75rem] p-5 md:p-6">
