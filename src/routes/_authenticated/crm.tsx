@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { fetchMyRoles, isAdminRole, ROLE_LABELS, type Role } from "@/lib/crm";
 import { supabase } from "@/integrations/supabase/client";
 import { Logo } from "@/components/site/Logo";
+import { NotificationBell } from "@/components/crm/NotificationBell";
 
 export const Route = createFileRoute("/_authenticated/crm")({
   head: () => ({
