@@ -57,6 +57,13 @@
       "when": 1790462226211,
       "tag": "0007_employer_messages_and_flags",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1790507754751,
+      "tag": "0008_staff_notifications",
+      "breakpoints": true
     }
   ]
 }

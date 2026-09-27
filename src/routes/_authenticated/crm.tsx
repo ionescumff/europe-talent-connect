@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { fetchMyRoles, isAdminRole, ROLE_LABELS, type Role } from "@/lib/crm";
 import { supabase } from "@/integrations/supabase/client";
 import { Logo } from "@/components/site/Logo";
+import { NotificationBell } from "@/components/crm/NotificationBell";
 
 export const Route = createFileRoute("/_authenticated/crm")({
   head: () => ({
@@ -67,6 +68,7 @@ function CrmLayout() {
           <span className="text-muted-foreground">
             {user.email} · {roles.data?.map((r) => ROLE_LABELS[r as Role] ?? r).join(", ") || "no access"}
           </span>
+          <NotificationBell />
           <button onClick={handleSignOut} className="rounded-full border border-glass-border px-4 py-2 font-medium">
             Sign out
           </button>
