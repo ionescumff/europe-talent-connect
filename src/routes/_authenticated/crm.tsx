@@ -68,6 +68,7 @@ function CrmLayout() {
           <span className="text-muted-foreground">
             {user.email} · {roles.data?.map((r) => ROLE_LABELS[r as Role] ?? r).join(", ") || "no access"}
           </span>
+          <NotificationBell />
           <button onClick={handleSignOut} className="rounded-full border border-glass-border px-4 py-2 font-medium">
             Sign out
           </button>
