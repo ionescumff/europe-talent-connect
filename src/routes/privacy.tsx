@@ -51,7 +51,7 @@ function PrivacyPage() {
       </InformationSection>
       <InformationSection title={t("Contacting the controller", "Contactarea operatorului")}>
         <p>ION MAN WORKFORCE S.R.L., Strada Jimbolia 65, Romania · Trade Register J2022021461408 · Tax ID/VAT 47083118.</p>
-        <p>{t("Email:", "Email:")} <a href="mailto:contact@imworkforce.eu" className="font-semibold text-brand underline">contact@imworkforce.eu</a> · {t("Phone/WhatsApp:", "Telefon/WhatsApp:")} <a href="tel:+40741699011" className="font-semibold text-brand underline">+40 741 699 011</a>.</p>
+        <p>{t("Email:", "Email:")} <a href="mailto:contact@imworkforce.eu" className="font-semibold text-brand underline">contact@imworkforce.eu</a> · {t("Phone/WhatsApp:", "Telefon/WhatsApp:")} <a href="tel:+40741699011" className="font-semibold text-brand underline">+40 741 699 011</a> (<a href="https://wa.me/40741699011" target="_blank" rel="noopener noreferrer" className="font-semibold text-brand underline">WhatsApp</a>).</p>
       </InformationSection>
     </InformationPage>
   );
