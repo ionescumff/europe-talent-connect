@@ -26,7 +26,8 @@ export function Footer() {
           <div className="mt-3 flex flex-col items-start gap-2">
             <a href="mailto:contact@imworkforce.eu" className="hover:text-brand">contact@imworkforce.eu</a>
             <a href="mailto:recruitment@imworkforce.eu" className="hover:text-brand">recruitment@imworkforce.eu</a>
-            <a href="tel:+40741699011" className="hover:text-brand">+40 741 699 011 · Phone<br /><br />                                 WhatsApp</a>
+            <a href="tel:+40741699011" className="hover:text-brand">+40 741 699 011 · Phone</a>
+            <a href="https://wa.me/40741699011" target="_blank" rel="noopener noreferrer" className="hover:text-brand">WhatsApp</a>
           </div>
         </div>
         <div>
