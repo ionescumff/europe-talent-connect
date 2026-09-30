@@ -31,8 +31,8 @@ export function Hero() {
             style={{ animationDelay: "160ms" }}
           >
             {t(
-              "Dutch–Romanian roots, direct access in Romania and Netherlands. We source warehousing, production, logistics and construction support talent for the Netherlands & Germany — no fee ever charged to candidates.",
-              "Rădăcini olandezo-române, acces direct în România. Recrutăm personal pentru depozite, producție, logistică și construcții pentru Olanda și Germania — fără nicio taxă pentru candidați."
+              "Dutch–Romanian roots, direct access in Romania and the Netherlands. We source warehousing, production, logistics and construction support talent for employers in Germany and the Netherlands — no fee ever charged to candidates.",
+              "Rădăcini olandezo-române, acces direct în România și Olanda. Recrutăm personal pentru depozite, producție, logistică și construcții pentru angajatori din Germania și Olanda — fără nicio taxă pentru candidați."
             )}
           </p>
           <div
@@ -79,7 +79,7 @@ export function Hero() {
             <div className="font-display text-2xl font-bold leading-tight text-brand-foreground">
               {t("Direct access, no middlemen.", "Acces direct, fără intermediari.")}
             </div>
-            <ul className="flex flex-col gap-2.5">
+            <ul className="flex flex-col">
               {[
                 t("Vacancy brief", "Oferta de muncă"),
                 t("Search & screening", "Căutare și selecție"),
@@ -89,12 +89,22 @@ export function Hero() {
                 (step, i) => (
                   <li
                     key={step}
-                    className="flex items-center gap-3 border-t border-brand-foreground/10 pt-2.5 text-sm text-brand-foreground/85"
+                    className="border-t border-brand-foreground/10 pt-3 text-sm text-brand-foreground/85 last:pb-1"
                   >
-                    <span className="font-display text-xs font-bold text-accent">
-                      0{i + 1}
-                    </span>
-                    {step}
+                    <div className="flex items-center gap-3">
+                      <span className="font-display text-xs font-bold text-accent">
+                        0{i + 1}
+                      </span>
+                      {step}
+                    </div>
+                    {i < 3 && (
+                      <div
+                        className="ml-[5px] mt-1.5 text-xs leading-none text-accent/70"
+                        aria-hidden="true"
+                      >
+                        ↓
+                      </div>
+                    )}
                   </li>
                 ),
               )}
