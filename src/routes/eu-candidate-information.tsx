@@ -44,11 +44,11 @@ function EuCandidatePage() {
         <p>
           {lang === "ro" ? (
             <>
-              Întrebări despre un post vacant? Trimite un e-mail la <a href="mailto:recruitment@imworkforce.eu" className="font-semibold text-brand underline">recruitment@imworkforce.eu</a>, sună sau trimite un mesaj pe WhatsApp la <a href="tel:+40741699011" className="font-semibold text-brand underline">+40 741 699 011</a>, sau <Link to="/jobs" className="font-semibold text-brand underline">vezi locurile de muncă actuale</Link>.
+              Întrebări despre un post vacant? Trimite un e-mail la <a href="mailto:recruitment@imworkforce.eu" className="font-semibold text-brand underline">recruitment@imworkforce.eu</a>, sună sau trimite un mesaj pe WhatsApp la <a href="tel:+40741699011" className="font-semibold text-brand underline">+40 741 699 011</a> (<a href="https://wa.me/40741699011" target="_blank" rel="noopener noreferrer" className="font-semibold text-brand underline">deschide discuția WhatsApp</a>), sau <Link to="/jobs" className="font-semibold text-brand underline">vezi locurile de muncă actuale</Link>.
             </>
           ) : (
             <>
-              Questions about a vacancy? Email <a href="mailto:recruitment@imworkforce.eu" className="font-semibold text-brand underline">recruitment@imworkforce.eu</a>, call or WhatsApp <a href="tel:+40741699011" className="font-semibold text-brand underline">+40 741 699 011</a>, or <Link to="/jobs" className="font-semibold text-brand underline">view current jobs</Link>.
+              Questions about a vacancy? Email <a href="mailto:recruitment@imworkforce.eu" className="font-semibold text-brand underline">recruitment@imworkforce.eu</a>, call or WhatsApp <a href="tel:+40741699011" className="font-semibold text-brand underline">+40 741 699 011</a> (<a href="https://wa.me/40741699011" target="_blank" rel="noopener noreferrer" className="font-semibold text-brand underline">open WhatsApp chat</a>), or <Link to="/jobs" className="font-semibold text-brand underline">view current jobs</Link>.
             </>
           )}
         </p>

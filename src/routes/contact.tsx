@@ -38,7 +38,8 @@ function ContactPage() {
           <a href="mailto:recruitment@imworkforce.eu" className="font-semibold hover:underline">recruitment@imworkforce.eu</a>
         </ContactItem>
         <ContactItem icon={<Phone className="size-5" />} label={t("Phone & WhatsApp", "Telefon și WhatsApp")}>
-          <a href="tel:+40741699011" className="font-semibold hover:underline">+40 741 699 011</a>
+          <a href="tel:+40741699011" className="font-semibold hover:underline">+40 741 699 011</a> ·{" "}
+          <a href="https://wa.me/40741699011" target="_blank" rel="noopener noreferrer" className="font-semibold hover:underline">{t("WhatsApp", "WhatsApp")}</a>
         </ContactItem>
         <ContactItem icon={<MapPin className="size-5" />} label={t("Registered office", "Sediu social")}>
           <p className="font-semibold">Strada Jimbolia 65, Romania</p>
