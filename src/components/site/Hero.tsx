@@ -79,7 +79,7 @@ export function Hero() {
             <div className="font-display text-2xl font-bold leading-tight text-brand-foreground">
               {t("Direct access, no middlemen.", "Acces direct, fără intermediari.")}
             </div>
-            <ul className="flex flex-col gap-3.5">
+            <ul className="flex flex-col">
               {[
                 t("Vacancy brief", "Oferta de muncă"),
                 t("Search & screening", "Căutare și selecție"),
@@ -89,12 +89,22 @@ export function Hero() {
                 (step, i) => (
                   <li
                     key={step}
-                    className="flex items-center gap-3 border-t border-brand-foreground/10 pt-3 text-sm text-brand-foreground/85"
+                    className="border-t border-brand-foreground/10 pt-3 text-sm text-brand-foreground/85 last:pb-1"
                   >
-                    <span className="font-display text-xs font-bold text-accent">
-                      0{i + 1}
-                    </span>
-                    {step}
+                    <div className="flex items-center gap-3">
+                      <span className="font-display text-xs font-bold text-accent">
+                        0{i + 1}
+                      </span>
+                      {step}
+                    </div>
+                    {i < 3 && (
+                      <div
+                        className="ml-[5px] mt-1.5 text-xs leading-none text-accent/70"
+                        aria-hidden="true"
+                      >
+                        ↓
+                      </div>
+                    )}
                   </li>
                 ),
               )}
