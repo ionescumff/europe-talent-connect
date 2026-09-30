@@ -31,7 +31,7 @@ export function Hero() {
             style={{ animationDelay: "160ms" }}
           >
             {t(
-              "Dutch–Romanian roots, direct access in Romania. We source warehousing, production, logistics and construction support talent for the Netherlands & Germany — no fee ever charged to candidates.",
+              "Dutch–Romanian roots, direct access in Romania and Netherlands. We source warehousing, production, logistics and construction support talent for the Netherlands & Germany — no fee ever charged to candidates.",
               "Rădăcini olandezo-române, acces direct în România. Recrutăm personal pentru depozite, producție, logistică și construcții pentru Olanda și Germania — fără nicio taxă pentru candidați."
             )}
           </p>
