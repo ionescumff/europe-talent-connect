@@ -56,6 +56,7 @@ function ContactPage() {
       </InformationSection>
       <InformationSection title={t("Leadership", "Conducere")}>
         <p>{t("Co-founders: Yuri Manteleres and Matei Ionescu.", "Co-fondatori: Yuri Manteleres și Matei Ionescu.")}</p>
+        <p>{t("Matei Ionescu:", "Matei Ionescu:")} <a href="mailto:matei@vreaujobs.eu" className="font-semibold text-brand underline">matei@vreaujobs.eu</a></p>
         <p>{t("For partnerships and employer enquiries, write to", "Pentru parteneriate și solicitări din partea angajatorilor, scrieți la")} <a href="mailto:contact@vreaujobs.eu" className="font-semibold text-brand underline">contact@vreaujobs.eu</a>.</p>
       </InformationSection>
     </InformationPage>
