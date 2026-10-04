@@ -39,7 +39,7 @@ function TermsPage() {
       </InformationSection>
       <InformationSection title={t("Company and contact", "Companie și contact")}>
         <p>ION MAN WORKFORCE S.R.L., registered in Romania. Trade Register J2022021461408 · Tax ID/VAT 47083118.</p>
-        <p>{t("Questions:", "Întrebări:")} <a href="mailto:contact@imworkforce.eu" className="font-semibold text-brand underline">contact@imworkforce.eu</a> · <a href="tel:+40741699011" className="font-semibold text-brand underline">+40 741 699 011</a>.</p>
+        <p>{t("Questions:", "Întrebări:")} <a href="mailto:contact@vreaujobs.eu" className="font-semibold text-brand underline">contact@vreaujobs.eu</a> · <a href="tel:+40741699011" className="font-semibold text-brand underline">+40 741 699 011</a>.</p>
       </InformationSection>
     </InformationPage>
   );
