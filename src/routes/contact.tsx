@@ -32,10 +32,10 @@ function ContactPage() {
     >
       <section className="grid gap-4 sm:grid-cols-2">
         <ContactItem icon={<Mail className="size-5" />} label={t("General & employer enquiries", "Solicitări generale și angajatori")}>
-          <a href="mailto:contact@imworkforce.eu" className="font-semibold hover:underline">contact@imworkforce.eu</a>
+          <a href="mailto:contact@vreaujobs.eu" className="font-semibold hover:underline">contact@vreaujobs.eu</a>
         </ContactItem>
         <ContactItem icon={<Mail className="size-5" />} label={t("CVs & recruitment", "CV-uri și recrutare")}>
-          <a href="mailto:recruitment@imworkforce.eu" className="font-semibold hover:underline">recruitment@imworkforce.eu</a>
+          <a href="mailto:recruitment@vreaujobs.eu" className="font-semibold hover:underline">recruitment@vreaujobs.eu</a>
         </ContactItem>
         <ContactItem icon={<Phone className="size-5" />} label={t("Phone & WhatsApp", "Telefon și WhatsApp")}>
           <a href="tel:+40741699011" className="font-semibold hover:underline">+40 741 699 011</a> ·{" "}
@@ -56,7 +56,7 @@ function ContactPage() {
       </InformationSection>
       <InformationSection title={t("Leadership", "Conducere")}>
         <p>{t("Co-founders: Yuri Manteleres and Matei Ionescu.", "Co-fondatori: Yuri Manteleres și Matei Ionescu.")}</p>
-        <p>{t("For partnerships and employer enquiries, write to", "Pentru parteneriate și solicitări din partea angajatorilor, scrieți la")} <a href="mailto:contact@imworkforce.eu" className="font-semibold text-brand underline">contact@imworkforce.eu</a>.</p>
+        <p>{t("For partnerships and employer enquiries, write to", "Pentru parteneriate și solicitări din partea angajatorilor, scrieți la")} <a href="mailto:contact@vreaujobs.eu" className="font-semibold text-brand underline">contact@vreaujobs.eu</a>.</p>
       </InformationSection>
     </InformationPage>
   );
