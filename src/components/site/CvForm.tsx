@@ -3,7 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import { CheckCircle2, Paperclip } from "lucide-react";
 import { submitCv } from "@/lib/submissions.functions";
-import { getJob, type Job } from "@/lib/jobs";
+import { type Job } from "@/lib/jobs";
 import { Link } from "@tanstack/react-router";
 import { useLang } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";

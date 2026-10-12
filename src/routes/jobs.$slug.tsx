@@ -3,14 +3,15 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, Check } from "lucide-react";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
-import { getJob, jobs } from "@/lib/jobs";
+
 import { listPublishedJobs } from "@/lib/jobposts.functions";
 
 export const Route = createFileRoute("/jobs/$slug")({
   loader: async ({ params }) => {
-    const job = getJob(params.slug) ?? (await listPublishedJobs()).find((j) => j.slug === params.slug);
+    const published = await listPublishedJobs();
+    const job = published.find((j) => j.slug === params.slug);
     if (!job) throw notFound();
-    return { job };
+    return { job, published };
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
@@ -28,6 +29,7 @@ export const Route = createFileRoute("/jobs/$slug")({
         { property: "og:description", content: job.summary },
         { property: "og:type", content: "article" },
         { name: "twitter:card", content: "summary_large_image" },
+        ...(job.image?.startsWith("https://") ? [{ property: "og:image", content: job.image }, { name: "twitter:image", content: job.image }] : []),
       ],
     };
   },
@@ -39,7 +41,7 @@ export const Route = createFileRoute("/jobs/$slug")({
 function JobNotFound() {
   const { t } = useLang();
   return (
-    <div className="bg-page-glow min-h-screen text-brand">
+    <div className="public-site min-h-screen">
       <Nav />
       <div className="px-6 py-24 text-center md:px-8">
         <h1 className="font-display text-3xl font-extrabold">{t("This job is no longer listed", "Acest job nu mai este disponibil")}</h1>
@@ -58,8 +60,8 @@ function JobNotFound() {
 
 function JobDetail() {
   const { t } = useLang();
-  const { job } = Route.useLoaderData();
-  const related = jobs.filter((j) => j.slug !== job.slug && j.sector === job.sector).slice(0, 2);
+  const { job, published } = Route.useLoaderData();
+  const related = published.filter((j) => j.slug !== job.slug && j.sector === job.sector).slice(0, 2);
 
   const facts: [string, string][] = [
     ...(job.company ? [[t("Employer", "Angajator"), job.company] as [string, string]] : []),
@@ -75,7 +77,7 @@ function JobDetail() {
   ];
 
   return (
-    <div className="bg-page-glow relative min-h-screen overflow-x-clip text-brand">
+    <div className="public-site relative min-h-screen overflow-x-clip">
       <Nav />
 
       <div className="px-6 pt-4 md:px-8 lg:px-14">
@@ -166,7 +168,7 @@ function JobDetail() {
               {t("Apply — leave your CV", "Aplică — lasă CV-ul tău")}
             </a>
             <p className="mt-3 text-center text-xs text-brand/50">
-              {t("Free for candidates. Mention this job and we'll call you back.", "Gratuit pentru candidați. Menționează acest job și te vom sună înapoi.")}
+              {t("Free for candidates. Mention this job and we'll call you back.", "Gratuit pentru candidați. Menționează acest job și te vom suna înapoi.")}
             </p>
           </div>
 

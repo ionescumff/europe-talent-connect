@@ -1,12 +1,12 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Mail, MapPin, Phone, ShieldCheck, Info } from "lucide-react";
 import type { ReactNode } from "react";
 import { EmployerMessageForm } from "@/components/site/EmployerMessageForm";
 import { InformationPage, InformationSection } from "@/components/site/InformationPage";
 import { useLang } from "@/lib/i18n";
 
-const title = "Company & contact details — IONMAN Workforce";
-const description = "Registered company and contact details for ION MAN WORKFORCE S.R.L. in Romania.";
+const title = "Contact & Candidate Info — IONMAN Workforce";
+const description = "Company details for ION MAN WORKFORCE S.R.L. and essential information for EU workers.";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -16,7 +16,6 @@ export const Route = createFileRoute("/contact")({
       { property: "og:title", content: title },
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: ContactPage,
@@ -26,38 +25,50 @@ function ContactPage() {
   const { t } = useLang();
   return (
     <InformationPage 
-      eyebrow={t("Company information", "Informații despre companie")} 
-      title={t("Contact IONMAN Workforce", "Contactează IONMAN Workforce")} 
-      intro={t("Candidates, employers and staffing partners can reach the right member of our team using the details below.", "Candidații, angajatorii și partenerii de personal pot contacta membrul potrivit al echipei noastre folosind detaliile de mai jos.")}
+      eyebrow={t("Information Hub", "Centru de informații")} 
+      title={t("Connect with IONMAN Workforce", "Contactează IONMAN Workforce")} 
+      intro={t("Official company details and practical guidance for candidates and employers.", "Detalii oficiale despre companie și îndrumări practice pentru candidați și angajatori.")}
     >
       <section className="grid gap-4 sm:grid-cols-2">
-        <ContactItem icon={<Mail className="size-5" />} label={t("General & employer enquiries", "Solicitări generale și angajatori")}>
+        <ContactItem icon={<Mail className="size-5" />} label={t("General & Employers", "General și angajatori")}>
           <a href="mailto:contact@vreaujobs.eu" className="font-semibold hover:underline">contact@vreaujobs.eu</a>
         </ContactItem>
-        <ContactItem icon={<Mail className="size-5" />} label={t("CVs & recruitment", "CV-uri și recrutare")}>
-          <a href="mailto:recruitment@vreaujobs.eu" className="font-semibold hover:underline">recruitment@vreaujobs.eu</a>
+        <ContactItem icon={<Mail className="size-5" />} label={t("Recruitment", "Recrutare")}>
+          <a href="mailto:contact@vreaujobs.eu" className="font-semibold hover:underline">contact@vreaujobs.eu</a>
         </ContactItem>
         <ContactItem icon={<Phone className="size-5" />} label={t("Phone & WhatsApp", "Telefon și WhatsApp")}>
-          <a href="tel:+40741699011" className="font-semibold hover:underline">+40 741 699 011</a> ·{" "}
-          <a href="https://wa.me/40741699011" target="_blank" rel="noopener noreferrer" className="font-semibold hover:underline">{t("WhatsApp", "WhatsApp")}</a>
+          <a href="tel:+40741699011" className="font-semibold hover:underline">+40 741 699 011</a>
         </ContactItem>
-        <ContactItem icon={<MapPin className="size-5" />} label={t("Registered office", "Sediu social")}>
+        <ContactItem icon={<MapPin className="size-5" />} label={t("Registered Office", "Sediu social")}>
           <p className="font-semibold">Strada Jimbolia 65, Romania</p>
         </ContactItem>
       </section>
-      <EmployerMessageForm />
-      <InformationSection title={t("Registered business", "Afacere înregistrată")}>
-        <div className="grid gap-x-8 gap-y-3 sm:grid-cols-2">
-          <p><strong className="text-brand">{t("Legal name:", "Nume legal:")}</strong><br />ION MAN WORKFORCE S.R.L.</p>
-          <p><strong className="text-brand">{t("Country of registration:", "Țara de înregistrare:")}</strong><br />Romania</p>
-          <p><strong className="text-brand">{t("Trade Register number:", "Număr de înregistrare la Registrul Comerțului:")}</strong><br />J2022021461408</p>
-          <p><strong className="text-brand">{t("Tax ID / VAT number:", "Cod de identificare fiscală / TVA:")}</strong><br />47083118</p>
+
+      <div className="my-12 h-px bg-brand/10" />
+
+      <InformationSection title={t("EU Candidate Essentials", "Informații esențiale candidați UE")}>
+        <div className="rounded-xl bg-accent/5 p-6 border border-accent/10">
+          <div className="flex gap-3 mb-4">
+            <ShieldCheck className="size-6 text-accent shrink-0" />
+            <p className="text-sm font-semibold">{t("No fees for candidates", "Fără taxe pentru candidați")}</p>
+          </div>
+          <p className="text-sm leading-relaxed mb-4">
+            {t("As a Romanian citizen, you have the right to work in the EU. We never charge candidates for recruitment. Always confirm your contract terms, housing costs, and net pay before traveling.", "În calitate de cetățean român, aveți dreptul de a lucra în UE. Nu percepem niciodată taxe candidaților pentru recrutare. Confirmați întotdeauna condițiile contractuale, costurile de cazare și salariul net înainte de a călători.")}
+          </p>
+          <Link to="/privacy" className="text-xs font-bold text-accent uppercase tracking-wider hover:underline flex items-center gap-2">
+            <Info size={14} /> {t("Read our Privacy & Data terms", "Citește termenii de confidențialitate")}
+          </Link>
         </div>
       </InformationSection>
-      <InformationSection title={t("Leadership", "Conducere")}>
-        <p>{t("Co-founders: Yuri Manteleres and Matei Ionescu.", "Co-fondatori: Yuri Manteleres și Matei Ionescu.")}</p>
-        <p>{t("Matei Ionescu:", "Matei Ionescu:")} <a href="mailto:matei@vreaujobs.eu" className="font-semibold text-brand underline">matei@vreaujobs.eu</a></p>
-        <p>{t("For partnerships and employer enquiries, write to", "Pentru parteneriate și solicitări din partea angajatorilor, scrieți la")} <a href="mailto:contact@vreaujobs.eu" className="font-semibold text-brand underline">contact@vreaujobs.eu</a>.</p>
+
+      <EmployerMessageForm />
+
+      <InformationSection title={t("Legal Details", "Detalii legale")}>
+        <div className="grid gap-y-4 text-sm text-brand/70 sm:grid-cols-2">
+          <div><p className="font-bold text-brand uppercase text-[10px] tracking-widest">{t("Legal Entity", "Entitate legală")}</p><p>ION MAN WORKFORCE S.R.L.</p></div>
+          <div><p className="font-bold text-brand uppercase text-[10px] tracking-widest">{t("Registration", "Înregistrare")}</p><p>J2022021461408</p></div>
+          <div><p className="font-bold text-brand uppercase text-[10px] tracking-widest">{t("Tax ID", "Cod Fiscal")}</p><p>47083118</p></div>
+        </div>
       </InformationSection>
     </InformationPage>
   );

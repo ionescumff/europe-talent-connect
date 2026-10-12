@@ -73,8 +73,8 @@ export function rowToJob(r: Row): Job {
     slug: r.slug ?? r.id, title: r.title, sector: r.sector,
     country: (r.country === "Germany" ? "Germany" : "Netherlands"), city: r.city, pay: r.salary,
     contract: r.contract || "Discussed with your recruiter", schedule: r.schedule || "Discussed with your recruiter",
-    start: r.start_date || "To be confirmed", housing: r.housing || "Confirmed in the job brief",
-    transport: r.transport || "Confirmed in the job brief", language: r.language || "Basic English",
+    start: r.start_date || "To be confirmed", housing: r.housing || "Not specified",
+    transport: r.transport || "Not specified", language: r.language || "Not specified",
     openings: r.openings, summary: r.description || "", tasks: r.tasks, requirements: r.requirements, offer: r.benefits,
     image: r.image_url ?? undefined, company: r.company_name ?? undefined, companyDetails: r.company_details ?? undefined,
   };
