@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { CheckCircle2 } from "lucide-react";
 import { submitVacancy } from "@/lib/submissions.functions";
 import { Link } from "@tanstack/react-router";
+import { Button } from "@/components/ui/button";
 
 const points = [
   "Placement fee agreed before candidate selection",
@@ -45,7 +46,7 @@ export function VacancyForm() {
   return (
     <section id="employers" className="relative scroll-mt-24 px-6 pb-20 md:px-8 lg:px-14">
       <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr]">
-        <div className="glass-card rounded-[2rem] p-8 lg:p-10">
+        <div>
           <div className="font-display text-xs font-bold uppercase tracking-[0.2em] text-accent">
             For employers &amp; staffing agencies
           </div>
@@ -66,7 +67,7 @@ export function VacancyForm() {
           </ul>
         </div>
 
-        <div className="glass-card rounded-[2rem] p-8 lg:p-10">
+        <div>
           {done ? (
             <div className="flex h-full flex-col items-center justify-center gap-3 text-center">
               <CheckCircle2 className="size-10 text-accent" />
@@ -122,13 +123,13 @@ export function VacancyForm() {
                   I have read the <Link to="/privacy" className="font-semibold text-brand underline underline-offset-2">privacy notice</Link> and agree to be contacted about this enquiry.
                 </span>
               </label>
-              <button
+              <Button
                 type="submit"
                 disabled={busy}
                 className="h-12 w-full rounded-xl bg-accent font-semibold text-accent-foreground shadow-accent transition-transform hover:-translate-y-0.5 disabled:opacity-60"
               >
                 {busy ? "Sending…" : "Send vacancy brief"}
-              </button>
+              </Button>
             </form>
           )}
         </div>

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { LangSwitch, useLang } from "@/lib/i18n";
 import warehouse from "@/assets/test-workforce-hero.jpg";
 import production from "@/assets/test-workforce-production.jpg";
-import { TestCareerGallery } from "@/components/site/TestCareerGallery";
+import { TestCareerGallery } from "../components/site/TestCareerGallery";
 
 const title = "Inside IONMAN — Recruitment design test";
 const description = "Explore an editorial recruitment experience for Romanian candidates and employers in Germany and the Netherlands.";

@@ -17,7 +17,7 @@ export function InformationPage({
 }) {
   const { t } = useLang();
   return (
-    <div id="top" className="bg-page-glow min-h-screen text-brand">
+    <div id="top" className="public-site min-h-screen">
       <Nav />
       <main className="mx-auto max-w-5xl px-6 pb-20 pt-12 md:px-8 lg:pt-20">
         <Link to="/" className="text-sm font-semibold text-brand/60 transition-colors hover:text-brand">

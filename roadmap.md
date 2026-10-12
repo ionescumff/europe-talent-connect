@@ -4,7 +4,7 @@
 - [x] Admin panel: employees, roles (admin, co-founder, manager, associate, partner agency), managers, remove, performance, activity log
 - [x] Assignment page for candidates & employer leads
 - [x] "My work" page for staff (admins can view anyone's)
-- [ ] Manage job posts from the CRM (jobs still live in code; needs moving into the database)
+- [x] Manage job posts from the CRM; public listings use published records only
 - [x] Add discreet CRM access and verified business/contact details to footer
 - [x] Add Privacy, Terms, Contact, and EU candidate information pages
 - [x] Add privacy acknowledgement to candidate and employer forms
@@ -18,3 +18,6 @@
 
 - [ ] Email alerts on lead assignment — blocked: needs sender email domain set up
 - [x] Refine /test using the uploaded Inside LVMH career-advice reference; verify filters and article previews
+- [x] Replace public design with editorial style, simplify navigation, preserve CRM and existing URLs
+- [x] Review facts three times and exclude sample vacancies from the public website
+- [ ] Add German construction vacancies — blocked: employer identity and confirmed job conditions not supplied
