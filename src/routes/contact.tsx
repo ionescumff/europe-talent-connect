@@ -16,6 +16,7 @@ export const Route = createFileRoute("/contact")({
       { property: "og:title", content: title },
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: ContactPage,
@@ -38,6 +39,7 @@ function ContactPage() {
         </ContactItem>
         <ContactItem icon={<Phone className="size-5" />} label={t("Phone & WhatsApp", "Telefon și WhatsApp")}>
           <a href="tel:+40741699011" className="font-semibold hover:underline">+40 741 699 011</a>
+          <a href="https://wa.me/40741699011" target="_blank" rel="noopener noreferrer" className="ml-3 font-semibold underline">WhatsApp</a>
         </ContactItem>
         <ContactItem icon={<MapPin className="size-5" />} label={t("Registered Office", "Sediu social")}>
           <p className="font-semibold">Strada Jimbolia 65, Romania</p>
@@ -69,6 +71,10 @@ function ContactPage() {
           <div><p className="font-bold text-brand uppercase text-[10px] tracking-widest">{t("Registration", "Înregistrare")}</p><p>J2022021461408</p></div>
           <div><p className="font-bold text-brand uppercase text-[10px] tracking-widest">{t("Tax ID", "Cod Fiscal")}</p><p>47083118</p></div>
         </div>
+      </InformationSection>
+      <InformationSection title={t("Leadership", "Conducere")}>
+        <p>{t("Co-founders: Yuri Manteleres and Matei Ionescu.", "Co-fondatori: Yuri Manteleres și Matei Ionescu.")}</p>
+        <p>Matei Ionescu: <a href="mailto:matei@vreaujobs.eu" className="font-semibold underline">matei@vreaujobs.eu</a></p>
       </InformationSection>
     </InformationPage>
   );

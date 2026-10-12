@@ -12,10 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as EuCandidateInformationRouteImport } from './routes/eu-candidate-information'
 import { Route as PortalRouteImport } from './routes/portal'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as TestRouteImport } from './routes/test'
 import { Route as AuthenticatedCrmRouteImport } from './routes/_authenticated/crm'
 import { Route as JobsIndexRouteImport } from './routes/jobs.index'
 import { Route as JobsSlugRouteImport } from './routes/jobs.$slug'
@@ -41,6 +43,11 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EuCandidateInformationRoute = EuCandidateInformationRouteImport.update({
+  id: '/eu-candidate-information',
+  path: '/eu-candidate-information',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PortalRoute = PortalRouteImport.update({
   id: '/portal',
   path: '/portal',
@@ -59,6 +66,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TestRoute = TestRouteImport.update({
+  id: '/test',
+  path: '/test',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedCrmRoute = AuthenticatedCrmRouteImport.update({
@@ -117,10 +129,12 @@ const AuthenticatedCrmCandidatesIdRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
+  '/eu-candidate-information': typeof EuCandidateInformationRoute
   '/portal': typeof PortalRoute
   '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
   '/terms': typeof TermsRoute
+  '/test': typeof TestRoute
   '/crm': typeof AuthenticatedCrmRouteWithChildren
   '/jobs/$slug': typeof JobsSlugRoute
   '/jobs/': typeof JobsIndexRoute
@@ -135,10 +149,12 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
+  '/eu-candidate-information': typeof EuCandidateInformationRoute
   '/portal': typeof PortalRoute
   '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
   '/terms': typeof TermsRoute
+  '/test': typeof TestRoute
   '/jobs/$slug': typeof JobsSlugRoute
   '/jobs': typeof JobsIndexRoute
   '/crm/admin': typeof AuthenticatedCrmAdminRoute
@@ -154,10 +170,12 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/contact': typeof ContactRoute
+  '/eu-candidate-information': typeof EuCandidateInformationRoute
   '/portal': typeof PortalRoute
   '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
   '/terms': typeof TermsRoute
+  '/test': typeof TestRoute
   '/_authenticated/crm': typeof AuthenticatedCrmRouteWithChildren
   '/jobs/$slug': typeof JobsSlugRoute
   '/jobs/': typeof JobsIndexRoute
@@ -174,10 +192,12 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/contact'
+    | '/eu-candidate-information'
     | '/portal'
     | '/privacy'
     | '/reset-password'
     | '/terms'
+    | '/test'
     | '/crm'
     | '/jobs/$slug'
     | '/jobs/'
@@ -192,10 +212,12 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/contact'
+    | '/eu-candidate-information'
     | '/portal'
     | '/privacy'
     | '/reset-password'
     | '/terms'
+    | '/test'
     | '/jobs/$slug'
     | '/jobs'
     | '/crm/admin'
@@ -210,10 +232,12 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/contact'
+    | '/eu-candidate-information'
     | '/portal'
     | '/privacy'
     | '/reset-password'
     | '/terms'
+    | '/test'
     | '/_authenticated/crm'
     | '/jobs/$slug'
     | '/jobs/'
@@ -230,10 +254,12 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   ContactRoute: typeof ContactRoute
+  EuCandidateInformationRoute: typeof EuCandidateInformationRoute
   PortalRoute: typeof PortalRoute
   PrivacyRoute: typeof PrivacyRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   TermsRoute: typeof TermsRoute
+  TestRoute: typeof TestRoute
   JobsSlugRoute: typeof JobsSlugRoute
   JobsIndexRoute: typeof JobsIndexRoute
 }
@@ -259,6 +285,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/eu-candidate-information': {
+      id: '/eu-candidate-information'
+      path: '/eu-candidate-information'
+      fullPath: '/eu-candidate-information'
+      preLoaderRoute: typeof EuCandidateInformationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/portal': {
@@ -287,6 +320,13 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/test': {
+      id: '/test'
+      path: '/test'
+      fullPath: '/test'
+      preLoaderRoute: typeof TestRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/crm': {
@@ -400,10 +440,12 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   ContactRoute: ContactRoute,
+  EuCandidateInformationRoute: EuCandidateInformationRoute,
   PortalRoute: PortalRoute,
   PrivacyRoute: PrivacyRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   TermsRoute: TermsRoute,
+  TestRoute: TestRoute,
   JobsSlugRoute: JobsSlugRoute,
   JobsIndexRoute: JobsIndexRoute,
 }
