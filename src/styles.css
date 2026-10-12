@@ -261,21 +261,37 @@
 }
 .public-site h1, .public-site h2, .public-site h3, .public-site h4 { letter-spacing: 0; font-weight: 400; }
 .public-site .public-nav { background: var(--deep); color: var(--brand-foreground); min-height: 86px; }
-.public-wordmark { font-family: var(--font-display); font-size: 23px; font-weight: 600; line-height: 1.1; }
-.public-wordmark span { display: block; margin-top: 4px; font-size: 10px; font-weight: 400; }
-.public-site .public-cta { background: var(--accent); color: var(--accent-foreground); border: 1px solid var(--accent); box-shadow: none; }
-.public-site .public-cta:hover { background: var(--brand-foreground); color: var(--deep); }
+.public-nav nav a { letter-spacing: 0.14em; position: relative; padding-bottom: 4px; transition: color 180ms ease; }
+.public-nav nav a::after { content: ''; position: absolute; left: 0; bottom: 0; height: 1px; width: 100%; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 220ms ease; }
+.public-nav nav a:hover { color: var(--accent); }
+.public-nav nav a:hover::after, .public-nav nav a[aria-current="page"]::after { transform: scaleX(1); }
+.public-wordmark { font-family: var(--font-display); font-size: 23px; font-weight: 600; line-height: 1.1; letter-spacing: 0.02em; }
+.public-wordmark span { display: block; margin-top: 4px; font-size: 10px; font-weight: 400; letter-spacing: 0.34em; color: var(--public-dim); }
+.public-site .public-cta { background: var(--accent); color: var(--accent-foreground); border: 1px solid var(--accent); box-shadow: none; letter-spacing: 0.1em; text-transform: uppercase; font-size: 12px; transition: background 180ms ease, color 180ms ease; }
+.public-site .public-cta:hover { background: var(--brand-foreground); color: var(--deep); border-color: var(--brand-foreground); }
 .public-site .public-menu { color: var(--brand-foreground); border-radius: 0; }
 .public-site .public-menu:hover { background: var(--glass); color: var(--brand); }
-.public-mobile-nav { background: var(--deep); color: var(--brand-foreground); }
+.public-mobile-nav { background: var(--deep); color: var(--brand-foreground); letter-spacing: 0.08em; }
+.public-mobile-nav a:hover { color: var(--accent); }
 .public-nav [role="group"] { color: var(--brand-foreground); }
+.public-eyebrow { letter-spacing: 0.22em; font-weight: 500; }
 .public-hero { height: min(720px, 76svh); min-height: 510px; color: var(--brand-foreground); }
-.public-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, var(--public-overlay), transparent 100%); pointer-events: none; }
+.public-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, var(--public-overlay) 0%, oklch(0.13 0.008 260 / 0.55) 55%, transparent 100%); pointer-events: none; }
 .public-hero img { object-position: center; }
+.public-hero h1 { letter-spacing: 0.01em; }
+.public-hero-copy > p:first-child { letter-spacing: 0.22em; color: var(--accent); }
+.public-scroll { color: var(--brand-foreground); opacity: 0.75; transition: opacity 180ms ease, transform 220ms ease; }
+.public-scroll:hover { opacity: 1; transform: translateY(3px); }
 .public-dark-band { background: var(--deep); color: var(--brand-foreground); }
+.public-dark-band a:hover { color: var(--accent); }
+.public-dark-band article img { transition: opacity 220ms ease; }
+.public-dark-band article:hover img { opacity: 0.88; }
 .public-dim { color: var(--public-dim); }
 .public-muted { color: var(--muted-foreground); }
 .public-process { background: var(--glass); }
+.public-process li { border-color: var(--border); }
+.public-process li > div span { letter-spacing: 0.12em; }
+.public-process li > div svg { color: var(--muted-foreground); }
 .public-site .glass-card { border-radius: 6px; box-shadow: none; backdrop-filter: none; }
 .public-site .field { border-radius: 0; background: var(--background); border-color: var(--border); }
 .public-site #cv, .public-site #employers { padding: 64px max(24px, calc((100% - 1152px) / 2)); }
@@ -291,10 +307,15 @@
 .public-site footer a:hover { color: var(--accent); }
 .public-site .public-job { transition: border-color 180ms ease; }
 .public-site .public-job:hover { border-color: var(--brand); }
+.public-site .public-job img { transition: transform 400ms ease; }
+.public-site .public-job:hover img { transform: scale(1.02); }
+.public-site .public-job > span { color: var(--brand); }
+.public-site .public-job:hover > span { color: oklch(0.45 0.09 166); }
+.public-site a:focus-visible, .public-site button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 @media (max-width: 767px) {
   .public-hero { height: min(650px, 78svh); min-height: 500px; padding-bottom: 48px; }
   .public-hero img { object-position: 64% center; }
-  .public-hero::after { background: linear-gradient(0deg, var(--public-overlay), oklch(0.13 0.008 260 / 0.38)); }
+  .public-hero::after { background: linear-gradient(0deg, var(--public-overlay) 20%, oklch(0.13 0.008 260 / 0.45) 60%, oklch(0.13 0.008 260 / 0.25) 100%); }
   .public-site #cv h2, .public-site #employers h2 { font-size: 28px; }
   .public-wordmark { font-size: 20px; }
 }
