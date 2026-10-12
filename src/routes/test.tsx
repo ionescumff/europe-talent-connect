@@ -26,8 +26,8 @@ function TestPage() {
   const slides = [
     { image: warehouse, alt: t("Warehouse professionals working together", "Profesioniști într-un depozit"), title: t("Welcome to IONMAN Workforce", "Bine ai venit la IONMAN Workforce"), text: t("Discover opportunities across Europe. Bring your experience, explore a new direction and take your next career step in Germany or the Netherlands.", "Descoperă oportunități în Europa. Valorifică-ți experiența și fă următorul pas în carieră în Germania sau Olanda.") },
     { image: production, alt: t("Technicians inspecting a component", "Tehnicieni verificând o componentă"), title: t("Your experience. New possibilities.", "Experiența ta. Noi posibilități."), text: t("From warehousing and logistics to production and construction support, connect with roles that match your skills. Recruitment is always free for candidates.", "De la depozite și logistică la producție și construcții, găsește roluri potrivite abilităților tale. Recrutarea este întotdeauna gratuită pentru candidați.") },
-  ];
-  const current = slides[slide];
+  ] as const;
+  const current = slides[slide] ?? slides[0];
   const stories = [
     { image: warehouse, category: t("WAREHOUSING & LOGISTICS", "DEPOZITE ȘI LOGISTICĂ"), title: t("A new direction in the Netherlands", "Un nou început în Olanda"), text: t("Explore warehouse, order fulfilment and logistics opportunities.", "Explorează oportunități în depozite, pregătirea comenzilor și logistică.") },
     { image: production, category: t("PRODUCTION & PACKING", "PRODUCȚIE ȘI AMBALARE"), title: t("Put your skills to work in Germany", "Valorifică-ți abilitățile în Germania"), text: t("Discover production, packing and food industry roles.", "Descoperă roluri în producție, ambalare și industria alimentară.") },
@@ -45,7 +45,7 @@ function TestPage() {
         <div className="flex items-center gap-3">
           <LangSwitch />
           <Link to="/portal" className="hidden items-center gap-2 border-l test-divider pl-4 text-xs sm:flex"><UserRound size={16} />Staff login</Link>
-          <Button variant="ghost" size="icon" className="lg:hidden hover:bg-brand" aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X /> : <Menu />}</Button>
+          <Button variant="ghost" size="icon" className="test-icon lg:hidden" aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X /> : <Menu />}</Button>
         </div>
         {menuOpen && <nav aria-label="Mobile navigation" className="absolute top-full inset-x-0 flex flex-col gap-5 bg-deep px-6 py-6 text-sm lg:hidden">
           <Link to="/jobs">{t("Jobs & careers", "Locuri de muncă")}</Link>
