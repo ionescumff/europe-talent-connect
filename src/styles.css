@@ -230,7 +230,7 @@
   .test-header { min-height: 72px; }
   .test-hero { height: 580px; min-height: 0; }
   .test-hero::after { background: linear-gradient(0deg, var(--test-overlay) 25%, oklch(1 0 0 / 0.55) 62%, transparent 100%); }
-  .test-hero-copy { align-self: end; padding-bottom: 90px; }
+  .test-hero-copy { align-self: end; margin-inline: -24px; background: var(--test-background); padding: 22px 24px 96px; }
 }
 @media (prefers-reduced-motion: reduce) { .test-story-image { transition: none; } }
 
