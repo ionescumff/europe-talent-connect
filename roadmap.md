@@ -18,3 +18,6 @@
 
 - [ ] Email alerts on lead assignment — blocked: needs sender email domain set up
 - [x] Refine /test using the uploaded Inside LVMH career-advice reference; verify filters and article previews
+- [ ] Replace public design with editorial style, simplify navigation, preserve CRM and existing URLs
+- [ ] Review facts three times and exclude sample vacancies from the public website
+- [ ] Add German construction vacancies — blocked: employer identity and confirmed job conditions not supplied

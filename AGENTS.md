@@ -9,5 +9,5 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 
-- Keep the Inside LVMH-inspired experiment isolated at `/test` with scoped editorial styles, so testing never replaces or restyles the published homepage.
+- Apply the approved editorial design through a scoped public-site wrapper; preserve CRM styling and retain `/test` as a separate experiment.
 - Keep the test career-advice gallery in its own browser-safe component; reference spreadsheets inform the layout rather than importing third-party stories or claims.
