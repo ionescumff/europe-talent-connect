@@ -21,3 +21,4 @@
 - [x] Replace public design with editorial style, simplify navigation, preserve CRM and existing URLs
 - [x] Review facts three times and exclude sample vacancies from the public website
 - [ ] Add German construction vacancies — blocked: employer identity and confirmed job conditions not supplied
+- [ ] CRM: import job posts and candidates from a Google Sheet (user-provided sheet URL)
