@@ -63,7 +63,7 @@ function TestPage() {
         <section className="test-hero relative flex items-center overflow-hidden px-6 md:px-12 lg:px-16" aria-roledescription="carousel" aria-label={t("Career opportunities", "Oportunități de carieră")}>
           <img src={current.image} alt={current.alt} width={1920} height={1024} className="absolute inset-0 h-full w-full object-cover object-center" />
           <div className="test-hero-copy" aria-live="polite">
-            <p className="mb-5 text-[11px] font-medium uppercase tracking-[0.16em]">{t("Romanian talent. European opportunities.", "Talent românesc. Oportunități europene.")}</p>
+            <p className="mb-5 text-[11px] font-medium uppercase tracking-[0.16em]">{t("LOOKING FOR EASTERN. EUROPEAN TALENT?", "Talent românesc. Oportunități europene.")}</p>
             <h1 className="text-3xl leading-snug md:text-4xl">{current.title}</h1>
             <p className="mt-5 max-w-sm text-sm leading-7">{current.text}</p>
             <Button asChild variant="outline" className="test-outline mt-8 h-12 px-6 text-xs uppercase"><a href="/#cv">{t("Leave your CV", "Depune CV-ul")}<ArrowRight /></a></Button>
