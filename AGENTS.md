@@ -10,3 +10,4 @@
 <!-- LOVABLE:END -->
 
 - Keep the Inside LVMH-inspired experiment isolated at `/test` with scoped editorial styles, so testing never replaces or restyles the published homepage.
+- Keep the test career-advice gallery in its own browser-safe component; reference spreadsheets inform the layout rather than importing third-party stories or claims.
