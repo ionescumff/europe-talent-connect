@@ -49,7 +49,7 @@ function TestPage() {
           <Link to="/portal" className="hidden items-center gap-2 border-l test-divider pl-4 text-xs sm:flex"><UserRound size={16} />Staff login</Link>
           <Button variant="ghost" size="icon" className="test-icon lg:hidden" aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X /> : <Menu />}</Button>
         </div>
-        {menuOpen && <nav aria-label="Mobile navigation" className="absolute top-full inset-x-0 flex flex-col gap-5 bg-deep px-6 py-6 text-sm lg:hidden">
+        {menuOpen && <nav aria-label="Mobile navigation" className="test-mobile-nav absolute top-full inset-x-0 flex flex-col gap-5 px-6 py-6 text-sm lg:hidden">
           <Link to="/jobs">{t("Jobs & careers", "Locuri de muncă")}</Link>
           <Link to="/eu-candidate-information">{t("Working in Europe", "Munca în Europa")}</Link>
           <a href="#career-insights" onClick={() => setMenuOpen(false)}>{t("Career advice", "Sfaturi de carieră")}</a>
