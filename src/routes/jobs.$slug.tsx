@@ -73,7 +73,7 @@ function JobDetail() {
     [t("Housing", "Cazare"), job.housing],
     [t("Transport", "Transport"), job.transport],
     [t("Language", "Limbă"), job.language],
-    [t("Openings", "Locuri libere"), String(job.openings)],
+    [t("Openings", "Locuri libere"), job.openings],
   ];
 
   return (
