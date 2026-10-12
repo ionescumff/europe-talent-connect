@@ -176,3 +176,44 @@
     box-shadow: 0 0 0 2px var(--accent);
   }
 }
+
+/* Isolated editorial test: never changes the production site's theme. */
+.editorial-test {
+  --test-background: oklch(0.19 0.045 260);
+  --test-foreground: oklch(0.99 0.003 250);
+  --test-muted: oklch(0.8 0.015 250);
+  --test-surface: oklch(0.975 0.006 250);
+  --test-ink: var(--brand);
+  --test-line: oklch(0.99 0.003 250 / 0.24);
+  --test-overlay: oklch(0.19 0.045 260 / 0.88);
+  --test-shadow: 0 8px 32px oklch(0.1 0.02 260 / 0.18);
+  background: var(--test-background);
+  color: var(--test-foreground);
+  letter-spacing: 0;
+}
+.editorial-test h1, .editorial-test h2, .editorial-test h3 { letter-spacing: 0; }
+.test-header { min-height: 80px; border-bottom: 1px solid var(--test-line); }
+.test-wordmark { font-family: var(--font-display); font-weight: 400; line-height: 1.05; }
+.test-wordmark span { display: block; font-size: 12px; margin-top: 5px; letter-spacing: 0.14em; }
+.test-hero { height: min(680px, 76svh); min-height: 460px; }
+.test-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, var(--test-overlay), transparent 80%); pointer-events: none; }
+.test-hero-copy { position: relative; z-index: 1; max-width: 470px; }
+.test-hero-copy h1 { font-weight: 400; }
+.test-light { background: var(--test-surface); color: var(--test-ink); }
+.test-outline { border: 1px solid currentColor; background: transparent; color: inherit; border-radius: 0; box-shadow: none; }
+.test-outline:hover { background: var(--test-foreground); color: var(--test-ink); }
+.test-light .test-outline:hover { background: var(--test-ink); color: var(--test-foreground); }
+.test-icon { background: var(--test-surface); color: var(--test-ink); border-radius: 0; }
+.test-icon:hover { background: var(--glass); color: var(--test-ink); }
+.test-muted { color: var(--test-muted); }
+.test-divider { border-color: var(--test-line); }
+.test-story-image { transition: transform 450ms ease; }
+.test-story:hover .test-story-image { transform: scale(1.035); }
+.test-contact { background: var(--test-surface); color: var(--test-ink); box-shadow: var(--test-shadow); }
+@media (max-width: 767px) {
+  .test-header { min-height: 72px; }
+  .test-hero { height: 580px; min-height: 0; }
+  .test-hero::after { background: linear-gradient(0deg, var(--test-overlay), transparent 100%); }
+  .test-hero-copy { align-self: end; padding-bottom: 90px; }
+}
+@media (prefers-reduced-motion: reduce) { .test-story-image { transition: none; } }
