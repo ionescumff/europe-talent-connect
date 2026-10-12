@@ -17,3 +17,4 @@
 - [x] Romanian version of candidate pages (EN/RO switch); employer sections stay English
 
 - [ ] Email alerts on lead assignment — blocked: needs sender email domain set up
+- [x] Refine /test using the uploaded Inside LVMH career-advice reference; verify filters and article previews

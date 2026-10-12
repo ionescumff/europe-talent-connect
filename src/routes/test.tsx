@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { LangSwitch, useLang } from "@/lib/i18n";
 import warehouse from "@/assets/test-workforce-hero.jpg";
 import production from "@/assets/test-workforce-production.jpg";
+import { TestCareerGallery } from "@/components/site/TestCareerGallery";
 
 const title = "Inside IONMAN — Recruitment design test";
 const description = "Explore an editorial recruitment experience for Romanian candidates and employers in Germany and the Netherlands.";
@@ -39,6 +40,7 @@ function TestPage() {
         <nav aria-label="Main navigation" className="hidden items-center gap-7 text-[11px] font-medium uppercase lg:flex">
           <Link to="/jobs">{t("Jobs & careers", "Locuri de muncă")}</Link>
           <Link to="/eu-candidate-information">{t("Working in Europe", "Munca în Europa")}</Link>
+          <a href="#career-insights">{t("Career advice", "Sfaturi de carieră")}</a>
           <Link to="/contact">For employers</Link>
           <a href="/#cv">{t("Leave your CV", "Depune CV-ul")}</a>
         </nav>
@@ -50,6 +52,7 @@ function TestPage() {
         {menuOpen && <nav aria-label="Mobile navigation" className="absolute top-full inset-x-0 flex flex-col gap-5 bg-deep px-6 py-6 text-sm lg:hidden">
           <Link to="/jobs">{t("Jobs & careers", "Locuri de muncă")}</Link>
           <Link to="/eu-candidate-information">{t("Working in Europe", "Munca în Europa")}</Link>
+          <a href="#career-insights" onClick={() => setMenuOpen(false)}>{t("Career advice", "Sfaturi de carieră")}</a>
           <Link to="/contact">For employers</Link>
           <a href="/#cv">{t("Leave your CV", "Depune CV-ul")}</a>
           <Link to="/portal">Staff login</Link>
@@ -73,7 +76,7 @@ function TestPage() {
         </section>
 
         <section className="px-6 py-9 md:px-12 lg:px-16">
-          <div className="test-light mx-auto flex max-w-5xl flex-col items-center gap-6 px-6 py-10 text-center md:px-14">
+          <div className="mx-auto flex max-w-5xl flex-col items-center gap-6 px-6 py-10 text-center md:px-14">
             <h2 className="text-xl font-normal leading-relaxed md:text-2xl">{t("Your next opportunity starts with a conversation.", "Următoarea oportunitate începe cu o conversație.")}</h2>
             <p className="max-w-xl text-sm leading-6">{t("Leave your CV and our Romanian team will contact you. No recruitment fee is ever charged to candidates.", "Depune CV-ul și echipa noastră din România te va contacta. Nu percepem niciodată taxe de recrutare candidaților.")}</p>
             <Button asChild variant="outline" className="test-outline h-12 px-8 text-xs uppercase"><a href="/#cv">{t("Connect with our team", "Contactează echipa noastră")}<ArrowRight /></a></Button>
@@ -94,6 +97,8 @@ function TestPage() {
             </Link>)}
           </div>
         </section>
+
+        <TestCareerGallery />
 
         <section className="test-light mt-8 px-6 py-16 md:px-12 lg:px-16">
           <div className="mx-auto max-w-6xl">
