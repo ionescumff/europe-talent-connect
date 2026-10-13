@@ -39,7 +39,7 @@ export function Sectors() {
       <div className="mb-5 font-display text-xs font-bold uppercase tracking-[0.2em] text-brand/50">
         {t("Sectors we staff", "Sectoare în care recrutăm")}
       </div>
-      <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-2 md:overflow-visible md:px-0 lg:grid-cols-4">
+      <div className="-mx-6 flex snap-x snap-mandatory scroll-pl-6 gap-4 overflow-x-auto px-6 pb-2 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-2 md:overflow-visible md:px-0 lg:grid-cols-4">
         {sectors.map((s, i) => {
           const isOpen = open === s.n;
           return (
