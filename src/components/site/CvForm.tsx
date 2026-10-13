@@ -7,7 +7,7 @@ import { getJob, type Job } from "@/lib/jobs";
 import { Link } from "@tanstack/react-router";
 import { useLang } from "@/lib/i18n";
 
-export function CvForm() {
+export function CvForm({ availableJobs = [] }: { availableJobs?: Job[] }) {
   const { t } = useLang();
   const send = useServerFn(submitCv);
   const formRef = useRef<HTMLFormElement>(null);
@@ -18,9 +18,10 @@ export function CvForm() {
 
   useEffect(() => {
     const slug = new URLSearchParams(window.location.search).get("job");
-    const j = slug ? getJob(slug) : undefined;
+    if (!slug) return;
+    const j = availableJobs.find((j) => j.slug === slug) ?? getJob(slug);
     if (j) setJob(j);
-  }, []);
+  }, [availableJobs]);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
