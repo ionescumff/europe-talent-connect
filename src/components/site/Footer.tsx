@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-
+import { Logo } from "./Logo";
 import { useLang } from "@/lib/i18n";
 
 export function Footer() {
@@ -9,7 +9,7 @@ export function Footer() {
     <footer className="relative border-t border-brand/10 px-6 py-10 text-sm text-brand/60 md:px-8 lg:px-14">
       <div className="grid gap-8 md:grid-cols-[1.35fr_1fr_1fr]">
         <div>
-          <Link to="/" className="public-wordmark">IONMAN<span>WORKFORCE</span></Link>
+          <Logo small />
           <p className="mt-4 max-w-sm leading-6">
             {t(
               "European workforce recruitment from Romania for employers and staffing partners in the Netherlands and Germany.",
@@ -25,7 +25,7 @@ export function Footer() {
           <p className="font-display text-xs font-bold uppercase tracking-[0.16em] text-brand">{t("Contact", "Contact")}</p>
           <div className="mt-3 flex flex-col items-start gap-2">
             <a href="mailto:contact@vreaujobs.eu" className="hover:text-brand">contact@vreaujobs.eu</a>
-            <a href="mailto:matei@vreaujobs.eu" className="hover:text-brand">matei@vreaujobs.eu</a>
+            <a href="mailto:recruitment@vreaujobs.eu" className="hover:text-brand">recruitment@vreaujobs.eu</a>
             <a href="tel:+40741699011" className="hover:text-brand">+40 741 699 011 · Phone</a>
             <a href="https://wa.me/40741699011" target="_blank" rel="noopener noreferrer" className="hover:text-brand">WhatsApp</a>
           </div>

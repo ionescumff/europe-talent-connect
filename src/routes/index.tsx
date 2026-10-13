@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Nav } from "@/components/site/Nav";
-import { EditorialHome } from "@/components/site/EditorialHome";
-import { listPublishedJobs } from "@/lib/jobposts.functions";
+import { Hero } from "@/components/site/Hero";
+import { Sectors } from "@/components/site/Sectors";
+import { Process } from "@/components/site/Process";
 import { CvForm } from "@/components/site/CvForm";
 import { VacancyForm } from "@/components/site/VacancyForm";
 import { Footer } from "@/components/site/Footer";
@@ -21,20 +22,18 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  loader: () => listPublishedJobs(),
   component: Index,
 });
 
 function Index() {
-  const jobs = Route.useLoaderData();
   return (
-    <div id="top" className="public-site relative min-h-screen overflow-x-clip">
+    <div id="top" className="bg-page-glow relative min-h-screen overflow-x-clip text-brand">
       <Nav />
-      <main>
-      <EditorialHome jobs={jobs} />
-      <CvForm availableJobs={jobs} />
+      <Hero />
+      <Sectors />
+      <Process />
+      <CvForm />
       <VacancyForm />
-      </main>
       <Footer />
     </div>
   );
