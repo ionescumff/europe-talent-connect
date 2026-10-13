@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { CANDIDATE_STATUSES, fetchTeam, memberName } from "@/lib/crm";
 import { matchCandidate, type MatchResult } from "@/lib/match.functions";
 import { getJob, suggestedJobs } from "@/lib/jobs";
+import { CandidateCvUpload } from "@/components/crm/CandidateCvUpload";
 
 export const Route = createFileRoute("/_authenticated/crm/candidates/$id")({
   component: CandidateDetail,
@@ -21,6 +22,11 @@ function CandidateDetail() {
   const [kind, setKind] = useState("note");
   const [result, setResult] = useState<MatchResult | null>(null);
   const team = useQuery({ queryKey: ["team"], queryFn: fetchTeam });
+  const editable = useQuery({ queryKey: ["candidate-editable", id], queryFn: async () => {
+    const { data, error } = await supabase.rpc("can_edit_candidate", { _user_id: user.id, _candidate: id });
+    if (error) throw error;
+    return data;
+  } });
 
   const cand = useQuery({
     queryKey: ["candidate", id],
@@ -86,7 +92,7 @@ function CandidateDetail() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr_1.2fr]">
-      <div className="space-y-6">
+      <div className="min-w-0 space-y-6">
         <Link to="/crm" className="text-sm text-muted-foreground hover:text-accent">← All candidates</Link>
         <section className="glass-card space-y-4 p-6">
           <h1 className="font-display text-2xl font-bold">{c.full_name}</h1>
@@ -100,6 +106,7 @@ function CandidateDetail() {
             <Item k="Assigned to" v={memberName(team.data, c.assigned_to)} />
             <Item k="CV" v={c.cv_path ? <button onClick={openCv} className="font-semibold text-accent underline">{c.cv_filename ?? "Open"}</button> : "—"} />
           </dl>
+          {editable.data && <CandidateCvUpload id={id} hasCv={!!c.cv_path} />}
           {c.message && <p className="rounded-xl bg-glass p-3 text-sm">{c.message}</p>}
           <div className="grid grid-cols-2 gap-3">
             <label className="text-xs font-semibold uppercase text-muted-foreground">
@@ -153,7 +160,7 @@ function CandidateDetail() {
         </section>
       </div>
 
-      <div className="space-y-6 lg:mt-9">
+      <div className="min-w-0 space-y-6 lg:mt-9">
       <section className="glass-card space-y-4 p-6">
         <div>
           <h2 className="font-display text-lg font-bold">Suggested vacancies</h2>
@@ -177,7 +184,7 @@ function CandidateDetail() {
         </ul>
       </section>
       <section className="glass-card h-fit space-y-4 p-6">
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
             <h2 className="font-display text-lg font-bold">Best job matches</h2>
             <p className="text-sm text-muted-foreground">AI reads the CV (PDF) and profile and ranks the open jobs.</p>

@@ -71,6 +71,13 @@
       "when": 1790508543809,
       "tag": "0009_job_post_events_feed",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1791912801785,
+      "tag": "0010_synchronize_job_applicants",
+      "breakpoints": true
     }
   ]
 }

@@ -6,6 +6,7 @@ import * as XLSX from "xlsx";
 import { supabase } from "@/integrations/supabase/client";
 import { fetchMyRoles, isAdminRole } from "@/lib/crm";
 import { extractJobPosts, type JobDraft } from "@/lib/jobposts.functions";
+import { CandidateImport } from "@/components/crm/CandidateImport";
 
 export const Route = createFileRoute("/_authenticated/crm/jobs")({
   head: () => ({ meta: [{ title: "Job posts — CRM" }, { name: "robots", content: "noindex, nofollow" }] }),
@@ -181,6 +182,8 @@ function JobsManager() {
         {importError && <p className="mt-3 text-sm text-destructive">{importError}</p>}
       </section>
 
+      <CandidateImport />
+
       {/* AI previews */}
       {drafts.length > 0 && (
         <section className="space-y-4">
@@ -237,7 +240,7 @@ function JobsManager() {
                     </button>
                     {j.published && j.slug && j.status === "open" && <a href={`/jobs/${j.slug}`} target="_blank" rel="noreferrer" className="ml-2 text-xs underline">View</a>}
                   </td>
-                  <td className="p-3"><button onClick={() => setOpenId(open ? null : j.id)} className="underline">{linked.size} linked</button></td>
+                  <td className="p-3"><Link to="/crm/applicants/$jobId" params={{ jobId: j.id }} className="block font-semibold underline">{linked.size} applicants / linked</Link><button onClick={() => setOpenId(open ? null : j.id)} className="mt-2 text-xs underline">Link candidates</button></td>
                   <td className="p-3">
                     <div className="flex justify-end gap-2">
                       <button onClick={() => patch.mutate({ id: j.id, v: { status: j.status === "open" ? "closed" : "open" } })} className="rounded-full border border-glass-border px-3 py-1">{j.status === "open" ? "Close" : "Reopen"}</button>

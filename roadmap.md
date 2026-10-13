@@ -21,7 +21,10 @@
 - [x] Replace public design with editorial style, simplify navigation, preserve CRM and existing URLs
 - [x] Review facts three times and exclude sample vacancies from the public website
 - [ ] Add German construction vacancies — blocked: employer identity and confirmed job conditions not supplied
-- [ ] CRM: import job posts and candidates from a Google Sheet (user-provided sheet URL)
+- [x] CRM: import candidates from Excel/CSV with preview, duplicate checks and vacancy linking (jobs upload already exists)
+- [x] CRM: per-job applicant page with candidate profiles and private CV uploads
+- [ ] Replace generated sector photos with team/site photos — blocked: original photos not supplied
+- [ ] Publish confirmed vacancies — blocked: vacancy list and verified job details not supplied
 - [x] Rebuild navy-and-gold homepage on current site (keep contact emails + EN/RO switch)
 - [x] Test page header: show only "ION MAN WORKFORCE" (remove the extra label)
 - [x] Phone: natural, untilted homepage photos; interactive sector photo cards
