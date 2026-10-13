@@ -104,7 +104,7 @@ function CandidateDetail() {
             <Item k="Applied for" v={c.applied_job ? (getJob(c.applied_job) ? <Link to="/jobs/$slug" params={{ slug: c.applied_job }} target="_blank" className="underline">{getJob(c.applied_job)!.title}</Link> : c.applied_job) : "Open CV (no specific job)"} />
             <Item k="Received" v={new Date(c.created_at).toLocaleString("en-GB")} />
             <Item k="Assigned to" v={memberName(team.data, c.assigned_to)} />
-            <Item k="CV" v={c.cv_path ? <button onClick={openCv} className="font-semibold text-accent underline">{c.cv_filename ?? "Open"}</button> : "—"} />
+            <Item k="CV" v={c.cv_path ? <button onClick={openCv} className="max-w-full break-all text-left font-semibold text-accent underline">{c.cv_filename ?? "Open"}</button> : "—"} />
           </dl>
           {editable.data && <CandidateCvUpload id={id} hasCv={!!c.cv_path} />}
           {c.message && <p className="rounded-xl bg-glass p-3 text-sm">{c.message}</p>}
