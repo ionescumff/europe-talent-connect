@@ -1,7 +1,15 @@
+import { useState } from "react";
 import { useLang } from "@/lib/i18n";
+import imgWarehouse from "@/assets/hero-warehouse.jpg";
+import imgProduction from "@/assets/test-workforce-production.jpg";
+import imgLogistics from "@/assets/sector-logistics.jpg";
+import imgConstruction from "@/assets/construction-editorial.jpg";
+
+const IMAGES = [imgWarehouse, imgProduction, imgLogistics, imgConstruction];
 
 export function Sectors() {
   const { t } = useLang();
+  const [open, setOpen] = useState<string | null>(null);
 
   const sectors = [
     {
@@ -31,19 +39,37 @@ export function Sectors() {
       <div className="mb-5 font-display text-xs font-bold uppercase tracking-[0.2em] text-brand/50">
         {t("Sectors we staff", "Sectoare în care recrutăm")}
       </div>
-      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-        {sectors.map((s) => (
-          <div
-            key={s.n}
-            className="glass-card rounded-3xl p-6 transition-transform hover:-translate-y-1"
-          >
-            <div className="grid size-11 place-items-center rounded-xl bg-accent/15 font-display font-bold text-accent">
-              {s.n}
-            </div>
-            <h3 className="mt-4 font-display text-lg font-bold">{s.title}</h3>
-            <p className="mt-2 text-sm text-brand/60">{s.text}</p>
-          </div>
-        ))}
+      <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-2 md:overflow-visible md:px-0 lg:grid-cols-4">
+        {sectors.map((s, i) => {
+          const isOpen = open === s.n;
+          return (
+            <button
+              type="button"
+              key={s.n}
+              onClick={() => setOpen(isOpen ? null : s.n)}
+              aria-expanded={isOpen}
+              className="group relative aspect-[3/4] w-[78%] shrink-0 snap-start overflow-hidden rounded-3xl text-left shadow-glass focus-visible:outline-2 focus-visible:outline-accent md:w-auto"
+            >
+              <img
+                src={IMAGES[i]}
+                alt={s.title}
+                loading="lazy"
+                className={`absolute inset-0 size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 ${isOpen ? "scale-105" : ""}`}
+              />
+              <div className={`absolute inset-0 bg-gradient-to-t from-brand via-brand/40 to-transparent transition-opacity duration-500 ${isOpen ? "opacity-100" : "opacity-80 group-hover:opacity-100"}`} />
+              <div className="absolute inset-x-0 bottom-0 p-5 text-brand-foreground">
+                <div className="font-display text-xs font-bold tracking-[0.2em] text-accent">{s.n}</div>
+                <h3 className="mt-2 font-display text-xl font-bold leading-tight">{s.title}</h3>
+                <p className={`grid text-sm text-brand-foreground/80 transition-all duration-500 ${isOpen ? "mt-2 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0 md:group-hover:mt-2 md:group-hover:grid-rows-[1fr] md:group-hover:opacity-100"}`}>
+                  <span className="overflow-hidden">{s.text}</span>
+                </p>
+                <span className="mt-3 inline-block text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-foreground/60 md:hidden">
+                  {isOpen ? t("Tap to close", "Atinge pentru a închide") : t("Tap for details", "Atinge pentru detalii")}
+                </span>
+              </div>
+            </button>
+          );
+        })}
       </div>
       <p className="mt-5 text-sm text-brand/60">
         {t("Skilled profiles can be sourced for specific briefs.", "Profiluri calificate pot fi recrutate pentru cerințe specifice.")}
