@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { CANDIDATE_STATUSES, fetchTeam, memberName } from "@/lib/crm";
 import { matchCandidate, type MatchResult } from "@/lib/match.functions";
 import { getJob, suggestedJobs } from "@/lib/jobs";
+import { CandidateCvUpload } from "@/components/crm/CandidateCvUpload";
 
 export const Route = createFileRoute("/_authenticated/crm/candidates/$id")({
   component: CandidateDetail,
@@ -21,6 +22,11 @@ function CandidateDetail() {
   const [kind, setKind] = useState("note");
   const [result, setResult] = useState<MatchResult | null>(null);
   const team = useQuery({ queryKey: ["team"], queryFn: fetchTeam });
+  const editable = useQuery({ queryKey: ["candidate-editable", id], queryFn: async () => {
+    const { data, error } = await supabase.rpc("can_edit_candidate", { _user_id: user.id, _candidate: id });
+    if (error) throw error;
+    return data;
+  } });
 
   const cand = useQuery({
     queryKey: ["candidate", id],
@@ -100,6 +106,7 @@ function CandidateDetail() {
             <Item k="Assigned to" v={memberName(team.data, c.assigned_to)} />
             <Item k="CV" v={c.cv_path ? <button onClick={openCv} className="font-semibold text-accent underline">{c.cv_filename ?? "Open"}</button> : "—"} />
           </dl>
+          {editable.data && <CandidateCvUpload id={id} hasCv={!!c.cv_path} />}
           {c.message && <p className="rounded-xl bg-glass p-3 text-sm">{c.message}</p>}
           <div className="grid grid-cols-2 gap-3">
             <label className="text-xs font-semibold uppercase text-muted-foreground">

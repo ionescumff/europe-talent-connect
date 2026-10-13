@@ -2,7 +2,8 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { CANDIDATE_STATUSES, fetchTeam, ROLE_LABELS } from "@/lib/crm";
+import { CANDIDATE_STATUSES, fetchTeam, ROLE_LABELS, fetchMyRoles, isAdminRole } from "@/lib/crm";
+import { CandidateImport } from "@/components/crm/CandidateImport";
 import { getJob, suggestedJobs } from "@/lib/jobs";
 
 export const Route = createFileRoute("/_authenticated/crm/")({
@@ -11,6 +12,7 @@ export const Route = createFileRoute("/_authenticated/crm/")({
 
 function Candidates() {
   const navigate = useNavigate();
+  const roles = useQuery({ queryKey: ["my-roles"], queryFn: fetchMyRoles });
   const [q, setQ] = useState("");
   const [status, setStatus] = useState("all");
   const [dueOnly, setDueOnly] = useState(false);
@@ -65,6 +67,7 @@ function Candidates() {
         </div>
       </div>
 
+      {isAdminRole(roles.data) && <CandidateImport />}
       {error && <p className="text-destructive">Could not load candidates.</p>}
       {isLoading && <p className="text-muted-foreground">Loading…</p>}
 
