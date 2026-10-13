@@ -23,3 +23,4 @@
 - [ ] Add German construction vacancies — blocked: employer identity and confirmed job conditions not supplied
 - [ ] CRM: import job posts and candidates from a Google Sheet (user-provided sheet URL)
 - [x] Rebuild navy-and-gold homepage on current site (keep contact emails + EN/RO switch)
+- [x] Test page header: show only "ION MAN WORKFORCE" (remove the extra label)

@@ -7,7 +7,7 @@ import warehouse from "@/assets/test-workforce-hero.jpg";
 import production from "@/assets/test-workforce-production.jpg";
 import { TestCareerGallery } from "../components/site/TestCareerGallery";
 
-const title = "Inside IONMAN — Recruitment design test";
+const title = "ION MAN WORKFORCE — Recruitment design test";
 const description = "Explore an editorial recruitment experience for Romanian candidates and employers in Germany and the Netherlands.";
 
 export const Route = createFileRoute("/test")({
@@ -25,7 +25,7 @@ function TestPage() {
   const [slide, setSlide] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const slides = [
-    { image: warehouse, alt: t("Warehouse professionals working together", "Profesioniști într-un depozit"), title: t("Welcome to IONMAN Workforce", "Bine ai venit la IONMAN Workforce"), text: t("Discover opportunities across Europe. Bring your experience, explore a new direction and take your next career step in Germany or the Netherlands.", "Descoperă oportunități în Europa. Valorifică-ți experiența și fă următorul pas în carieră în Germania sau Olanda.") },
+    { image: warehouse, alt: t("Warehouse professionals working together", "Profesioniști într-un depozit"), title: t("Welcome to ION MAN WORKFORCE", "Bine ai venit la ION MAN WORKFORCE"), text: t("Discover opportunities across Europe. Bring your experience, explore a new direction and take your next career step in Germany or the Netherlands.", "Descoperă oportunități în Europa. Valorifică-ți experiența și fă următorul pas în carieră în Germania sau Olanda.") },
     { image: production, alt: t("Technicians inspecting a component", "Tehnicieni verificând o componentă"), title: t("Your experience. New possibilities.", "Experiența ta. Noi posibilități."), text: t("From warehousing and logistics to production and construction support, connect with roles that match your skills. Recruitment is always free for candidates.", "De la depozite și logistică la producție și construcții, găsește roluri potrivite abilităților tale. Recrutarea este întotdeauna gratuită pentru candidați.") },
   ] as const;
   const current = slides[slide] ?? slides[0];
@@ -36,7 +36,7 @@ function TestPage() {
   return (
     <div className="editorial-test min-h-screen">
       <header className="test-header relative z-20 flex items-center justify-between gap-4 px-6 md:px-10 lg:px-16">
-        <Link to="/test" aria-label="Inside IONMAN home" className="test-wordmark text-2xl">INSIDE<span>IONMAN WORKFORCE</span></Link>
+        <Link to="/test" aria-label="ION MAN WORKFORCE home" className="test-wordmark text-2xl">ION MAN<span>WORKFORCE</span></Link>
         <nav aria-label="Main navigation" className="hidden items-center gap-7 text-[11px] font-medium uppercase lg:flex">
           <Link to="/jobs">{t("Jobs & careers", "Locuri de muncă")}</Link>
           <Link to="/eu-candidate-information">{t("Working in Europe", "Munca în Europa")}</Link>
@@ -108,7 +108,7 @@ function TestPage() {
         </section>
       </main>
       <footer className="mx-auto max-w-7xl px-6 py-12 md:px-12 lg:px-16">
-        <div className="flex flex-col justify-between gap-7 md:flex-row"><Link to="/" className="test-wordmark text-2xl">IONMAN<span>WORKFORCE</span></Link><div className="flex flex-wrap gap-x-7 gap-y-4 text-xs"><Link to="/contact">{t("Contact", "Contact")}</Link><Link to="/privacy">{t("Privacy & cookies", "Confidențialitate")}</Link><Link to="/terms">{t("Terms", "Termeni")}</Link><Link to="/">{t("Main website", "Site principal")}</Link></div></div>
+        <div className="flex flex-col justify-between gap-7 md:flex-row"><Link to="/" className="test-wordmark text-2xl">ION MAN<span>WORKFORCE</span></Link><div className="flex flex-wrap gap-x-7 gap-y-4 text-xs"><Link to="/contact">{t("Contact", "Contact")}</Link><Link to="/privacy">{t("Privacy & cookies", "Confidențialitate")}</Link><Link to="/terms">{t("Terms", "Termeni")}</Link><Link to="/">{t("Main website", "Site principal")}</Link></div></div>
         <div className="test-divider test-muted mt-8 flex flex-wrap justify-between gap-4 border-t pt-6 text-[11px]"><span>© {new Date().getFullYear()} ION MAN WORKFORCE S.R.L.</span><a href="mailto:contact@vreaujobs.eu">contact@vreaujobs.eu</a></div>
       </footer>
       <Button asChild size="icon" className="test-contact fixed bottom-5 right-5 z-30 size-12 rounded-full" title={t("Contact our team", "Contactează echipa")}><Link to="/contact" aria-label={t("Contact our team", "Contactează echipa")}><MessageCircle /></Link></Button>
