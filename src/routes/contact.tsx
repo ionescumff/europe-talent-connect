@@ -74,6 +74,7 @@ function ContactPage() {
       </InformationSection>
       <InformationSection title={t("Leadership", "Conducere")}>
         <p>{t("Co-founders: Yuri Manteleres and Matei Ionescu.", "Co-fondatori: Yuri Manteleres și Matei Ionescu.")}</p>
+        <p>Yuri Manteleres: <a href="mailto:yuri@vreaujobs.eu" className="font-semibold underline">yuri@vreaujobs.eu</a></p>
         <p>Matei Ionescu: <a href="mailto:matei@vreaujobs.eu" className="font-semibold underline">matei@vreaujobs.eu</a></p>
       </InformationSection>
     </InformationPage>
