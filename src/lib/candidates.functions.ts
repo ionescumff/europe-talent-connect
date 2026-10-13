@@ -5,15 +5,22 @@ import { candidateImportSchema, normalizedPhone } from "./candidate-import";
 
 export const importCandidates = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: unknown) => z.object({ rows: z.array(candidateImportSchema).min(1).max(300), jobId: z.string().uuid().optional(), authorized: z.literal(true) }).parse(input))
+  .validator((input: unknown) => z.object({ rows: z.array(candidateImportSchema).min(1).max(300), jobId: z.string().uuid().optional(), authorized: z.literal(true) }).parse(input))
   .handler(async ({ data, context }) => {
     const { data: admin, error: roleError } = await context.supabase.rpc("is_admin", { _user_id: context.userId });
     if (roleError || !admin) throw new Error("Only admins and co-founders can import candidates");
-    const [{ data: existing, error }, { data: jobs, error: jobsError }] = await Promise.all([
-      context.supabase.from("cv_submissions").select("phone, email"),
-      context.supabase.from("job_posts").select("id, slug"),
-    ]);
-    if (error || jobsError) throw new Error("Could not check existing candidates and vacancies");
+    const existing: { phone: string; email: string | null }[] = [];
+    const jobs: { id: string; slug: string | null }[] = [];
+    for (let offset = 0; ; offset += 1000) {
+      const { data: page, error } = await context.supabase.from("cv_submissions").select("phone, email").order("id").range(offset, offset + 999);
+      if (error) throw new Error("Could not check existing candidates");
+      existing.push(...page); if (page.length < 1000) break;
+    }
+    for (let offset = 0; ; offset += 1000) {
+      const { data: page, error } = await context.supabase.from("job_posts").select("id, slug").order("id").range(offset, offset + 999);
+      if (error) throw new Error("Could not check vacancies");
+      jobs.push(...page); if (page.length < 1000) break;
+    }
     const target = data.jobId ? jobs?.find((j) => j.id === data.jobId) : undefined;
     if (data.jobId && !target) throw new Error("Vacancy not found");
     const phones = new Set(existing?.map((c) => normalizedPhone(c.phone)));
@@ -38,7 +45,7 @@ export const importCandidates = createServerFn({ method: "POST" })
 
 export const attachCandidateCv = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: unknown) => {
+  .validator((input: unknown) => {
     if (!(input instanceof FormData)) throw new Error("Expected CV upload");
     const id = z.string().uuid().parse(input.get("id"));
     const file = input.get("cv");
