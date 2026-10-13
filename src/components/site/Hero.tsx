@@ -65,17 +65,17 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="relative mx-auto min-h-[440px] w-full max-w-md lg:max-w-none lg:min-h-[520px]">
-          <div className="absolute -top-4 -right-2 w-[78%] rotate-[7deg] overflow-hidden rounded-[2rem] border border-glass-border shadow-glass lg:-right-6 animate-float">
+        <div className="relative mx-auto flex w-full max-w-md flex-col gap-4 lg:block lg:max-w-none lg:min-h-[520px]">
+          <div className="group relative w-full overflow-hidden rounded-[1.5rem] border border-glass-border shadow-glass lg:absolute lg:-top-4 lg:-right-6 lg:w-[78%] lg:rotate-[7deg] lg:rounded-[2rem] lg:animate-float">
             <img
               src={heroImage}
               alt={t("Workers in hi-vis vests walking through a warehouse", "Muncitori în veste reflectorizante mergând printr-un depozit")}
               width={1024}
               height={1280}
-              className="aspect-[3/4] w-full object-cover"
+              className="aspect-[4/3] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 lg:aspect-[3/4]"
             />
           </div>
-          <div className="absolute bottom-0 left-0 flex aspect-[4/5] w-[62%] -rotate-[6deg] flex-col justify-between rounded-[2rem] border border-brand-foreground/10 bg-brand/90 p-6 shadow-brand backdrop-blur-xl">
+          <div className="relative flex w-full flex-col justify-between gap-5 rounded-[1.5rem] lg:absolute lg:bottom-0 lg:left-0 lg:aspect-[4/5] lg:w-[62%] lg:-rotate-[6deg] lg:gap-0 lg:rounded-[2rem] border border-brand-foreground/10 bg-brand/90 p-6 shadow-brand backdrop-blur-xl">
             <div className="font-display text-2xl font-bold leading-tight text-brand-foreground">
               {t("Direct access, no middlemen.", "Acces direct, fără intermediari.")}
             </div>
@@ -113,7 +113,7 @@ export function Hero() {
               {t("Our Romanian team screens every CV before it reaches the client selection stage.", "Echipa noastră din România verifică fiecare CV înainte de etapa selecției finale.")}
             </div>
           </div>
-          <div className="absolute top-8 left-2 z-10 -rotate-[4deg] rounded-full bg-accent px-5 py-3 text-sm font-semibold text-accent-foreground shadow-accent">
+          <div className="order-first self-start rounded-full lg:absolute lg:top-8 lg:left-2 lg:z-10 lg:-rotate-[4deg] bg-accent px-5 py-3 text-sm font-semibold text-accent-foreground shadow-accent">
             {t("No recruitment fee to candidates", "Fără taxe de recrutare pentru candidați")}
           </div>
         </div>

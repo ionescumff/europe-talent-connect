@@ -24,3 +24,4 @@
 - [ ] CRM: import job posts and candidates from a Google Sheet (user-provided sheet URL)
 - [x] Rebuild navy-and-gold homepage on current site (keep contact emails + EN/RO switch)
 - [x] Test page header: show only "ION MAN WORKFORCE" (remove the extra label)
+- [x] Phone: natural, untilted homepage photos; interactive sector photo cards
