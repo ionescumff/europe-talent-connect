@@ -3,10 +3,9 @@ import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import { CheckCircle2, Paperclip } from "lucide-react";
 import { submitCv } from "@/lib/submissions.functions";
-import { type Job } from "@/lib/jobs";
+import { getJob, type Job } from "@/lib/jobs";
 import { Link } from "@tanstack/react-router";
 import { useLang } from "@/lib/i18n";
-import { Button } from "@/components/ui/button";
 
 export function CvForm({ availableJobs = [] }: { availableJobs?: Job[] }) {
   const { t } = useLang();
@@ -19,7 +18,8 @@ export function CvForm({ availableJobs = [] }: { availableJobs?: Job[] }) {
 
   useEffect(() => {
     const slug = new URLSearchParams(window.location.search).get("job");
-    const j = slug ? availableJobs.find(item => item.slug === slug) : undefined;
+    if (!slug) return;
+    const j = availableJobs.find((j) => j.slug === slug) ?? getJob(slug);
     if (j) setJob(j);
   }, [availableJobs]);
 
@@ -54,7 +54,7 @@ export function CvForm({ availableJobs = [] }: { availableJobs?: Job[] }) {
 
   return (
     <section id="cv" className="relative scroll-mt-24 px-6 pb-20 md:px-8 lg:px-14">
-      <div className="public-form-layout grid items-start gap-10 lg:grid-cols-[1fr_1fr]">
+      <div className="glass-card grid items-center gap-10 rounded-[2rem] p-8 lg:grid-cols-[1.2fr_1fr] lg:p-12">
         <div>
           <div className="font-display text-xs font-bold uppercase tracking-[0.2em] text-accent">
             {t("For candidates", "Pentru candidați")}
@@ -77,13 +77,13 @@ export function CvForm({ availableJobs = [] }: { availableJobs?: Job[] }) {
             <p className="text-sm text-brand/60">
               {t("Our team will review your profile and contact you about matching vacancies.", "Echipa noastră îți va analiza profilul și te va contacta pentru posturile vacante potrivite.")}
             </p>
-            <Button variant="link"
+            <button
               type="button"
               onClick={() => setDone(false)}
               className="mt-2 text-sm font-semibold text-brand underline-offset-4 hover:underline"
             >
               {t("Send another CV", "Trimite alt CV")}
-            </Button>
+            </button>
           </div>
         ) : (
           <form key={job?.slug ?? "general"} ref={formRef} onSubmit={onSubmit} className="space-y-4">
@@ -92,9 +92,9 @@ export function CvForm({ availableJobs = [] }: { availableJobs?: Job[] }) {
                 <span>
                   {t("Applying for", "Aplică pentru")} <strong>{job.title}</strong> · {job.city}
                 </span>
-                <Button variant="link" type="button" onClick={() => setJob(null)} className="text-xs font-semibold underline">
+                <button type="button" onClick={() => setJob(null)} className="text-xs font-semibold underline">
                   {t("Remove", "Elimină")}
-                </Button>
+                </button>
                 <input type="hidden" name="appliedJob" value={job.slug} />
               </div>
             )}
@@ -151,13 +151,13 @@ export function CvForm({ availableJobs = [] }: { availableJobs?: Job[] }) {
                 {t("I have read the", "Am citit")} <Link to="/privacy" className="font-semibold text-brand underline underline-offset-2">{t("privacy notice", "nota de informare privind confidențialitatea")}</Link> {t("and understand how my details and CV will be used for recruitment.", "și înțeleg cum vor fi folosite datele mele și CV-ul pentru recrutare.")}
               </span>
             </label>
-            <Button
+            <button
               type="submit"
               disabled={busy}
               className="h-12 w-full rounded-xl bg-brand font-semibold text-brand-foreground shadow-brand transition-transform hover:-translate-y-0.5 disabled:opacity-60"
             >
               {busy ? t("Sending…", "Se trimite...") : t("Submit my CV", "Trimite CV-ul meu")}
-            </Button>
+            </button>
             <p className="text-center text-xs text-brand/50">
               {t(
                 "No fee, ever, for candidates. Your CV is only shared with employers for confirmed vacancies.",

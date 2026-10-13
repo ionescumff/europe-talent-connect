@@ -1,10 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Nav } from "@/components/site/Nav";
-import { EditorialHome } from "@/components/site/EditorialHome";
-import { listPublishedJobs } from "@/lib/jobposts.functions";
+import { Hero } from "@/components/site/Hero";
+import { Sectors } from "@/components/site/Sectors";
+import { Process } from "@/components/site/Process";
 import { CvForm } from "@/components/site/CvForm";
 import { VacancyForm } from "@/components/site/VacancyForm";
 import { Footer } from "@/components/site/Footer";
+import { listPublishedJobs } from "@/lib/jobposts.functions";
 
 const title = "IONMAN Workforce — Screened Romanian workers for the Netherlands & Germany";
 const description =
@@ -28,13 +30,13 @@ export const Route = createFileRoute("/")({
 function Index() {
   const jobs = Route.useLoaderData();
   return (
-    <div id="top" className="public-site relative min-h-screen overflow-x-clip">
+    <div id="top" className="bg-page-glow relative min-h-screen overflow-x-clip text-brand">
       <Nav />
-      <main>
-      <EditorialHome jobs={jobs} />
+      <Hero />
+      <Sectors />
+      <Process />
       <CvForm availableJobs={jobs} />
       <VacancyForm />
-      </main>
       <Footer />
     </div>
   );
