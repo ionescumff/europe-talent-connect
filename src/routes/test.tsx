@@ -36,7 +36,7 @@ function TestPage() {
   return (
     <div className="editorial-test min-h-screen">
       <header className="test-header relative z-20 flex items-center justify-between gap-4 px-6 md:px-10 lg:px-16">
-        <Link to="/test" aria-label="Inside IONMAN home" className="test-wordmark text-2xl">INSIDE<span>IONMAN WORKFORCE</span></Link>
+        <Link to="/test" aria-label="ION MAN WORKFORCE home" className="test-wordmark text-2xl">ION MAN<span>WORKFORCE</span></Link>
         <nav aria-label="Main navigation" className="hidden items-center gap-7 text-[11px] font-medium uppercase lg:flex">
           <Link to="/jobs">{t("Jobs & careers", "Locuri de muncă")}</Link>
           <Link to="/eu-candidate-information">{t("Working in Europe", "Munca în Europa")}</Link>
