@@ -7,7 +7,7 @@ import warehouse from "@/assets/test-workforce-hero.jpg";
 import production from "@/assets/test-workforce-production.jpg";
 import { TestCareerGallery } from "../components/site/TestCareerGallery";
 
-const title = "Inside IONMAN — Recruitment design test";
+const title = "ION MAN WORKFORCE — Recruitment design test";
 const description = "Explore an editorial recruitment experience for Romanian candidates and employers in Germany and the Netherlands.";
 
 export const Route = createFileRoute("/test")({
