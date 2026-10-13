@@ -92,7 +92,7 @@ function CandidateDetail() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr_1.2fr]">
-      <div className="space-y-6">
+      <div className="min-w-0 space-y-6">
         <Link to="/crm" className="text-sm text-muted-foreground hover:text-accent">← All candidates</Link>
         <section className="glass-card space-y-4 p-6">
           <h1 className="font-display text-2xl font-bold">{c.full_name}</h1>
@@ -160,7 +160,7 @@ function CandidateDetail() {
         </section>
       </div>
 
-      <div className="space-y-6 lg:mt-9">
+      <div className="min-w-0 space-y-6 lg:mt-9">
       <section className="glass-card space-y-4 p-6">
         <div>
           <h2 className="font-display text-lg font-bold">Suggested vacancies</h2>
@@ -184,7 +184,7 @@ function CandidateDetail() {
         </ul>
       </section>
       <section className="glass-card h-fit space-y-4 p-6">
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
             <h2 className="font-display text-lg font-bold">Best job matches</h2>
             <p className="text-sm text-muted-foreground">AI reads the CV (PDF) and profile and ranks the open jobs.</p>
