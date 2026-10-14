@@ -3,6 +3,7 @@ import { Nav } from "@/components/site/Nav";
 import { Hero } from "@/components/site/Hero";
 import { Sectors } from "@/components/site/Sectors";
 import { Process } from "@/components/site/Process";
+import { CandidateBand } from "@/components/site/CandidateBand";
 import { CvForm } from "@/components/site/CvForm";
 import { VacancyForm } from "@/components/site/VacancyForm";
 import { Footer } from "@/components/site/Footer";
@@ -35,6 +36,7 @@ function Index() {
       <Hero />
       <Sectors />
       <Process />
+      <CandidateBand />
       <CvForm availableJobs={jobs} />
       <VacancyForm />
       <Footer />
