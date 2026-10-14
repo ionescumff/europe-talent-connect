@@ -75,11 +75,22 @@ export function Hero() {
               className="aspect-[4/3] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 lg:aspect-[3/4]"
             />
           </div>
-          <div className="relative flex w-full flex-col justify-between gap-5 rounded-[1.5rem] lg:absolute lg:bottom-0 lg:left-0 lg:aspect-[4/5] lg:w-[62%] lg:-rotate-[6deg] lg:gap-0 lg:rounded-[2rem] border border-brand-foreground/10 bg-brand/90 p-6 shadow-brand backdrop-blur-xl">
-            <div className="font-display text-2xl font-bold leading-tight text-brand-foreground">
-              {t("Direct access, no middlemen.", "Acces direct, fără intermediari.")}
+          <div className="relative flex w-full flex-col justify-between gap-6 overflow-hidden rounded-[1.5rem] lg:absolute lg:bottom-0 lg:left-0 lg:aspect-[4/5] lg:w-[62%] lg:-rotate-[6deg] lg:gap-0 lg:rounded-[2rem] border border-brand-foreground/10 bg-gradient-to-br from-brand via-brand/95 to-[#0f1c30] p-6 shadow-brand backdrop-blur-xl">
+            <div
+              className="pointer-events-none absolute -right-16 -top-16 size-48 rounded-full bg-accent/15 blur-3xl"
+              aria-hidden="true"
+            />
+            <div
+              className="pointer-events-none absolute -bottom-20 -left-10 size-40 rounded-full bg-accent/10 blur-3xl"
+              aria-hidden="true"
+            />
+            <div className="relative">
+              <div className="mb-3 h-px w-10 bg-accent" aria-hidden="true" />
+              <div className="font-display text-2xl font-bold leading-tight text-brand-foreground">
+                {t("Direct access, no middlemen.", "Acces direct, fără intermediari.")}
+              </div>
             </div>
-            <ul className="flex flex-col">
+            <ul className="relative flex flex-col">
               {[
                 t("Vacancy brief", "Oferta de muncă"),
                 t("Search & screening", "Căutare și selecție"),
@@ -87,29 +98,24 @@ export function Hero() {
                 t("Start & review", "Început și evaluare")
               ].map(
                 (step, i) => (
-                  <li
-                    key={step}
-                    className="border-t border-brand-foreground/10 pt-3 text-sm text-brand-foreground/85 last:pb-1"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="font-display text-xs font-bold text-accent">
-                        0{i + 1}
-                      </span>
-                      {step}
-                    </div>
+                  <li key={step} className="relative flex gap-3.5 pb-3 last:pb-0">
                     {i < 3 && (
-                      <div
-                        className="ml-[5px] mt-1.5 text-xs leading-none text-accent/70"
+                      <span
+                        className="absolute left-[13px] top-7 bottom-0 w-px bg-gradient-to-b from-accent/60 to-accent/10"
                         aria-hidden="true"
-                      >
-                        ↓
-                      </div>
+                      />
                     )}
+                    <span className="relative z-10 flex size-7 shrink-0 items-center justify-center rounded-full border border-accent/50 bg-accent/15 font-display text-[11px] font-bold text-accent">
+                      {i + 1}
+                    </span>
+                    <span className="pt-1 text-sm font-medium text-brand-foreground/90">
+                      {step}
+                    </span>
                   </li>
                 ),
               )}
             </ul>
-            <div className="text-sm text-brand-foreground/70">
+            <div className="relative rounded-xl border border-brand-foreground/10 bg-brand-foreground/5 p-3.5 text-[13px] leading-relaxed text-brand-foreground/75">
               {t("Our Romanian team screens every CV before it reaches the client selection stage.", "Echipa noastră din România verifică fiecare CV înainte de etapa selecției finale.")}
             </div>
           </div>
