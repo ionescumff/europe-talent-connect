@@ -36,6 +36,7 @@ function Index() {
       <Hero />
       <Sectors />
       <Process />
+      <CandidateBand />
       <CvForm availableJobs={jobs} />
       <VacancyForm />
       <Footer />
