@@ -85,7 +85,7 @@ export function Hero() {
               aria-hidden="true"
             />
             <div className="relative">
-              <div className="mb-3 h-px w-10 bg-accent" aria-hidden="true" />
+              <div className="mb-3 h-px w-24 bg-accent" aria-hidden="true" />
               <div className="font-display text-2xl font-bold leading-tight text-brand-foreground">
                 {t("Direct access, no middlemen.", "Acces direct, fără intermediari.")}
               </div>
@@ -119,7 +119,7 @@ export function Hero() {
               {t("Our Romanian team screens every CV before it reaches the client selection stage.", "Echipa noastră din România verifică fiecare CV înainte de etapa selecției finale.")}
             </div>
           </div>
-          <div className="order-first self-start rounded-full lg:absolute lg:top-8 lg:left-2 lg:z-10 lg:-rotate-[4deg] bg-accent px-5 py-3 text-sm font-semibold text-accent-foreground shadow-accent">
+          <div className="order-first self-start rounded-full lg:absolute lg:top-[62px] lg:left-0 lg:z-20 lg:-rotate-[6deg] bg-accent px-5 py-3 text-sm font-semibold text-accent-foreground shadow-accent">
             {t("No recruitment fee to candidates", "Fără taxe de recrutare pentru candidați")}
           </div>
         </div>
