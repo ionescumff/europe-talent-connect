@@ -119,7 +119,7 @@ export function Hero() {
               {t("Our Romanian team screens every CV before it reaches the client selection stage.", "Echipa noastră din România verifică fiecare CV înainte de etapa selecției finale.")}
             </div>
           </div>
-          <div className="order-first self-start rounded-full lg:absolute lg:top-8 lg:left-2 lg:z-10 lg:-rotate-[4deg] bg-accent px-5 py-3 text-sm font-semibold text-accent-foreground shadow-accent">
+          <div className="order-first self-start rounded-full lg:absolute lg:top-[62px] lg:left-0 lg:z-20 lg:-rotate-[6deg] bg-accent px-5 py-3 text-sm font-semibold text-accent-foreground shadow-accent">
             {t("No recruitment fee to candidates", "Fără taxe de recrutare pentru candidați")}
           </div>
         </div>

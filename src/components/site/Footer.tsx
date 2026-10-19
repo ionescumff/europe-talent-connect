@@ -1,6 +1,25 @@
 import { Link } from "@tanstack/react-router";
+import { Facebook, Instagram, Linkedin } from "lucide-react";
 import { Logo } from "./Logo";
 import { useLang } from "@/lib/i18n";
+
+const socials = [
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/vreaujobs.eu",
+    icon: Instagram,
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/vreaujobs.eu",
+    icon: Facebook,
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/vreaujobs.eu",
+    icon: Linkedin,
+  },
+];
 
 export function Footer() {
   const { t } = useLang();
@@ -27,6 +46,26 @@ export function Footer() {
             <a href="mailto:contact@vreaujobs.eu" className="hover:text-brand">contact@vreaujobs.eu</a>
             <a href="tel:+40741699011" className="hover:text-brand">+40 741 699 011 · Phone</a>
             <a href="https://wa.me/40741699011" target="_blank" rel="noopener noreferrer" className="hover:text-brand">WhatsApp</a>
+          </div>
+          <p className="mt-5 font-display text-[11px] font-bold uppercase tracking-[0.16em] text-brand/45">
+            {t("Follow", "Urmărește")}
+          </p>
+          <div className="mt-2 flex items-center gap-2">
+            {socials.map((s) => {
+              const Icon = s.icon;
+              return (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${s.label} — @vreaujobs.eu`}
+                  className="rounded-full border border-brand/15 p-2 text-brand/60 transition-colors hover:border-brand/40 hover:text-brand"
+                >
+                  <Icon className="size-4" aria-hidden="true" />
+                </a>
+              );
+            })}
           </div>
         </div>
         <div>
