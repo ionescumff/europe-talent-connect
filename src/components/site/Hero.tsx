@@ -85,7 +85,7 @@ export function Hero() {
               aria-hidden="true"
             />
             <div className="relative">
-              <div className="mb-3 h-px w-10 bg-accent" aria-hidden="true" />
+              <div className="mb-3 h-px w-24 bg-accent" aria-hidden="true" />
               <div className="font-display text-2xl font-bold leading-tight text-brand-foreground">
                 {t("Direct access, no middlemen.", "Acces direct, fără intermediari.")}
               </div>
