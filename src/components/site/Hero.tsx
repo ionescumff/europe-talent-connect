@@ -75,7 +75,7 @@ export function Hero() {
               className="aspect-[4/3] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 lg:aspect-[3/4]"
             />
           </div>
-          <div className="relative flex w-full flex-col justify-between gap-6 overflow-hidden rounded-[1.5rem] lg:absolute lg:bottom-0 lg:left-0 lg:aspect-[4/5] lg:w-[62%] lg:-rotate-[6deg] lg:gap-0 lg:rounded-[2rem] border border-brand-foreground/10 bg-gradient-to-br from-brand via-brand/95 to-[#0f1c30] p-6 shadow-brand backdrop-blur-xl">
+          <div className="relative flex w-full flex-col justify-between gap-6 overflow-hidden rounded-[1.5rem] lg:absolute lg:bottom-16 lg:left-0 lg:aspect-[4/5] lg:w-[62%] lg:-rotate-[6deg] lg:gap-0 lg:rounded-[2rem] border border-brand-foreground/10 bg-gradient-to-br from-brand via-brand/95 to-[#0f1c30] p-6 shadow-brand backdrop-blur-xl">
             <div
               className="pointer-events-none absolute -right-16 -top-16 size-48 rounded-full bg-accent/15 blur-3xl"
               aria-hidden="true"
@@ -118,7 +118,7 @@ export function Hero() {
               {t("Our Romanian team screens every CV before it reaches the client selection stage.", "Echipa noastră din România verifică fiecare CV înainte de etapa selecției finale.")}
             </div>
           </div>
-          <div className="order-first self-start rounded-full lg:absolute lg:top-[62px] lg:left-0 lg:z-20 lg:-rotate-[6deg] bg-accent px-5 py-3 text-sm font-semibold text-accent-foreground shadow-accent">
+          <div className="order-first self-start rounded-full lg:absolute lg:bottom-0 lg:left-0 lg:z-20 bg-accent px-5 py-3 text-sm font-semibold text-accent-foreground shadow-accent">
             {t("No recruitment fee to candidates", "Fără taxe de recrutare pentru candidați")}
           </div>
         </div>
