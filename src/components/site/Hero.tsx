@@ -63,6 +63,12 @@ export function Hero() {
               </span>
             ))}
           </div>
+          <div
+            className="mt-7 inline-flex rounded-full bg-accent px-5 py-3 text-sm font-semibold text-accent-foreground shadow-accent animate-rise"
+            style={{ animationDelay: "400ms" }}
+          >
+            {t("No recruitment fee to candidates", "Fără taxe de recrutare pentru candidați")}
+          </div>
         </div>
 
         <div className="relative mx-auto flex w-full max-w-md flex-col gap-4 lg:block lg:max-w-none lg:min-h-[520px]">
@@ -117,9 +123,6 @@ export function Hero() {
             <div className="relative rounded-xl border border-brand-foreground/10 bg-brand-foreground/5 p-3.5 text-[13px] leading-relaxed text-brand-foreground/75">
               {t("Our Romanian team screens every CV before it reaches the client selection stage.", "Echipa noastră din România verifică fiecare CV înainte de etapa selecției finale.")}
             </div>
-          </div>
-          <div className="order-first self-start rounded-full lg:absolute lg:top-[62px] lg:left-0 lg:z-20 lg:-rotate-[6deg] bg-accent px-5 py-3 text-sm font-semibold text-accent-foreground shadow-accent">
-            {t("No recruitment fee to candidates", "Fără taxe de recrutare pentru candidați")}
           </div>
         </div>
       </div>
