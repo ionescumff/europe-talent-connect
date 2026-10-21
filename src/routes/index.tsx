@@ -9,9 +9,9 @@ import { VacancyForm } from "@/components/site/VacancyForm";
 import { Footer } from "@/components/site/Footer";
 import { listPublishedJobs } from "@/lib/jobposts.functions";
 
-const title = "IONMAN Workforce — Screened Romanian workers for the Netherlands & Germany";
+const title = "IONMAN Workforce — Locuri de muncă în Germania și Olanda";
 const description =
-  "European workforce from Romania for warehousing, production, logistics and construction. Candidates: leave your CV and we'll contact you — no fee. Employers: share your vacancies.";
+  "Trimite CV-ul pentru oportunități de muncă în Germania și Olanda. Recrutare pentru depozite, producție, logistică și construcții, fără taxe pentru candidați.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -31,7 +31,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   const jobs = Route.useLoaderData();
   return (
-    <div id="top" className="bg-page-glow relative min-h-screen overflow-x-clip text-brand">
+    <div id="top" className="candidate-site bg-page-glow relative min-h-screen overflow-x-clip text-brand">
       <Nav />
       <Hero />
       <Sectors />

@@ -16,8 +16,8 @@ export function Sectors() {
   const sectors = [
     {
       n: "01",
-      title: t("Warehousing & fulfilment", "Depozitare și logistică"),
-      text: t("Picking, packing and order-fulfilment lines at peak and steady volume.", "Picking, ambalare și linii de procesare a comenzilor."),
+      title: t("Warehousing & fulfilment", "Depozite și pregătirea comenzilor"),
+      text: t("Picking, packing and order-fulfilment lines at peak and steady volume.", "Pregătirea, ambalarea și procesarea comenzilor în depozite."),
     },
     {
       n: "02",
@@ -26,18 +26,18 @@ export function Sectors() {
     },
     {
       n: "03",
-      title: t("Logistics & site work", "Logistică și lucru pe teren"),
-      text: t("Loading, unloading and general site support crews for depots and yards.", "Încărcare, descărcare și echipe de suport pentru depozite și curți exterioare."),
+      title: t("Logistics & site work", "Logistică și încărcare"),
+      text: t("Loading, unloading and general site support crews for depots and yards.", "Încărcarea și descărcarea mărfurilor, cu sprijin pentru activitățile din depozite și platforme logistice."),
     },
     {
       n: "04",
-      title: t("Construction support", "Suport construcții"),
-      text: t("Trades assistance and manual labour for fast-moving build phases.", "Asistență meseriași și muncă manuală pentru faze de construcție rapide."),
+      title: t("Construction support", "Construcții și lucrări de sprijin"),
+      text: t("Trades assistance and manual labour for fast-moving build phases.", "Sprijin pentru meseriași și muncă manuală în diferite etape ale construcției."),
     },
   ];
 
   return (
-    <section id="sectors" className="relative scroll-mt-24 px-6 pb-16 md:px-8 lg:px-14">
+    <section id="sectors" className="home-sectors relative scroll-mt-24 px-6 pb-16 md:px-8 lg:px-14">
       <div className="mb-5 font-display text-xs font-bold uppercase tracking-[0.2em] text-brand/50">
         {t("Sectors we staff", "Sectoare în care recrutăm")}
       </div>
@@ -74,7 +74,7 @@ export function Sectors() {
         })}
       </div>
       <p className="mt-5 text-sm text-brand/60">
-        {t("Skilled profiles can be sourced for specific briefs.", "Profiluri calificate pot fi recrutate pentru cerințe specifice.")}
+        {t("Skilled profiles can be sourced for specific briefs.", "Putem căuta și candidați calificați, în funcție de cerințele postului.")}
       </p>
       <p className="mt-2 text-xs text-brand/50">{t("Illustrative workplace photography — not photos of our teams or client sites.", "Fotografii ilustrative — nu reprezintă echipele noastre sau locațiile clienților.")}</p>
     </section>

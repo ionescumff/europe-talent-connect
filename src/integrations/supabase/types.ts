@@ -334,6 +334,27 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          created_at: string
+          full_name: string
+          id: string
+          phone: string
+        }
+        Insert: {
+          created_at?: string
+          full_name?: string
+          id: string
+          phone?: string
+        }
+        Update: {
+          created_at?: string
+          full_name?: string
+          id?: string
+          phone?: string
+        }
+        Relationships: []
+      }
       staff_notifications: {
         Row: {
           actor_email: string | null
@@ -477,6 +498,7 @@ export type Database = {
         Args: { _candidate: string; _user_id: string }
         Returns: boolean
       }
+      candidate_portal_data: { Args: never; Returns: Json }
       claim_lead: { Args: { _id: string; _table: string }; Returns: boolean }
       has_role: {
         Args: {
@@ -489,6 +511,10 @@ export type Database = {
       is_internal: { Args: { _user_id: string }; Returns: boolean }
       is_staff: { Args: { _user_id: string }; Returns: boolean }
       role_of: { Args: { _user_id: string }; Returns: string }
+      update_candidate_profile: {
+        Args: { _full_name: string; _phone: string }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "admin" | "recruiter" | "cofounder" | "manager" | "agency"

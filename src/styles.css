@@ -320,3 +320,57 @@
   .public-wordmark { font-size: 20px; }
 }
 @media (prefers-reduced-motion: reduce) { .public-site .public-job { transition: none; } }
+
+/* Candidate presentation refinements are intentionally isolated from the CRM. */
+.candidate-site, .public-site { overflow-wrap: break-word; }
+.candidate-site :is(h1,h2,h3,h4,a,button), .public-site :is(h1,h2,h3,h4,a,button) { letter-spacing: 0; }
+.candidate-site :is(input,select,textarea), .public-site :is(input,select,textarea) { min-width: 0; font-size: 16px; }
+.candidate-site :is(button,a):focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.candidate-site .field { background: var(--card); border-color: var(--border); border-radius: 8px; }
+.candidate-site .site-header, .public-site .site-header { background: var(--background); color: var(--brand); }
+.candidate-site .site-header [role="group"], .public-site .site-header [role="group"] { color: var(--brand); }
+.candidate-site > :is(section,footer), .candidate-site > header > div, .public-site > header > div { max-width: 1440px; margin-inline: auto; }
+.candidate-site .home-hero { padding-block: 44px 64px; }
+.candidate-site .home-hero > div { gap: 40px; }
+.candidate-site .home-hero h1 { max-width: 680px; }
+.candidate-site #process > div { border-radius: 12px; }
+.candidate-site #process > div > div:first-child { display: none; }
+.candidate-site #employers { padding-top: 32px; }
+.candidate-site #cv label, .candidate-site #employers label { min-width: 0; }
+.candidate-site #cv label:has(input[type=file]) { border-radius: 8px; }
+.candidate-site #cv label:has(input[type=file]) span { overflow-wrap: anywhere; }
+.candidate-site #cv form > button, .candidate-site #employers form button { border-radius: 8px; min-height: 48px; }
+.candidate-site #cv p, .candidate-site #employers p { line-height: 1.75; }
+.public-site main { max-width: 1440px; margin-inline: auto; }
+.public-site .job-filters { grid-template-columns: minmax(0,2fr) minmax(0,1fr) minmax(0,1fr) auto; }
+.public-site a[href^="tel:"] { white-space: nowrap; }
+.public-site .public-dark-band { padding-block: 48px; }
+.public-site .public-dark-band h1 { max-width: 850px; }
+.public-site .public-job img { border-radius: 8px; }
+.public-site .public-job h2 { line-height: 1.35; }
+.public-site section.glass-card { border: 0; border-top: 1px solid var(--border); background: transparent; padding-inline: 0; }
+@media (max-width: 767px) {
+  .candidate-site > :is(section,footer), .candidate-site > header > div, .public-site > header > div { padding-inline: 20px; }
+  .candidate-site .home-hero { padding-block: 32px 48px; }
+  .candidate-site .home-hero h1 { font-size: 34px; line-height: 1.18; }
+  .candidate-site .home-hero > div > div:first-child > p { font-size: 16px; }
+  .candidate-site .home-hero > div > div:first-child > div:has(a) { gap: 12px; }
+  .candidate-site .home-hero > div > div:first-child > div:has(a) a { padding: 14px 20px; font-size: 14px; }
+  .candidate-site #process { padding-bottom: 44px; }
+  .candidate-site #process > div > div:last-child { padding: 28px 22px; gap: 24px; }
+  .candidate-site #process h2, .candidate-site #cv h2, .candidate-site #employers h2, .candidate-site #candidates h2 { font-size: 28px; line-height: 1.25; }
+  .candidate-site #cv, .candidate-site #employers { padding-bottom: 48px; }
+  .candidate-site .home-sectors > div:nth-child(2) { margin-inline: -20px; padding-inline: 20px; scroll-padding-left: 20px; }
+  .candidate-site .home-sectors button { width: 78%; }
+  .public-site .job-filters { grid-template-columns: minmax(0,1fr) auto; gap: 12px; }
+  .public-site .job-filters label { grid-column: 1 / -1; }
+  .public-site .job-filters select { grid-column: 1; }
+  .public-site .job-filters button { grid-column: 2; grid-row: 2 / 4; align-self: center; }
+  .public-site .public-dark-band { padding: 36px 20px; }
+  .public-site .public-dark-band h1 { font-size: 32px; line-height: 1.25; }
+  .public-site main > section { padding-inline: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .candidate-site *, .public-site * { animation: none !important; transition: none !important; }
+}

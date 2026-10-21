@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as CandidatePortalRouteImport } from './routes/candidate-portal'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as EuCandidateInformationRouteImport } from './routes/eu-candidate-information'
 import { Route as PortalRouteImport } from './routes/portal'
@@ -18,6 +19,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as TestRouteImport } from './routes/test'
+import { Route as AuthenticatedCandidateAccountRouteImport } from './routes/_authenticated/candidate-account'
 import { Route as AuthenticatedCrmRouteImport } from './routes/_authenticated/crm'
 import { Route as JobsIndexRouteImport } from './routes/jobs.index'
 import { Route as JobsSlugRouteImport } from './routes/jobs.$slug'
@@ -38,6 +40,11 @@ const IndexRoute = IndexRouteImport.update({
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CandidatePortalRoute = CandidatePortalRouteImport.update({
+  id: '/candidate-portal',
+  path: '/candidate-portal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -75,6 +82,12 @@ const TestRoute = TestRouteImport.update({
   path: '/test',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedCandidateAccountRoute =
+  AuthenticatedCandidateAccountRouteImport.update({
+    id: '/candidate-account',
+    path: '/candidate-account',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedCrmRoute = AuthenticatedCrmRouteImport.update({
   id: '/crm',
   path: '/crm',
@@ -142,6 +155,7 @@ const LovableEmailTransactionalPreviewRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/candidate-portal': typeof CandidatePortalRoute
   '/contact': typeof ContactRoute
   '/eu-candidate-information': typeof EuCandidateInformationRoute
   '/portal': typeof PortalRoute
@@ -149,6 +163,7 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/terms': typeof TermsRoute
   '/test': typeof TestRoute
+  '/candidate-account': typeof AuthenticatedCandidateAccountRoute
   '/crm': typeof AuthenticatedCrmRouteWithChildren
   '/jobs/$slug': typeof JobsSlugRoute
   '/jobs/': typeof JobsIndexRoute
@@ -164,6 +179,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/candidate-portal': typeof CandidatePortalRoute
   '/contact': typeof ContactRoute
   '/eu-candidate-information': typeof EuCandidateInformationRoute
   '/portal': typeof PortalRoute
@@ -171,6 +187,7 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/terms': typeof TermsRoute
   '/test': typeof TestRoute
+  '/candidate-account': typeof AuthenticatedCandidateAccountRoute
   '/jobs/$slug': typeof JobsSlugRoute
   '/jobs': typeof JobsIndexRoute
   '/crm/admin': typeof AuthenticatedCrmAdminRoute
@@ -187,6 +204,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/candidate-portal': typeof CandidatePortalRoute
   '/contact': typeof ContactRoute
   '/eu-candidate-information': typeof EuCandidateInformationRoute
   '/portal': typeof PortalRoute
@@ -194,6 +212,7 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/terms': typeof TermsRoute
   '/test': typeof TestRoute
+  '/_authenticated/candidate-account': typeof AuthenticatedCandidateAccountRoute
   '/_authenticated/crm': typeof AuthenticatedCrmRouteWithChildren
   '/jobs/$slug': typeof JobsSlugRoute
   '/jobs/': typeof JobsIndexRoute
@@ -211,6 +230,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/candidate-portal'
     | '/contact'
     | '/eu-candidate-information'
     | '/portal'
@@ -218,6 +238,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/terms'
     | '/test'
+    | '/candidate-account'
     | '/crm'
     | '/jobs/$slug'
     | '/jobs/'
@@ -233,6 +254,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/candidate-portal'
     | '/contact'
     | '/eu-candidate-information'
     | '/portal'
@@ -240,6 +262,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/terms'
     | '/test'
+    | '/candidate-account'
     | '/jobs/$slug'
     | '/jobs'
     | '/crm/admin'
@@ -255,6 +278,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/candidate-portal'
     | '/contact'
     | '/eu-candidate-information'
     | '/portal'
@@ -262,6 +286,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/terms'
     | '/test'
+    | '/_authenticated/candidate-account'
     | '/_authenticated/crm'
     | '/jobs/$slug'
     | '/jobs/'
@@ -279,6 +304,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  CandidatePortalRoute: typeof CandidatePortalRoute
   ContactRoute: typeof ContactRoute
   EuCandidateInformationRoute: typeof EuCandidateInformationRoute
   PortalRoute: typeof PortalRoute
@@ -305,6 +331,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/candidate-portal': {
+      id: '/candidate-portal'
+      path: '/candidate-portal'
+      fullPath: '/candidate-portal'
+      preLoaderRoute: typeof CandidatePortalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -355,6 +388,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/test'
       preLoaderRoute: typeof TestRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/candidate-account': {
+      id: '/_authenticated/candidate-account'
+      path: '/candidate-account'
+      fullPath: '/candidate-account'
+      preLoaderRoute: typeof AuthenticatedCandidateAccountRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/crm': {
       id: '/_authenticated/crm'
@@ -469,10 +509,12 @@ const AuthenticatedCrmRouteWithChildren =
   AuthenticatedCrmRoute._addFileChildren(AuthenticatedCrmRouteChildren)
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedCandidateAccountRoute: typeof AuthenticatedCandidateAccountRoute
   AuthenticatedCrmRoute: typeof AuthenticatedCrmRouteWithChildren
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedCandidateAccountRoute: AuthenticatedCandidateAccountRoute,
   AuthenticatedCrmRoute: AuthenticatedCrmRouteWithChildren,
 }
 
@@ -482,6 +524,7 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  CandidatePortalRoute: CandidatePortalRoute,
   ContactRoute: ContactRoute,
   EuCandidateInformationRoute: EuCandidateInformationRoute,
   PortalRoute: PortalRoute,

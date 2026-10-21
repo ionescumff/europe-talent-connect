@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
@@ -48,24 +49,24 @@ export function CvForm({ availableJobs = [] }: { availableJobs?: Job[] }) {
     { value: "Warehousing & fulfilment", label: t("Warehousing & fulfilment", "Depozitare și logistică") },
     { value: "Production & food", label: t("Production & food", "Producție și sector alimentar") },
     { value: "Logistics & site work", label: t("Logistics & site work", "Logistică și lucru pe teren") },
-    { value: "Construction support", label: t("Construction support", "Suport construcții") },
-    { value: "Other / skilled role", label: t("Other / skilled role", "Altul / rol calificat") },
+    { value: "Construction support", label: t("Construction support", "Construcții și lucrări de sprijin") },
+    { value: "Other / skilled role", label: t("Other / skilled role", "Alt domeniu / meserie calificată") },
   ];
 
   return (
     <section id="cv" className="relative scroll-mt-24 px-6 pb-20 md:px-8 lg:px-14">
-      <div className="glass-card grid items-center gap-10 rounded-[2rem] p-8 lg:grid-cols-[1.2fr_1fr] lg:p-12">
+      <div className="cv-layout grid items-start gap-10 border-t border-brand/15 pt-10 lg:grid-cols-[1.2fr_1fr] lg:pt-12">
         <div>
           <div className="font-display text-xs font-bold uppercase tracking-[0.2em] text-accent">
             {t("For candidates", "Pentru candidați")}
           </div>
           <h2 className="mt-3 font-display text-3xl font-extrabold leading-tight md:text-4xl">
-            {t("Ready to work in the Netherlands or Germany? Leave your CV — we'll call you.", "Ești gata să lucrezi în Olanda sau Germania? Depune CV-ul — te vom suna noi.")}
+            {t("Ready to work in the Netherlands or Germany? Leave your CV — we'll call you.", "Ești gata să lucrezi în Olanda sau Germania? Trimite CV-ul — te contactăm noi.")}
           </h2>
           <p className="mt-4 max-w-md text-sm text-brand/60">
             {t(
               "Free for candidates, always. Housing details are confirmed in the job brief before you commit. Leave your CV and our team will contact you.",
-              "Gratuit pentru candidați, întotdeauna. Detaliile cazării sunt confirmate înainte de a accepta. Depune CV-ul și echipa noastră te va contacta."
+              "Gratuit pentru candidați, întotdeauna. Detaliile cazării sunt confirmate înainte de a accepta. Trimite CV-ul și echipa noastră te va contacta."
             )}
           </p>
         </div>
@@ -75,42 +76,42 @@ export function CvForm({ availableJobs = [] }: { availableJobs?: Job[] }) {
             <CheckCircle2 className="size-10 text-accent" />
             <div className="font-display text-xl font-bold">{t("CV received. Thank you!", "CV primit. Mulțumim!")}</div>
             <p className="text-sm text-brand/60">
-              {t("Our team will review your profile and contact you about matching vacancies.", "Echipa noastră îți va analiza profilul și te va contacta pentru posturile vacante potrivite.")}
+              {t("Our team will review your profile and contact you about matching vacancies.", "Echipa noastră îți va analiza profilul și te va contacta pentru oportunitățile potrivite.")}
             </p>
-            <button
+            <Button variant="ghost"
               type="button"
               onClick={() => setDone(false)}
               className="mt-2 text-sm font-semibold text-brand underline-offset-4 hover:underline"
             >
               {t("Send another CV", "Trimite alt CV")}
-            </button>
+            </Button>
           </div>
         ) : (
           <form key={job?.slug ?? "general"} ref={formRef} onSubmit={onSubmit} className="space-y-4">
             {job && (
-              <div className="flex items-center justify-between gap-3 rounded-xl bg-accent/10 px-4 py-3 text-sm">
+              <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl bg-accent/10 px-4 py-3 text-sm">
                 <span>
-                  {t("Applying for", "Aplică pentru")} <strong>{job.title}</strong> · {job.city}
+                  {t("Applying for", "Candidezi pentru")} <strong>{job.title}</strong> · {job.city}
                 </span>
-                <button type="button" onClick={() => setJob(null)} className="text-xs font-semibold underline">
+                <Button variant="ghost" type="button" onClick={() => setJob(null)} className="text-xs font-semibold underline">
                   {t("Remove", "Elimină")}
-                </button>
+                </Button>
                 <input type="hidden" name="appliedJob" value={job.slug} />
               </div>
             )}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <label className="block">
                 <span className="text-xs font-semibold text-brand/60">{t("Full name", "Nume complet")}</span>
-                <input name="fullName" required minLength={2} className="field mt-1" placeholder="Ana Popescu" />
+                <input name="fullName" autoComplete="name" required minLength={2} className="field mt-1" placeholder="Ana Popescu" />
               </label>
               <label className="block">
                 <span className="text-xs font-semibold text-brand/60">{t("Phone", "Telefon")}</span>
-                <input name="phone" required type="tel" className="field mt-1" placeholder="+40 7xx xxx xxx" />
+                <input name="phone" autoComplete="tel" inputMode="tel" required type="tel" className="field mt-1" placeholder="+40 7xx xxx xxx" />
               </label>
             </div>
             <label className="block">
               <span className="text-xs font-semibold text-brand/60">{t("Email (optional)", "Email (opțional)")}</span>
-              <input name="email" type="email" className="field mt-1" placeholder="ana@email.ro" />
+              <input name="email" autoComplete="email" type="email" className="field mt-1" placeholder="ana@email.ro" />
             </label>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <label className="block">
@@ -132,9 +133,9 @@ export function CvForm({ availableJobs = [] }: { availableJobs?: Job[] }) {
                 </select>
               </label>
             </div>
-            <label className="grid h-12 cursor-pointer place-items-center rounded-xl border-2 border-dashed border-accent/50 bg-accent/5 text-xs font-semibold text-brand/60 transition-colors hover:bg-accent/10">
-              <span className="flex items-center gap-2">
-                <Paperclip className="size-4" />
+            <label className="grid min-h-14 cursor-pointer place-items-center px-4 py-3 rounded-xl border-2 border-dashed border-accent/50 bg-accent/5 text-xs font-semibold text-brand/60 transition-colors hover:bg-accent/10">
+              <span className="flex min-w-0 items-center gap-2 break-all">
+                <Paperclip className="size-4 shrink-0" />
                 {fileName ?? t("Attach CV (PDF / DOCX, max 8 MB)", "Atașează CV (PDF / DOCX, max 8 MB)")}
               </span>
               <input
@@ -146,18 +147,18 @@ export function CvForm({ availableJobs = [] }: { availableJobs?: Job[] }) {
               />
             </label>
             <label className="flex items-start gap-3 text-xs leading-5 text-brand/60">
-              <input name="privacyAccepted" type="checkbox" required className="mt-1 size-4 accent-brand" />
+              <input name="privacyAccepted" type="checkbox" required className="mt-1 size-4 shrink-0 accent-brand" />
               <span>
                 {t("I have read the", "Am citit")} <Link to="/privacy" className="font-semibold text-brand underline underline-offset-2">{t("privacy notice", "nota de informare privind confidențialitatea")}</Link> {t("and understand how my details and CV will be used for recruitment.", "și înțeleg cum vor fi folosite datele mele și CV-ul pentru recrutare.")}
               </span>
             </label>
-            <button
+            <Button 
               type="submit"
               disabled={busy}
               className="h-12 w-full rounded-xl bg-brand font-semibold text-brand-foreground shadow-brand transition-transform hover:-translate-y-0.5 disabled:opacity-60"
             >
-              {busy ? t("Sending…", "Se trimite...") : t("Submit my CV", "Trimite CV-ul meu")}
-            </button>
+              {busy ? t("Sending…", "Se trimite...") : t("Submit my CV", "Trimite CV-ul")}
+            </Button>
             <p className="text-center text-xs text-brand/50">
               {t(
                 "No fee, ever, for candidates. Your CV is only shared with employers for confirmed vacancies.",
