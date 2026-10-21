@@ -75,6 +75,7 @@ export function Footer() {
             <Link to="/privacy" className="hover:text-brand">{t("Privacy & cookies", "Confidențialitate și cookie-uri")}</Link>
             <Link to="/terms" className="hover:text-brand">{t("Terms", "Termeni și condiții")}</Link>
             <Link to="/eu-candidate-information" className="hover:text-brand">{t("EU candidate information", "Informații candidați UE")}</Link>
+            <Link to="/candidate-portal" className="hover:text-brand">{t("Candidate portal", "Portal candidați")}</Link>
           </div>
         </div>
       </div>

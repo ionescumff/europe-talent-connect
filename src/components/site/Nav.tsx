@@ -23,6 +23,7 @@ export function Nav() {
         ))}
       </div>
       <div className="flex items-center gap-3">
+      <Link to="/candidate-portal" className="text-sm font-semibold">{t("My account", "Contul meu")}</Link>
       <LangSwitch />
       <a
         href="/#cv"

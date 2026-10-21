@@ -6,12 +6,13 @@ import { Logo } from "@/components/site/Logo";
 
 export const Route = createFileRoute("/reset-password")({
   ssr: false,
+  validateSearch: (search: Record<string, unknown>) => ({ candidate: search.candidate === true || search.candidate === "true" }),
   head: () => ({
     meta: [
       { title: "Set a new password — IONMAN Workforce" },
-      { name: "description", content: "Choose a new password for your IONMAN Workforce staff account." },
+      { name: "description", content: "Choose a new password for your IONMAN Workforce account." },
       { property: "og:title", content: "Set a new password — IONMAN Workforce" },
-      { property: "og:description", content: "Choose a new password for your IONMAN Workforce staff account." },
+      { property: "og:description", content: "Choose a new password for your IONMAN Workforce account." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex, nofollow" },
@@ -22,20 +23,22 @@ export const Route = createFileRoute("/reset-password")({
 
 function ResetPassword() {
   const navigate = useNavigate();
+  const { candidate } = Route.useSearch();
   const [ready, setReady] = useState(false);
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
     let active = true;
-    supabase.auth.getSession().then(({ data }) => {
-      if (active) setReady(Boolean(data.session));
-    });
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session) setReady(true);
-    });
+    const check = async () => {
+      const recovery = new URLSearchParams(window.location.hash.slice(1)).get("type") === "recovery" || sessionStorage.getItem("password-recovery") === "true";
+      const { data } = await supabase.auth.getUser();
+      if (active) setReady(recovery && Boolean(data.user));
+    };
+    void check();
+    window.addEventListener("password-recovery", check);
     return () => {
       active = false;
-      sub.subscription.unsubscribe();
+      window.removeEventListener("password-recovery", check);
     };
   }, []);
 
@@ -52,7 +55,8 @@ function ResetPassword() {
       const { error } = await supabase.auth.updateUser({ password });
       if (error) throw error;
       toast.success("Password updated.");
-      await navigate({ to: "/crm" });
+      sessionStorage.removeItem("password-recovery");
+      await navigate({ to: candidate ? "/candidate-account" : "/crm" });
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Something went wrong");
     } finally {
