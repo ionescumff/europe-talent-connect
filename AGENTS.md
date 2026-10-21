@@ -13,3 +13,5 @@
 - Keep the test career-advice gallery in its own browser-safe component; reference spreadsheets inform the layout rather than importing third-party stories or claims.
 - Candidate spreadsheet imports use authenticated admin-only server functions with explicit column mapping and duplicate checks; CVs remain in private storage.
 - Job applicants use the existing job/candidate link table; direct applications synchronize links by confirmed vacancy slug so all applicant views share the same records.
+- Candidate accounts use public.profiles without staff roles; a restricted status RPC resolves applications only from the authenticated user's confirmed email and projects no internal notes or CV paths.
+- Ship bilingual editable CV templates as same-origin static downloads to keep document generation out of the server runtime.
