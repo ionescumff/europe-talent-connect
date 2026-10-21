@@ -1,3 +1,4 @@
+import { resolveSiteLanguage } from "./site-language";
 import { Button } from "@/components/ui/button";
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 
@@ -11,7 +12,7 @@ export function LangProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("ro");
   useEffect(() => {
     const saved = localStorage.getItem(KEY);
-    if (saved === "ro" || saved === "en") setLangState(saved);
+    setLangState(resolveSiteLanguage(saved));
   }, []);
   useEffect(() => {
     document.documentElement.lang = lang;

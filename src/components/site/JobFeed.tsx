@@ -32,17 +32,17 @@ export function JobFeed() {
   }, []);
 
   const label = (a: string) =>
-    a === "published" ? t("New job", "Job nou") : a === "updated" ? t("Updated", "Actualizat") : t("Closed", "Închis");
+    a === "published" ? t("New job", "Post nou") : a === "updated" ? t("Updated", "Actualizat") : t("Closed", "Închis");
 
   return (
-    <section className="px-6 pb-6 md:px-8 lg:px-14">
-      <div className="glass-card rounded-[1.75rem] p-5">
+    <section className="px-6 pt-8 pb-0 md:px-8 lg:px-14">
+      <div className="border-b border-border pb-6">
         <div className="mb-3 flex items-center gap-2 font-display text-xs font-bold uppercase tracking-[0.2em] text-accent">
           <span className="relative flex size-2"><span className="absolute inline-flex size-full animate-ping rounded-full bg-accent opacity-75" /><span className="relative inline-flex size-2 rounded-full bg-accent" /></span>
           {t("Live job updates", "Actualizări în timp real")}
         </div>
         {events.length === 0 ? (
-          <p className="text-sm text-brand/60">{t("New and updated job posts will appear here the moment they go live.", "Joburile noi și actualizate vor apărea aici imediat ce sunt publicate.")}</p>
+          <p className="text-sm text-brand/60">{t("New and updated job posts will appear here the moment they go live.", "Posturile noi și actualizate vor apărea aici imediat ce sunt publicate.")}</p>
         ) : (
           <ul className="divide-y divide-brand/10">
             {events.map((e) => (

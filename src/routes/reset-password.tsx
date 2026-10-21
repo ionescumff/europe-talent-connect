@@ -2,6 +2,8 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { Button } from "@/components/ui/button";
+import { useLang } from "@/lib/i18n";
 import { Logo } from "@/components/site/Logo";
 
 export const Route = createFileRoute("/reset-password")({
@@ -24,6 +26,8 @@ export const Route = createFileRoute("/reset-password")({
 function ResetPassword() {
   const navigate = useNavigate();
   const { candidate } = Route.useSearch();
+  const { t } = useLang();
+  const copy = (en: string, ro: string) => candidate ? t(en, ro) : en;
   const [ready, setReady] = useState(false);
   const [busy, setBusy] = useState(false);
 
@@ -47,14 +51,14 @@ function ResetPassword() {
     const f = new FormData(e.currentTarget);
     const password = String(f.get("password"));
     if (password !== String(f.get("confirm"))) {
-      toast.error("The two passwords don't match.");
+      toast.error(copy("The two passwords don't match.", "Parolele nu coincid."));
       return;
     }
     setBusy(true);
     try {
       const { error } = await supabase.auth.updateUser({ password });
       if (error) throw error;
-      toast.success("Password updated.");
+      toast.success(copy("Password updated.", "Parola a fost actualizată."));
       sessionStorage.removeItem("password-recovery");
       await navigate({ to: candidate ? "/candidate-account" : "/crm" });
     } catch (err) {
@@ -65,10 +69,10 @@ function ResetPassword() {
   }
 
   return (
-    <div className="bg-page-glow flex min-h-screen items-center justify-center px-4 text-brand">
+    <div className={`${candidate ? "candidate-site " : ""}bg-page-glow flex min-h-screen items-center justify-center px-4 text-brand`}>
       <div className="glass-card w-full max-w-md p-8">
         <Logo />
-        <h1 className="mt-6 font-display text-2xl font-bold">Set a new password</h1>
+        <h1 className="mt-6 font-display text-2xl font-bold">{copy("Set a new password", "Alege o parolă nouă")}</h1>
         {ready ? (
           <form onSubmit={onSubmit} className="mt-6 space-y-4">
             <input
@@ -76,7 +80,8 @@ function ResetPassword() {
               type="password"
               required
               minLength={8}
-              placeholder="New password"
+              aria-label={copy("New password", "Parolă nouă")}
+              placeholder={copy("New password", "Parolă nouă")}
               className="field w-full"
               autoComplete="new-password"
             />
@@ -85,21 +90,21 @@ function ResetPassword() {
               type="password"
               required
               minLength={8}
-              placeholder="Repeat new password"
+              aria-label={copy("Repeat new password", "Repetă parola nouă")}
+              placeholder={copy("Repeat new password", "Repetă parola nouă")}
               className="field w-full"
               autoComplete="new-password"
             />
-            <button
+            <Button
               disabled={busy}
               className="w-full rounded-full bg-accent py-3 text-sm font-semibold text-accent-foreground shadow-accent disabled:opacity-60"
             >
-              {busy ? "Please wait…" : "Save new password"}
-            </button>
+              {busy ? copy("Please wait…", "Te rugăm să aștepți…") : copy("Save new password", "Salvează parola nouă")}
+            </Button>
           </form>
         ) : (
           <p className="mt-4 text-sm text-muted-foreground">
-            Open this page from the reset link in your email. If the link has expired, request a new
-            one from the staff portal.
+            {copy("Open this page from the reset link in your email. If the link has expired, request a new one from the sign-in page.", "Deschide această pagină din linkul primit prin email. Dacă linkul a expirat, solicită unul nou din pagina de autentificare.")}
           </p>
         )}
       </div>

@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
@@ -40,24 +41,24 @@ export function EmployerMessageForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="glass-card grid gap-3 p-6 sm:grid-cols-2">
+    <form onSubmit={onSubmit} className="grid min-w-0 gap-4 border-t border-border py-8 sm:grid-cols-2">
       <div className="sm:col-span-2">
         <h3 className="font-display text-lg font-bold">Message the co-founders</h3>
         <p className="text-sm text-muted-foreground">For employers: your message goes straight to our co-founders and admins.</p>
       </div>
-      <input name="name" required minLength={2} placeholder="Your name" className="field" />
-      <input name="company" required minLength={2} placeholder="Company" className="field" />
-      <input name="email" type="email" required placeholder="Work email" className="field" />
-      <input name="phone" placeholder="Phone (optional)" className="field" />
-      <input name="subject" required minLength={2} placeholder="Subject" className="field sm:col-span-2" />
-      <textarea name="body" required minLength={5} rows={5} placeholder="Your message" className="field sm:col-span-2" />
+      <input name="name" autoComplete="name" aria-label="Your name" required minLength={2} placeholder="Your name" className="field" />
+      <input name="company" autoComplete="organization" aria-label="Company" required minLength={2} placeholder="Company" className="field" />
+      <input name="email" aria-label="Work email" autoComplete="email" type="email" required placeholder="Work email" className="field" />
+      <input name="phone" type="tel" inputMode="tel" autoComplete="tel" aria-label="Phone (optional)" placeholder="Phone (optional)" className="field" />
+      <input name="subject" aria-label="Subject" required minLength={2} placeholder="Subject" className="field sm:col-span-2" />
+      <textarea name="body" aria-label="Your message" required minLength={5} rows={5} placeholder="Your message" className="field h-auto py-3 sm:col-span-2" />
       <label className="flex items-start gap-2 text-xs text-muted-foreground sm:col-span-2">
         <input type="checkbox" name="privacy" required className="mt-0.5" />
         <span>I have read the <Link to="/privacy" className="underline">privacy notice</Link>.</span>
       </label>
-      <button disabled={busy} className="rounded-full bg-accent px-6 py-3 font-semibold text-accent-foreground disabled:opacity-60 sm:col-span-2">
+      <Button disabled={busy} className="rounded-full bg-accent px-6 py-3 font-semibold text-accent-foreground disabled:opacity-60 sm:col-span-2">
         {busy ? "Sending…" : "Send message"}
-      </button>
+      </Button>
     </form>
   );
 }

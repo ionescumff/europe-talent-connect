@@ -32,8 +32,8 @@ export function Hero() {
             style={{ animationDelay: "160ms" }}
           >
             {t(
-              "Looking for work in warehousing, production, logistics or construction? Send your CV and our Romanian–Dutch team will contact you about suitable confirmed vacancies. Recruitment is free for candidates.",
-              "Cauți un loc de muncă în depozite, producție, logistică sau construcții? Trimite CV-ul, iar echipa noastră româno-olandeză te va contacta pentru oportunități confirmate, potrivite experienței tale. Recrutarea este gratuită pentru candidați."
+              "Send your CV for opportunities in warehousing, production, logistics or construction. Our team will contact you about confirmed vacancies that suit your experience.",
+              "Trimite CV-ul pentru oportunități în depozite, producție, logistică sau construcții. Echipa noastră te contactează pentru posturi confirmate, potrivite experienței tale."
             )}
           </p>
           <div
@@ -54,7 +54,7 @@ export function Hero() {
             </a></Button>
           </div>
           <div
-            className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-medium text-brand/60 animate-rise"
+            className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-medium text-brand/60 animate-rise"
             style={{ animationDelay: "320ms" }}
           >
             {trust.map((tStr) => (
@@ -65,7 +65,7 @@ export function Hero() {
             ))}
           </div>
           <div
-            className="mt-7 inline-flex rounded-full bg-accent px-5 py-3 text-sm font-semibold text-accent-foreground shadow-accent animate-rise"
+            className="mt-5 inline-flex rounded-full bg-accent px-5 py-3 text-sm font-semibold text-accent-foreground shadow-accent animate-rise"
             style={{ animationDelay: "400ms" }}
           >
             {t("No recruitment fee to candidates", "Fără taxe de recrutare pentru candidați")}
