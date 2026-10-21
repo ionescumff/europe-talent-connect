@@ -1,6 +1,6 @@
 # Roadmap
-- [ ] Candidate portal: basic profiles, email sign-in, private application status, bilingual CV template, and access/download checks
-- [ ] Public site: Romanian by default, polished candidate copy, full spacing and phone/computer layout review; preserve English employer sections and CRM
+- [x] Candidate portal: basic profiles, email sign-in, private application status, bilingual CV template, and authenticated access/download checks
+- [x] Public site: Romanian by default, polished candidate copy, spacing and phone/computer layout review; preserve English employer sections and CRM
 - [x] Audit public and CRM text for English-only wording and English date formatting
 - [x] Clickable candidate rows in CRM
 - [x] Admin panel: employees, roles (admin, co-founder, manager, associate, partner agency), managers, remove, performance, activity log
