@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { resolveSiteLanguage } from "./site-language";
+import { resolveSiteLanguage } from "./site-language.ts";
 
 describe("candidate language preference", () => {
   test("new visitors start in Romanian", () => {
