@@ -2,8 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { InformationPage, InformationSection } from "@/components/site/InformationPage";
 import { useLang } from "@/lib/i18n";
 
-const title = "Privacy & cookies — IONMAN Workforce";
-const description = "How ION MAN WORKFORCE S.R.L. handles candidate, employer and website information under European data protection rules.";
+const title = "Confidențialitate și cookie-uri — IONMAN Workforce";
+const description = "Cum gestionează ION MAN WORKFORCE S.R.L. datele candidaților și angajatorilor, conform normelor europene de protecție a datelor.";
 
 export const Route = createFileRoute("/privacy")({
   head: () => ({ meta: [
@@ -43,7 +43,7 @@ function PrivacyPage() {
         <p>{t("We keep information only for as long as it is needed for the recruitment or business purpose described here, to maintain necessary records, resolve disputes and meet legal duties. The period depends on the relationship, whether an application remains active, and applicable limitation or record-keeping rules. Information is then deleted or anonymised.", "Păstrăm informațiile doar atât timp cât este necesar pentru scopul de recrutare sau de afaceri descris aici, pentru a menține evidențele necesare, a rezolva disputele și a îndeplini obligațiile legale. Perioada depinde de relație, de faptul dacă o candidatură rămâne activă și de regulile aplicabile privind prescripția sau păstrarea înregistrărilor. Ulterior, informațiile sunt șterse sau anonimizate.")}</p>
       </InformationSection>
       <InformationSection title={t("Your rights", "Drepturile tale")}>
-        <p>{t("Subject to the conditions in data protection law, you may ask to access, correct, erase or restrict your information, object to certain processing, receive portable information, or withdraw consent without affecting earlier lawful use. You may also complain to the Romanian data protection authority or the authority where you live or work.", "În condițiile prevăzute de legislația privind protecția datelor, puteți solicita accesul, corectarea, ștergerea sau restricționarea informațiilor dumneavoastră, vă puteți opune anumitor prelucrări, puteți primi informații portabile sau vă puteți retrage consimțământul fără a afecta utilizarea legală anterioară. De asemenea, puteți depune o plângere la autoritatea română de protecție a datelor (ANSPDCP) sau la autoritatea din locul în care locuiți sau lucrați.")}</p>
+        <p>{t("Subject to the conditions in data protection law, you may ask to access, correct, erase or restrict your information, object to certain processing, receive portable information, or withdraw consent without affecting earlier lawful use. You may also complain to the Romanian data protection authority or the authority where you live or work.", "În condițiile prevăzute de legislația privind protecția datelor, puteți solicita accesul, corectarea, ștergerea sau restricționarea informațiilor dumneavoastră, vă puteți opune anumitor prelucrări, puteți primi o copie a datelor într-un format portabil sau vă puteți retrage consimțământul fără a afecta utilizarea legală anterioară. De asemenea, puteți depune o plângere la autoritatea română de protecție a datelor (ANSPDCP) sau la autoritatea din locul în care locuiți sau lucrați.")}</p>
         <p>{t("Send requests to", "Trimiteți cererile la")} <a href="mailto:contact@vreaujobs.eu" className="font-semibold text-brand underline">contact@vreaujobs.eu</a>. {t("We may need to verify your identity before acting.", "Este posibil să fie necesar să vă verificăm identitatea înainte de a acționa.")}</p>
       </InformationSection>
       <InformationSection title={t("Cookies and staff access", "Cookie-uri și accesul personalului")}>

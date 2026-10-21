@@ -5,8 +5,8 @@ import { EmployerMessageForm } from "@/components/site/EmployerMessageForm";
 import { InformationPage, InformationSection } from "@/components/site/InformationPage";
 import { useLang } from "@/lib/i18n";
 
-const title = "Contact & Candidate Info — IONMAN Workforce";
-const description = "Company details for ION MAN WORKFORCE S.R.L. and essential information for EU workers.";
+const title = "Contact și informații pentru candidați — IONMAN Workforce";
+const description = "Contactează echipa IONMAN Workforce. Datele companiei și informații esențiale pentru candidații care caută un loc de muncă în Europa.";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -26,7 +26,7 @@ function ContactPage() {
   const { t } = useLang();
   return (
     <InformationPage 
-      eyebrow={t("Information Hub", "Centru de informații")} 
+      eyebrow={t("Information Hub", "Informații și contact")} 
       title={t("Connect with IONMAN Workforce", "Contactează IONMAN Workforce")} 
       intro={t("Official company details and practical guidance for candidates and employers.", "Detalii oficiale despre companie și îndrumări practice pentru candidați și angajatori.")}
     >
@@ -48,14 +48,14 @@ function ContactPage() {
 
       <div className="my-12 h-px bg-brand/10" />
 
-      <InformationSection title={t("EU Candidate Essentials", "Informații esențiale candidați UE")}>
+      <InformationSection title={t("EU Candidate Essentials", "Ce trebuie să știi înainte de plecare")}>
         <div className="rounded-xl bg-accent/5 p-6 border border-accent/10">
           <div className="flex gap-3 mb-4">
             <ShieldCheck className="size-6 text-accent shrink-0" />
             <p className="text-sm font-semibold">{t("No fees for candidates", "Fără taxe pentru candidați")}</p>
           </div>
           <p className="text-sm leading-relaxed mb-4">
-            {t("As a Romanian citizen, you have the right to work in the EU. We never charge candidates for recruitment. Always confirm your contract terms, housing costs, and net pay before traveling.", "În calitate de cetățean român, aveți dreptul de a lucra în UE. Nu percepem niciodată taxe candidaților pentru recrutare. Confirmați întotdeauna condițiile contractuale, costurile de cazare și salariul net înainte de a călători.")}
+            {t("As a Romanian citizen, you have the right to work in the EU. We never charge candidates for recruitment. Always confirm your contract terms, housing costs, and net pay before traveling.", "Ca cetățean român, ai dreptul să lucrezi în UE. Nu percepem taxe de recrutare candidaților. Confirmă întotdeauna condițiile contractuale, costurile cazării și salariul net înainte de plecare.")}
           </p>
           <Link to="/privacy" className="text-xs font-bold text-accent uppercase tracking-wider hover:underline flex items-center gap-2">
             <Info size={14} /> {t("Read our Privacy & Data terms", "Citește termenii de confidențialitate")}
@@ -83,9 +83,9 @@ function ContactPage() {
 
 function ContactItem({ icon, label, children }: { icon: ReactNode; label: string; children: ReactNode }) {
   return (
-    <div className="glass-card rounded-xl p-5">
+    <div className="min-w-0 border-b border-brand/15 py-6">
       <div className="flex items-center gap-3 text-accent">{icon}<span className="text-xs font-bold uppercase tracking-[0.12em] text-brand/55">{label}</span></div>
-      <div className="mt-3 text-sm text-brand">{children}</div>
+      <div className="mt-3 break-words text-sm text-brand">{children}</div>
     </div>
   );
 }

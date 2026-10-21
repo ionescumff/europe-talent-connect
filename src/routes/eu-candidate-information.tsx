@@ -2,8 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { InformationPage, InformationSection } from "@/components/site/InformationPage";
 import { useLang } from "@/lib/i18n";
 
-const title = "EU candidate information — IONMAN Workforce";
-const description = "Practical information for Romanian and other EU candidates considering work in the Netherlands or Germany.";
+const title = "Munca în Europa: informații pentru candidați — IONMAN Workforce";
+const description = "Ce trebuie să verifici înainte de a lucra în Germania sau Olanda: contract, salariu, cazare și formalități pentru candidații din UE.";
 
 export const Route = createFileRoute("/eu-candidate-information")({
   head: () => ({ meta: [
@@ -22,12 +22,12 @@ function EuCandidatePage() {
       title={t("Know the terms before you travel", "Află condițiile înainte de a călători")} 
       intro={t("Romanian citizens are EU citizens and generally benefit from free movement for work in other EU countries. Practical registrations and job-specific requirements still apply.", "Cetățenii români sunt cetățeni UE și beneficiază, în general, de libera circulație a forței de muncă în alte țări UE. Înregistrările practice și cerințele specifice locului de muncă se aplică în continuare.")}
     >
-      <InformationSection title={t("Before accepting a role", "Înainte de a accepta un rol")}>
+      <InformationSection title={t("Before accepting a role", "Înainte de a accepta un post")}>
         <ul className="list-disc space-y-2 pl-5">
-          <li>{t("Confirm the employer, workplace, job title, start date and contract duration.", "Confirmă angajatorul, locul de muncă, titlul postului, data de începere și durata contractului.")}</li>
-          <li>{t("Check gross pay, expected hours, shift pattern, overtime rules and payment schedule in writing.", "Verifică în scris salariul brut, orele estimate, programul de schimburi, regulile privind orele suplimentare și programul de plată.")}</li>
+          <li>{t("Confirm the employer, workplace, job title, start date and contract duration.", "Confirmă angajatorul, locul de muncă, denumirea postului, data de începere și durata contractului.")}</li>
+          <li>{t("Check gross pay, expected hours, shift pattern, overtime rules and payment schedule in writing.", "Verifică în scris salariul brut, orele estimate, programul de schimburi, regulile privind orele suplimentare și frecvența plății.")}</li>
           <li>{t("Ask what deductions may apply for tax, insurance, transport or accommodation.", "Întreabă ce deduceri se pot aplica pentru taxe, asigurări, transport sau cazare.")}</li>
-          <li>{t("If housing is offered, confirm the address or area, cost, occupancy and conditions before travelling.", "Dacă se oferă cazare, confirmă adresa sau zona, costul, gradul de ocupare și condițiile înainte de a călători.")}</li>
+          <li>{t("If housing is offered, confirm the address or area, cost, occupancy and conditions before travelling.", "Dacă se oferă cazare, confirmă adresa sau zona, costul, numărul de persoane în cazare și condițiile înainte de a călători.")}</li>
           <li>{t("Keep copies of your identity document, agreement and all information you receive.", "Păstrează copii ale documentului de identitate, ale acordului și ale tuturor informațiilor pe care le primești.")}</li>
         </ul>
       </InformationSection>

@@ -9,7 +9,7 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 
-- Apply the approved editorial design through a scoped public-site wrapper; preserve CRM styling and retain `/test` as a separate experiment.
+- Scope shared candidate spacing and accessibility rules to `.candidate-site` and `.public-site`; preserve CRM styling and retain `/test` as a separate experiment so public refinements never leak into staff tools.
 - Keep the test career-advice gallery in its own browser-safe component; reference spreadsheets inform the layout rather than importing third-party stories or claims.
 - Candidate spreadsheet imports use authenticated admin-only server functions with explicit column mapping and duplicate checks; CVs remain in private storage.
 - Job applicants use the existing job/candidate link table; direct applications synchronize links by confirmed vacancy slug so all applicant views share the same records.

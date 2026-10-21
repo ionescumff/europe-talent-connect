@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import heroImage from "@/assets/hero-warehouse.jpg";
 import { useLang } from "@/lib/i18n";
 
@@ -6,51 +7,51 @@ export function Hero() {
   
   const trust = [
     t("Free for candidates", "Gratuit pentru candidați"),
-    t("Housing confirmed in brief", "Cazare confirmată în ofertă"),
-    t("Start & review support", "Suport la plecare și evaluare")
+    t("Conditions confirmed before travel", "Condiții confirmate înainte de plecare"),
+    t("Support from our team", "Sprijin din partea echipei")
   ];
 
   return (
-    <section className="relative px-6 pt-6 pb-16 md:px-8 lg:px-14 lg:pt-8">
+    <section className="home-hero relative px-6 pt-6 pb-16 md:px-8 lg:px-14 lg:pt-8">
       <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_1fr] lg:gap-10">
         <div className="relative z-10">
           <div className="inline-flex items-center gap-2 rounded-full border border-brand/10 bg-brand/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-brand/70 animate-rise">
             <span className="size-2 rounded-full bg-accent" />
-            {t("Romanian talent · EU destinations", "Talent românesc · Destinații UE")}
+            {t("Romanian talent · EU destinations", "Candidați din România · Oportunități în Europa")}
           </div>
           <h1
-            className="mt-6 font-display text-5xl font-extrabold leading-[0.95] tracking-tight md:text-6xl lg:text-7xl animate-rise"
+            className="mt-6 font-display text-4xl font-extrabold leading-[1.12] md:text-5xl lg:text-6xl animate-rise"
             style={{ animationDelay: "80ms" }}
           >
-            {t("Fill the ", "Acoperă ")}
-            <span className="text-accent">{t("labour gap", "deficitul de forță de muncă")}</span>
-            {t(" with vetted European crews.", " cu echipe europene verificate.")}
+            {t("Work in ", "Lucrează în ")}
+            <span className="text-accent">{t("Germany or the Netherlands", "Germania sau Olanda")}</span>
+            {t(" with IONMAN Workforce.", " cu IONMAN Workforce.")}
           </h1>
           <p
             className="mt-6 max-w-lg text-lg leading-relaxed text-brand/70 animate-rise"
             style={{ animationDelay: "160ms" }}
           >
             {t(
-              "Dutch–Romanian roots, direct access in Romania and the Netherlands. We source warehousing, production, logistics and construction support talent for employers in Germany and the Netherlands — no fee ever charged to candidates.",
-              "Rădăcini olandezo-române, acces direct în România și Olanda. Recrutăm personal pentru depozite, producție, logistică și construcții pentru angajatori din Germania și Olanda — fără nicio taxă pentru candidați."
+              "Looking for work in warehousing, production, logistics or construction? Send your CV and our Romanian–Dutch team will contact you about suitable confirmed vacancies. Recruitment is free for candidates.",
+              "Cauți un loc de muncă în depozite, producție, logistică sau construcții? Trimite CV-ul, iar echipa noastră româno-olandeză te va contacta pentru oportunități confirmate, potrivite experienței tale. Recrutarea este gratuită pentru candidați."
             )}
           </p>
           <div
             className="mt-8 flex flex-wrap items-center gap-4 animate-rise"
             style={{ animationDelay: "240ms" }}
           >
-            <a
+            <Button asChild className="h-auto rounded-full p-0"><a
               href="#cv"
               className="rounded-full bg-brand px-8 py-4 text-base font-semibold text-brand-foreground shadow-brand transition-transform hover:-translate-y-0.5"
             >
-              {t("Leave your CV", "Depune CV-ul")}
-            </a>
-            <a
-              href="#employers"
+              {t("Leave your CV", "Trimite CV-ul")}
+            </a></Button>
+            <Button asChild variant="ghost" className="h-auto rounded-full p-0"><a
+              href="/jobs"
               className="rounded-full border border-brand/20 px-6 py-4 font-semibold text-brand transition-colors hover:bg-brand/5"
             >
-              {t("Post a vacancy brief", "Publică o ofertă de muncă")}
-            </a>
+              {t("View available jobs", "Vezi locurile de muncă")}
+            </a></Button>
           </div>
           <div
             className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-medium text-brand/60 animate-rise"
@@ -72,7 +73,7 @@ export function Hero() {
         </div>
 
         <div className="relative mx-auto flex w-full max-w-md flex-col gap-4 lg:block lg:max-w-none lg:min-h-[520px]">
-          <div className="group relative w-full overflow-hidden rounded-[1.5rem] border border-glass-border shadow-glass lg:absolute lg:-top-4 lg:-right-6 lg:w-[78%] lg:rotate-[7deg] lg:rounded-[2rem] lg:animate-float">
+          <div className="group relative w-full overflow-hidden rounded-[1.5rem] border border-glass-border shadow-glass lg:absolute lg:-top-4 lg:-right-6 lg:w-[78%] lg:rounded-[2rem]">
             <img
               src={heroImage}
               alt={t("Workers in hi-vis vests walking through a warehouse", "Muncitori în veste reflectorizante mergând printr-un depozit")}
@@ -81,15 +82,7 @@ export function Hero() {
               className="aspect-[4/3] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 lg:aspect-[3/4]"
             />
           </div>
-          <div className="relative flex w-full flex-col justify-between gap-6 overflow-hidden rounded-[1.5rem] lg:absolute lg:bottom-0 lg:left-0 lg:aspect-[4/5] lg:w-[62%] lg:-rotate-[6deg] lg:gap-0 lg:rounded-[2rem] border border-brand-foreground/10 bg-gradient-to-br from-brand via-brand/95 to-[#0f1c30] p-6 shadow-brand backdrop-blur-xl">
-            <div
-              className="pointer-events-none absolute -right-16 -top-16 size-48 rounded-full bg-accent/15 blur-3xl"
-              aria-hidden="true"
-            />
-            <div
-              className="pointer-events-none absolute -bottom-20 -left-10 size-40 rounded-full bg-accent/10 blur-3xl"
-              aria-hidden="true"
-            />
+          <div className="relative flex w-full flex-col justify-between gap-6 overflow-hidden rounded-[1.5rem] lg:absolute lg:bottom-0 lg:left-0 lg:aspect-[4/5] lg:w-[62%]  lg:gap-0 lg:rounded-[2rem] border border-brand-foreground/10 bg-brand p-6 shadow-brand backdrop-blur-xl">
             <div className="relative">
               <div className="font-display text-2xl font-bold leading-tight text-brand-foreground">
                 {t("Direct access, no middlemen.", "Acces direct, fără intermediari.")}
@@ -99,8 +92,8 @@ export function Hero() {
               {[
                 t("Vacancy brief", "Oferta de muncă"),
                 t("Search & screening", "Căutare și selecție"),
-                t("Client selection", "Selecția clientului"),
-                t("Start & review", "Început și evaluare")
+                t("Client selection", "Selecția angajatorului"),
+                t("Start & review", "Începerea activității și evaluare")
               ].map(
                 (step, i) => (
                   <li key={step} className="relative flex gap-3.5 pb-3 last:pb-0">

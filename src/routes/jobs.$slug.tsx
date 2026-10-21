@@ -44,13 +44,13 @@ function JobNotFound() {
     <div className="public-site min-h-screen">
       <Nav />
       <div className="px-6 py-24 text-center md:px-8">
-        <h1 className="font-display text-3xl font-extrabold">{t("This job is no longer listed", "Acest job nu mai este disponibil")}</h1>
+        <h1 className="font-display text-3xl font-extrabold">{t("This job is no longer listed", "Acest post nu mai este disponibil")}</h1>
         <p className="mt-3 text-sm text-brand/60">{t("It may have been filled. See what else is open.", "Este posibil să fi fost ocupat. Vezi ce alte posturi sunt deschise.")}</p>
         <Link
           to="/jobs"
           className="mt-6 inline-block rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-foreground shadow-accent"
         >
-          {t("Back to all jobs", "Înapoi la toate joburile")}
+          {t("Back to all jobs", "Înapoi la toate posturile")}
         </Link>
       </div>
       <Footer />
@@ -85,7 +85,7 @@ function JobDetail() {
           to="/jobs"
           className="inline-flex items-center gap-2 text-sm font-semibold text-brand/60 transition-colors hover:text-accent"
         >
-          <ArrowLeft className="size-4" /> {t("All jobs", "Toate joburile")}
+          <ArrowLeft className="size-4" /> {t("All jobs", "Toate posturile")}
         </Link>
       </div>
 
@@ -106,14 +106,14 @@ function JobDetail() {
       </header>
 
       <div className="grid gap-6 px-6 pb-16 md:px-8 lg:grid-cols-[1.3fr_1fr] lg:px-14">
-        <div className="space-y-6">
+        <div className="min-w-0 space-y-6">
           {job.company && (
-            <section className="glass-card rounded-[1.75rem] p-7">
+            <section className="border-t border-border py-7">
               <h2 className="font-display text-xl font-bold">{t("About", "Despre")} {job.company}</h2>
               {job.companyDetails && <p className="mt-3 whitespace-pre-line text-sm text-brand/75">{job.companyDetails}</p>}
             </section>
           )}
-          {job.tasks.length > 0 && <section className="glass-card rounded-[1.75rem] p-7">
+          {job.tasks.length > 0 && <section className="border-t border-border py-7">
             <h2 className="font-display text-xl font-bold">{t("What you'll do", "Ce vei face")}</h2>
             <ul className="mt-4 space-y-3 text-sm text-brand/75">
               {job.tasks.map((t) => (
@@ -125,8 +125,8 @@ function JobDetail() {
             </ul>
           </section>}
 
-          {job.requirements.length > 0 && <section className="glass-card rounded-[1.75rem] p-7">
-            <h2 className="font-display text-xl font-bold">{t("What you need", "Ce ai nevoie")}</h2>
+          {job.requirements.length > 0 && <section className="border-t border-border py-7">
+            <h2 className="font-display text-xl font-bold">{t("What you need", "Ce îți trebuie")}</h2>
             <ul className="mt-4 space-y-3 text-sm text-brand/75">
               {job.requirements.map((t) => (
                 <li key={t} className="flex gap-3">
@@ -137,7 +137,7 @@ function JobDetail() {
             </ul>
           </section>}
 
-          {job.offer.length > 0 && <section className="glass-card rounded-[1.75rem] p-7">
+          {job.offer.length > 0 && <section className="border-t border-border py-7">
             <h2 className="font-display text-xl font-bold">{t("What we offer", "Ce oferim")}</h2>
             <ul className="mt-4 space-y-3 text-sm text-brand/75">
               {job.offer.map((t) => (
@@ -151,13 +151,13 @@ function JobDetail() {
         </div>
 
         <aside className="space-y-6 lg:sticky lg:top-6 lg:self-start">
-          <div className="glass-card rounded-[1.75rem] p-7">
-            <h2 className="font-display text-lg font-bold">{t("Job details", "Detaliile jobului")}</h2>
+          <div className="border-t border-border py-7">
+            <h2 className="font-display text-lg font-bold">{t("Job details", "Detaliile postului")}</h2>
             <dl className="mt-4 space-y-3 text-sm">
               {facts.map(([k, v]) => (
-                <div key={k} className="flex justify-between gap-6 border-b border-border pb-3 last:border-0 last:pb-0">
+                <div key={k} className="grid grid-cols-[minmax(0,0.7fr)_minmax(0,1fr)] gap-4 border-b border-border pb-3 last:border-0 last:pb-0">
                   <dt className="shrink-0 text-brand/50">{k}</dt>
-                  <dd className="text-right font-medium text-brand/85">{v}</dd>
+                  <dd className="break-words text-right font-medium text-brand/85">{v}</dd>
                 </div>
               ))}
             </dl>
@@ -165,16 +165,16 @@ function JobDetail() {
               href={`/?job=${job.slug}#cv`}
               className="mt-6 block rounded-xl bg-accent px-6 py-3.5 text-center text-sm font-semibold text-accent-foreground shadow-accent transition-transform hover:-translate-y-0.5"
             >
-              {t("Apply — leave your CV", "Aplică — lasă CV-ul tău")}
+              {t("Apply — leave your CV", "Aplică — trimite CV-ul")}
             </a>
             <p className="mt-3 text-center text-xs text-brand/50">
-              {t("Free for candidates. Mention this job and we'll call you back.", "Gratuit pentru candidați. Menționează acest job și te vom suna înapoi.")}
+              {t("Free for candidates. Mention this job and we'll call you back.", "Gratuit pentru candidați. Trimite CV-ul pentru acest post, iar echipa noastră te va contacta.")}
             </p>
           </div>
 
           {related.length > 0 && (
-            <div className="glass-card rounded-[1.75rem] p-7">
-              <h2 className="font-display text-lg font-bold">{t("Similar jobs", "Joburi similare")}</h2>
+            <div className="border-t border-border py-7">
+              <h2 className="font-display text-lg font-bold">{t("Similar jobs", "Posturi similare")}</h2>
               <div className="mt-4 space-y-3">
                 {related.map((r) => (
                   <Link

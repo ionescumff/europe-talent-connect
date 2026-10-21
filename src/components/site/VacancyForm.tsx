@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useState, type FormEvent } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
@@ -45,7 +46,7 @@ export function VacancyForm() {
   return (
     <section id="employers" className="relative scroll-mt-24 px-6 pb-20 md:px-8 lg:px-14">
       <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr]">
-        <div className="glass-card rounded-[2rem] p-8 lg:p-10">
+        <div className="min-w-0 border-t border-brand/15 pt-8 lg:pt-10">
           <div className="font-display text-xs font-bold uppercase tracking-[0.2em] text-accent">
             For employers &amp; staffing agencies
           </div>
@@ -66,7 +67,7 @@ export function VacancyForm() {
           </ul>
         </div>
 
-        <div className="glass-card rounded-[2rem] p-8 lg:p-10">
+        <div className="min-w-0 border-t border-brand/15 pt-8 lg:pt-10">
           {done ? (
             <div className="flex h-full flex-col items-center justify-center gap-3 text-center">
               <CheckCircle2 className="size-10 text-accent" />
@@ -94,7 +95,7 @@ export function VacancyForm() {
                 </label>
                 <label className="block">
                   <span className="text-xs font-semibold text-brand/60">Phone (optional)</span>
-                  <input name="phone" type="tel" className="field mt-1" />
+                  <input name="phone" type="tel" inputMode="tel" autoComplete="tel" placeholder="+40 7xx xxx xxx" className="field mt-1" />
                 </label>
               </div>
               <label className="block">
@@ -117,18 +118,18 @@ export function VacancyForm() {
                 />
               </label>
               <label className="flex items-start gap-3 text-xs leading-5 text-brand/60">
-                <input name="privacyAccepted" type="checkbox" required className="mt-1 size-4 accent-brand" />
+                <input name="privacyAccepted" type="checkbox" required className="mt-1 size-4 shrink-0 accent-brand" />
                 <span>
                   I have read the <Link to="/privacy" className="font-semibold text-brand underline underline-offset-2">privacy notice</Link> and agree to be contacted about this enquiry.
                 </span>
               </label>
-              <button
+              <Button
                 type="submit"
                 disabled={busy}
                 className="h-12 w-full rounded-xl bg-accent font-semibold text-accent-foreground shadow-accent transition-transform hover:-translate-y-0.5 disabled:opacity-60"
               >
                 {busy ? "Sending…" : "Send vacancy brief"}
-              </button>
+              </Button>
             </form>
           )}
         </div>

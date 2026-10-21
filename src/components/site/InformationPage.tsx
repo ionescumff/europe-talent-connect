@@ -23,12 +23,12 @@ export function InformationPage({
         <Link to="/" className="text-sm font-semibold text-brand/60 transition-colors hover:text-brand">
           {t("← Back to home", "← Înapoi la pagina principală")}
         </Link>
-        <header className="max-w-3xl py-10">
+        <header className="max-w-3xl py-8 md:py-12">
           <p className="font-display text-xs font-bold uppercase tracking-[0.2em] text-accent">{eyebrow}</p>
-          <h1 className="mt-4 font-display text-4xl font-extrabold leading-tight md:text-6xl">{title}</h1>
+          <h1 className="mt-4 font-display text-3xl font-extrabold leading-[1.2] md:text-5xl">{title}</h1>
           <p className="mt-5 text-base leading-7 text-brand/70 md:text-lg">{intro}</p>
         </header>
-        <div className="space-y-8">{children}</div>
+        <div className="min-w-0 space-y-10">{children}</div>
       </main>
       <Footer />
     </div>

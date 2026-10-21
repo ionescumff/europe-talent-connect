@@ -57,17 +57,17 @@ function CandidateSignIn() {
   }
   function changeMode(next: typeof mode) { setMode(next); setNotice(""); setError(""); }
 
-  return <div className="min-h-screen bg-background text-foreground">
-    <header className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-6"><Logo /><LangSwitch /></header>
+  return <div className="candidate-site min-h-screen bg-background text-foreground">
+    <header className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-6"><Logo /><LangSwitch /></header>
     <main className="mx-auto grid max-w-6xl gap-10 px-5 py-10 md:grid-cols-2 md:gap-16 md:py-20">
       <section className="min-w-0">
         <p className="mb-5 text-sm font-semibold text-muted-foreground">{t("YOUR NEXT CHAPTER", "URMĂTORUL TĂU CAPITOL")}</p>
-        <h1 className="max-w-lg font-display text-4xl font-bold leading-tight md:text-5xl">{t("Your candidate portal", "Portalul tău de candidat")}</h1>
-        <p className="mt-6 max-w-md text-lg leading-8 text-muted-foreground">{t("A new opportunity starts with you.", "O nouă oportunitate începe cu tine.")}</p>
+        <h1 className="max-w-lg font-display text-4xl font-bold leading-tight md:text-5xl">{t("Your candidate portal", "Contul tău de candidat")}</h1>
+        <p className="mt-6 max-w-md text-lg leading-8 text-muted-foreground">{t("Stay in touch with your application.", "Fii la curent cu candidatura ta.")}</p>
         <div className="mt-8 flex items-center gap-3 border-t border-border pt-6"><ShieldCheck className="size-6 text-primary" /><span>{t("No recruitment fee to candidates", "Fără taxe de recrutare pentru candidați")}</span></div>
         <Button asChild variant="link" className="mt-6 h-auto p-0"><Link to="/jobs">{t("Explore available jobs", "Vezi locurile de muncă")}<ArrowRight /></Link></Button>
       </section>
-      <section className="min-w-0 border-t border-border pt-6 md:border-l md:border-t-0 md:pl-12 md:pt-0">
+      <section className="min-w-0 border-t border-border pt-8 md:border-l md:border-t-0 md:pl-12 md:pt-0">
         <h2 className="font-display text-2xl font-bold">{mode === "signup" ? t("Create your account", "Creează-ți contul") : mode === "reset" ? t("Reset password", "Resetează parola") : t("Welcome back", "Bine ai revenit")}</h2>
         <p className="mt-3 text-sm leading-6 text-muted-foreground">{t("Use the same email address you used when applying.", "Folosește aceeași adresă de email cu care ai aplicat.")}</p>
         <form onSubmit={submit} className="mt-6 space-y-5">
