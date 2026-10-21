@@ -6,7 +6,7 @@ import { Logo } from "@/components/site/Logo";
 
 export const Route = createFileRoute("/reset-password")({
   ssr: false,
-  validateSearch: (search: Record<string, unknown>) => ({ candidate: search.candidate === true || search.candidate === "true" }),
+  validateSearch: (search: Record<string, unknown>) => ({ candidate: search["candidate"] === true || search["candidate"] === "true" }),
   head: () => ({
     meta: [
       { title: "Set a new password — IONMAN Workforce" },
