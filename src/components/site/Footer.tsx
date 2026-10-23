@@ -6,7 +6,7 @@ import { useLang } from "@/lib/i18n";
 const socials = [
   {
     label: "Instagram",
-    href: "https://www.instagram.com/ionmanworkforce.eu",
+    href: "https://www.instagram.com/ionmanworkforce.eu/",
     icon: Instagram,
   },
   {
