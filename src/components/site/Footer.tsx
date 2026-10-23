@@ -28,7 +28,9 @@ export function Footer() {
     <footer className="relative border-t border-brand/10 px-6 py-10 text-sm text-brand/60 md:px-8 lg:px-14">
       <div className="grid gap-8 md:grid-cols-[1.35fr_1fr_1fr]">
         <div>
-          <Logo small />
+          <div className="inline-flex rounded-md bg-white px-3 py-2">
+            <Logo small />
+          </div>
           <p className="mt-4 max-w-sm leading-6">
             {t(
               "European workforce recruitment from Romania for employers and staffing partners in the Netherlands and Germany.",
