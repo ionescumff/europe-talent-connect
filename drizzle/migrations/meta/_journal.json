@@ -85,6 +85,13 @@
       "when": 1792557352548,
       "tag": "0011_candidate_portal_profiles_and_private_status",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1792722963585,
+      "tag": "0012_allow_admins_to_permanently_delete_staff_profile_entries",
+      "breakpoints": true
     }
   ]
 }

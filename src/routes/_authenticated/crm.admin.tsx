@@ -272,10 +272,15 @@ function TeamTab() {
   }
 
   async function remove(userId: string) {
-    if (!confirm("Remove this employee's access and unassign all their leads?")) return;
+    if (!confirm("Remove this employee permanently? Their access is revoked, their leads become unassigned and their entry disappears from this list.")) return;
     await supabase.from("cv_submissions").update({ assigned_to: null }).eq("assigned_to", userId);
     await supabase.from("vacancy_enquiries").update({ assigned_to: null }).eq("assigned_to", userId);
+    await supabase.from("staff_profiles").update({ manager_id: null }).eq("manager_id", userId);
     await setRole(userId, "none");
+    const { error } = await supabase.from("staff_profiles").delete().eq("user_id", userId);
+    if (error) { toast.error("Could not remove this employee"); return; }
+    toast.success("Employee removed permanently");
+    qc.invalidateQueries({ queryKey: ["team"] });
     qc.invalidateQueries({ queryKey: ["candidates"] });
     qc.invalidateQueries({ queryKey: ["enquiries"] });
   }
