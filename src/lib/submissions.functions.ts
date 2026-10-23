@@ -97,14 +97,14 @@ function generatePassword(): string {
   const all = upper + lower + digits;
   const bytes = new Uint8Array(12);
   crypto.getRandomValues(bytes);
-  const pick = (set: string, i: number) => set[bytes[i] % set.length];
+  const pick = (set: string, i: number) => set[bytes[i]! % set.length]!;
   // Guarantee one of each class, then fill randomly.
   const chars = [pick(upper, 0), pick(lower, 1), pick(digits, 2)];
   for (let i = 3; i < 12; i++) chars.push(pick(all, i));
   // Shuffle
   for (let i = chars.length - 1; i > 0; i--) {
-    const j = bytes[i] % (i + 1);
-    [chars[i], chars[j]] = [chars[j], chars[i]];
+    const j = bytes[i]! % (i + 1);
+    [chars[i], chars[j]] = [chars[j]!, chars[i]!];
   }
   return chars.join("");
 }
