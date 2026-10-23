@@ -38,9 +38,9 @@ export function Process() {
                 "Un proces transparent pentru candidații români și angajatorii din Olanda și Germania. Confirmăm postul și condițiile înainte de plecare. Recrutarea este întotdeauna gratuită pentru candidați."
               )}
             </p>
-            <Button asChild className="mt-8 h-auto rounded-full p-0"><a
+            <Button asChild className="mt-8 h-auto rounded-full bg-accent p-0 text-accent-foreground hover:bg-accent/90"><a
               href="#cv"
-              className="inline-block rounded-full bg-accent px-7 py-3.5 font-semibold text-accent-foreground transition-transform hover:-translate-y-0.5"
+              className="inline-block rounded-full px-7 py-3.5 font-semibold shadow-accent transition-transform hover:-translate-y-0.5"
             >
               {t("Leave your CV", "Trimite CV-ul")}
             </a></Button>

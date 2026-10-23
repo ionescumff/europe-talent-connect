@@ -31,4 +31,5 @@
 - [x] Test page header: show only "ION MAN WORKFORCE" (remove the extra label)
 - [x] Phone: natural, untilted homepage photos; interactive sector photo cards
 - [x] Hero: reposition the "No recruitment fee to candidates" badge so it sits better on the photo
-- [x] Footer: Instagram, Facebook and LinkedIn links pointing at @vreaujobs.eu
+- [x] Footer: Instagram, Facebook and LinkedIn links pointing at @ionmanworkforce.eu
+- [x] Process panel: "Trimite CV-ul" button in the same gold as the other page buttons
