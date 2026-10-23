@@ -6,17 +6,17 @@ import { useLang } from "@/lib/i18n";
 const socials = [
   {
     label: "Instagram",
-    href: "https://www.instagram.com/vreaujobs.eu",
+    href: "https://www.instagram.com/ionmanworkforce.eu",
     icon: Instagram,
   },
   {
     label: "Facebook",
-    href: "https://www.facebook.com/vreaujobs.eu",
+    href: "https://www.facebook.com/ionmanworkforce.eu",
     icon: Facebook,
   },
   {
     label: "LinkedIn",
-    href: "https://www.linkedin.com/company/vreaujobs.eu",
+    href: "https://www.linkedin.com/company/ionmanworkforce.eu",
     icon: Linkedin,
   },
 ];
