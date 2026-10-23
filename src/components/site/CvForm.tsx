@@ -15,6 +15,7 @@ export function CvForm({ availableJobs = [] }: { availableJobs?: Job[] }) {
   const [fileName, setFileName] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
+  const [accountEmail, setAccountEmail] = useState(false);
   const [job, setJob] = useState<Job | null>(null);
 
   useEffect(() => {
@@ -34,7 +35,8 @@ export function CvForm({ availableJobs = [] }: { availableJobs?: Job[] }) {
     }
     setBusy(true);
     try {
-      await send({ data });
+      const result = await send({ data });
+      setAccountEmail(Boolean(result?.accountCreated));
       setDone(true);
       form.reset();
       setFileName(null);
@@ -78,6 +80,14 @@ export function CvForm({ availableJobs = [] }: { availableJobs?: Job[] }) {
             <p className="text-sm text-brand/60">
               {t("Our team will review your profile and contact you about matching vacancies.", "Echipa noastră îți va analiza profilul și te va contacta pentru oportunitățile potrivite.")}
             </p>
+            {accountEmail && (
+              <p className="rounded-xl bg-accent/10 px-4 py-3 text-sm font-medium text-brand">
+                {t(
+                  "We've emailed you the sign-in details for your candidate account, where you can follow your application.",
+                  "Ți-am trimis pe email datele de autentificare pentru contul tău de candidat, unde poți urmări candidatura."
+                )}
+              </p>
+            )}
             <Button variant="ghost"
               type="button"
               onClick={() => setDone(false)}
