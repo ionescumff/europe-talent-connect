@@ -59,7 +59,7 @@ export function Footer() {
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`${s.label} — @vreaujobs.eu`}
+                  aria-label={`${s.label} — @ionmanworkforce.eu`}
                   className="grid size-11 place-items-center rounded-full border border-brand/15 text-brand/60 transition-colors hover:border-brand/40 hover:text-brand"
                 >
                   <Icon className="size-4" aria-hidden="true" />
