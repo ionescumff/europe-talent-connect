@@ -53,7 +53,7 @@ export const submitCv = createServerFn({ method: "POST" })
       throw new Error("We couldn't save your CV. Please try again.");
     }
 
-    const { error: insertError } = await supabaseAdmin.from("cv_submissions").insert({
+    const { data: submission, error: insertError } = await supabaseAdmin.from("cv_submissions").insert({
       full_name: fields.fullName,
       phone: fields.phone,
       email: fields.email || null,
@@ -63,14 +63,80 @@ export const submitCv = createServerFn({ method: "POST" })
       cv_path: path,
       cv_filename: file.name,
       applied_job: fields.appliedJob || null,
-    });
+    }).select("id").single();
     if (insertError) {
       console.error("CV insert failed", insertError);
       throw new Error("We couldn't save your details. Please try again.");
     }
 
-    return { ok: true as const };
+    // Create a candidate account with a generated password and email the
+    // credentials. Never let account/email problems fail the CV submission.
+    let accountCreated = false;
+    if (fields.email) {
+      try {
+        accountCreated = await createCandidateAccount(supabaseAdmin, {
+          email: fields.email,
+          fullName: fields.fullName,
+          phone: fields.phone,
+          submissionId: submission?.id ?? crypto.randomUUID(),
+        });
+      } catch (err) {
+        console.error("Candidate account creation failed", err);
+      }
+    }
+
+    return { ok: true as const, accountCreated };
   });
+
+const SITE_URL = "https://europe-talent-connect.lovable.app";
+
+function generatePassword(): string {
+  const upper = "ABCDEFGHJKLMNPQRSTUVWXYZ";
+  const lower = "abcdefghijkmnpqrstuvwxyz";
+  const digits = "23456789";
+  const all = upper + lower + digits;
+  const bytes = new Uint8Array(12);
+  crypto.getRandomValues(bytes);
+  const pick = (set: string, i: number) => set[bytes[i] % set.length];
+  // Guarantee one of each class, then fill randomly.
+  const chars = [pick(upper, 0), pick(lower, 1), pick(digits, 2)];
+  for (let i = 3; i < 12; i++) chars.push(pick(all, i));
+  // Shuffle
+  for (let i = chars.length - 1; i > 0; i--) {
+    const j = bytes[i] % (i + 1);
+    [chars[i], chars[j]] = [chars[j], chars[i]];
+  }
+  return chars.join("");
+}
+
+async function createCandidateAccount(
+  supabaseAdmin: any,
+  { email, fullName, phone, submissionId }: { email: string; fullName: string; phone: string; submissionId: string },
+): Promise<boolean> {
+  const password = generatePassword();
+  const { error } = await supabaseAdmin.auth.admin.createUser({
+    email,
+    password,
+    email_confirm: true,
+    user_metadata: { account_type: "candidate", full_name: fullName, phone },
+  });
+  if (error) {
+    // Already registered (or invalid): keep the CV, skip the credentials email.
+    console.error("createUser skipped/failed", error.message);
+    return false;
+  }
+  const { sendTemplateEmail } = await import("@/lib/email-templates/send-email");
+  await sendTemplateEmail("candidate-account", email, {
+    templateData: {
+      name: fullName,
+      email,
+      password,
+      loginUrl: `${SITE_URL}/candidate-portal`,
+    },
+    idempotencyKey: `candidate-account-${submissionId}`,
+  });
+  return true;
+}
 
 const vacancySchema = z.object({
   company: z.string().trim().min(2).max(120),
