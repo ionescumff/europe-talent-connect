@@ -18,7 +18,7 @@ const EMAIL_TEMPLATES: Record<string, React.ComponentType<any>> = {
 }
 
 // Configuration
-const SITE_NAME = "Europe Talent Bridge"
+const SITE_NAME = "IONMAN Workforce"
 const ROOT_DOMAIN = "vreaujobs.eu"
 
 // Sample data for preview mode ONLY (not used in actual email sending).

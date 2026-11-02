@@ -9,7 +9,7 @@ import { EmailChangeEmail } from '@/lib/email-templates/email-change'
 import { ReauthenticationEmail } from '@/lib/email-templates/reauthentication'
 
 // Configuration
-const SITE_NAME = "Europe Talent Bridge"
+const SITE_NAME = "IONMAN Workforce"
 const SENDER_DOMAIN = "notify.vreaujobs.eu"
 const ROOT_DOMAIN = "vreaujobs.eu"
 const FROM_DOMAIN = "notify.vreaujobs.eu"
