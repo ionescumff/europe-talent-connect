@@ -4,6 +4,7 @@ import { createClient } from "@supabase/supabase-js";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import type { Database } from "@/integrations/supabase/types";
 import type { Job } from "./jobs";
+import { z as translationZ } from "zod";
 
 export type JobDraft = {
   title: string; sector: string; country: string; city: string; salary: string;
@@ -68,15 +69,25 @@ export const extractJobPosts = createServerFn({ method: "POST" })
 
 type Row = Database["public"]["Tables"]["job_posts"]["Row"];
 
+const translationSchema = translationZ.object({
+  title: translationZ.string().optional(), sector: translationZ.string().optional(), pay: translationZ.string().optional(),
+  contract: translationZ.string().optional(), schedule: translationZ.string().optional(), start: translationZ.string().optional(),
+  housing: translationZ.string().optional(), transport: translationZ.string().optional(), language: translationZ.string().optional(),
+  summary: translationZ.string().optional(), companyDetails: translationZ.string().optional(),
+  tasks: translationZ.array(translationZ.string()).optional(), requirements: translationZ.array(translationZ.string()).optional(), offer: translationZ.array(translationZ.string()).optional(),
+});
+
 export function rowToJob(r: Row): Job {
+  const translations = translationZ.object({ ro: translationSchema.optional(), en: translationSchema.optional() }).safeParse(r.translations);
   return {
     slug: r.slug ?? r.id, title: r.title, sector: r.sector,
     country: (r.country === "Germany" ? "Germany" : "Netherlands"), city: r.city, pay: r.salary,
-    contract: r.contract || "Discussed with your recruiter", schedule: r.schedule || "Discussed with your recruiter",
-    start: r.start_date || "To be confirmed", housing: r.housing || "Not specified",
-    transport: r.transport || "Not specified", language: r.language || "Not specified",
+    contract: r.contract || "", schedule: r.schedule || "",
+    start: r.start_date || "", housing: r.housing || "",
+    transport: r.transport || "", language: r.language || "",
     openings: r.openings, summary: r.description || "", tasks: r.tasks, requirements: r.requirements, offer: r.benefits,
     image: r.image_url ?? undefined, company: r.company_name ?? undefined, companyDetails: r.company_details ?? undefined,
+    sourceUrl: r.source_url ?? undefined, translations: translations.success ? translations.data : undefined,
   };
 }
 

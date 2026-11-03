@@ -19,7 +19,21 @@ export type Job = {
   image?: string | undefined;
   company?: string | undefined;
   companyDetails?: string | undefined;
+  sourceUrl?: string | undefined;
+  translations?: { ro?: JobTranslation; en?: JobTranslation } | undefined;
 };
+
+export type JobTranslation = Partial<Pick<Job, "title" | "sector" | "pay" | "contract" | "schedule" | "start" | "housing" | "transport" | "language" | "summary" | "tasks" | "requirements" | "offer" | "companyDetails">>;
+
+/** Localize display fields without changing the vacancy identity or matching data. */
+export function localizeJob(job: Job, lang: "ro" | "en"): Job {
+  const translated = { ...job, ...job.translations?.[lang] };
+  const missing = lang === "ro" ? "Nu este precizat; de confirmat înainte de plecare" : "Not specified; confirm before travel";
+  return { ...translated, ...Object.fromEntries(
+    (["pay", "contract", "schedule", "start", "housing", "transport", "language"] as const)
+      .map(key => [key, translated[key] || missing]),
+  ) };
+}
 
 // Only confirmed published vacancies are displayed publicly; no demo offers.
 export const jobs: Job[] = [];

@@ -4,12 +4,12 @@ import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import { CheckCircle2, Paperclip } from "lucide-react";
 import { submitCv } from "@/lib/submissions.functions";
-import { getJob, type Job } from "@/lib/jobs";
+import { getJob, localizeJob, type Job } from "@/lib/jobs";
 import { Link } from "@tanstack/react-router";
 import { useLang } from "@/lib/i18n";
 
 export function CvForm({ availableJobs = [] }: { availableJobs?: Job[] }) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const send = useServerFn(submitCv);
   const formRef = useRef<HTMLFormElement>(null);
   const [fileName, setFileName] = useState<string | null>(null);
@@ -101,7 +101,7 @@ export function CvForm({ availableJobs = [] }: { availableJobs?: Job[] }) {
             {job && (
               <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl bg-accent/10 px-4 py-3 text-sm">
                 <span>
-                  {t("Applying for", "Candidezi pentru")} <strong>{job.title}</strong> · {job.city}
+                  {t("Applying for", "Candidezi pentru")} <strong>{localizeJob(job, lang).title}</strong> · {job.city}
                 </span>
                 <Button variant="ghost" type="button" onClick={() => setJob(null)} className="text-xs font-semibold underline">
                   {t("Remove", "Elimină")}
