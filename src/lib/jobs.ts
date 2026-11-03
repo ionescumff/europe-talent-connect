@@ -20,14 +20,17 @@ export type Job = {
   company?: string | undefined;
   companyDetails?: string | undefined;
   sourceUrl?: string | undefined;
-  translations?: { ro?: JobTranslation; en?: JobTranslation } | undefined;
+  translations?: { ro?: JobTranslation | undefined; en?: JobTranslation | undefined } | undefined;
 };
 
-export type JobTranslation = Partial<Pick<Job, "title" | "sector" | "pay" | "contract" | "schedule" | "start" | "housing" | "transport" | "language" | "summary" | "tasks" | "requirements" | "offer" | "companyDetails">>;
+export type JobTranslation = { [Key in "title" | "sector" | "pay" | "contract" | "schedule" | "start" | "housing" | "transport" | "language" | "summary" | "tasks" | "requirements" | "offer" | "companyDetails"]?: Job[Key] | undefined };
 
 /** Localize display fields without changing the vacancy identity or matching data. */
 export function localizeJob(job: Job, lang: "ro" | "en"): Job {
-  const translated = { ...job, ...job.translations?.[lang] };
+  const translated = { ...job };
+  for (const [key, value] of Object.entries(job.translations?.[lang] ?? {})) {
+    if (value !== undefined) Object.assign(translated, { [key]: value });
+  }
   const missing = lang === "ro" ? "Nu este precizat; de confirmat înainte de plecare" : "Not specified; confirm before travel";
   return { ...translated, ...Object.fromEntries(
     (["pay", "contract", "schedule", "start", "housing", "transport", "language"] as const)
