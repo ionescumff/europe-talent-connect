@@ -272,10 +272,13 @@ export type Database = {
           schedule: string | null
           sector: string
           slug: string | null
+          source_checked_at: string | null
+          source_url: string | null
           start_date: string | null
           status: string
           tasks: string[]
           title: string
+          translations: Json
           transport: string | null
         }
         Insert: {
@@ -299,10 +302,13 @@ export type Database = {
           schedule?: string | null
           sector: string
           slug?: string | null
+          source_checked_at?: string | null
+          source_url?: string | null
           start_date?: string | null
           status?: string
           tasks?: string[]
           title: string
+          translations?: Json
           transport?: string | null
         }
         Update: {
@@ -326,10 +332,13 @@ export type Database = {
           schedule?: string | null
           sector?: string
           slug?: string | null
+          source_checked_at?: string | null
+          source_url?: string | null
           start_date?: string | null
           status?: string
           tasks?: string[]
           title?: string
+          translations?: Json
           transport?: string | null
         }
         Relationships: []

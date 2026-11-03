@@ -26,7 +26,7 @@
 - [x] CRM: import candidates from Excel/CSV with preview, duplicate checks and vacancy linking (jobs upload already exists)
 - [x] CRM: per-job applicant page with candidate profiles and private CV uploads
 - [x] Replace AI sector photos with real illustrative photography and LVMH-inspired movement; own team/site photos await originals
-- [ ] Publish confirmed vacancies — blocked: vacancy list and verified job details not supplied
+- [ ] Import 35 current Triangle vacancies with Romanian/English translations and verify list, detail and application links
 - [x] Rebuild navy-and-gold homepage on current site (keep contact emails + EN/RO switch)
 - [x] Test page header: show only "ION MAN WORKFORCE" (remove the extra label)
 - [x] Phone: natural, untilted homepage photos; interactive sector photo cards

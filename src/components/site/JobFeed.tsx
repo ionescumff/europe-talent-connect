@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useLang } from "@/lib/i18n";
+import { localizeJob, type Job } from "@/lib/jobs";
 
 type Ev = { id: string; created_at: string; action: string; job_slug: string | null; title: string; city: string | null; country: string | null };
 
@@ -14,7 +15,7 @@ function ago(iso: string, ro: boolean) {
   return new Date(iso).toLocaleDateString(ro ? "ro-RO" : "en-GB");
 }
 
-export function JobFeed() {
+export function JobFeed({ jobs = [] }: { jobs?: Job[] }) {
   const { t, lang } = useLang();
   const ro = lang === "ro";
   const [events, setEvents] = useState<Ev[]>([]);
@@ -49,9 +50,9 @@ export function JobFeed() {
               <li key={e.id} className="flex flex-wrap items-center gap-x-3 gap-y-1 py-2 text-sm">
                 <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${e.action === "removed" ? "bg-brand/10 text-brand/60" : "bg-accent/15 text-accent"}`}>{label(e.action)}</span>
                 {e.job_slug && e.action !== "removed" ? (
-                  <Link to="/jobs/$slug" params={{ slug: e.job_slug }} className="font-medium hover:text-accent">{e.title}</Link>
+                  <Link to="/jobs/$slug" params={{ slug: e.job_slug }} className="font-medium hover:text-accent">{(() => { const job = jobs.find(item => item.slug === e.job_slug); return job ? localizeJob(job, lang).title : e.title; })()}</Link>
                 ) : <span className="font-medium text-brand/60 line-through">{e.title}</span>}
-                <span className="text-brand/50">{[e.city, e.country].filter(Boolean).join(", ")}</span>
+                <span className="text-brand/50">{[e.city, e.country === "Netherlands" ? t("Netherlands", "Olanda") : e.country === "Germany" ? t("Germany", "Germania") : e.country].filter(Boolean).join(", ")}</span>
                 <span className="ml-auto text-xs text-brand/40">{ago(e.created_at, ro)}</span>
               </li>
             ))}

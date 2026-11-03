@@ -5,6 +5,7 @@ import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 
 import { listPublishedJobs } from "@/lib/jobposts.functions";
+import { localizeJob } from "@/lib/jobs";
 
 export const Route = createFileRoute("/jobs/$slug")({
   loader: async ({ params }) => {
@@ -19,8 +20,8 @@ export const Route = createFileRoute("/jobs/$slug")({
         meta: [{ title: "Job not found — IONMAN Workforce" }, { name: "robots", content: "noindex" }],
       };
     }
-    const { job } = loaderData;
-    const title = `${job.title} in ${job.city}, ${job.country} — IONMAN Workforce`;
+    const job = localizeJob(loaderData.job, "ro");
+    const title = `${job.title} în ${job.city} — IONMAN Workforce`;
     return {
       meta: [
         { title },
@@ -59,13 +60,16 @@ function JobNotFound() {
 }
 
 function JobDetail() {
-  const { t } = useLang();
-  const { job, published } = Route.useLoaderData();
+  const { t, lang } = useLang();
+  const data = Route.useLoaderData();
+  const job = localizeJob(data.job, lang);
+  const published = data.published.map(item => localizeJob(item, lang));
+  const countryName = job.country === "Netherlands" ? t("Netherlands", "Olanda") : t("Germany", "Germania");
   const related = published.filter((j) => j.slug !== job.slug && j.sector === job.sector).slice(0, 2);
 
   const facts: [string, string][] = [
     ...(job.company ? [[t("Employer", "Angajator"), job.company] as [string, string]] : []),
-    [t("Location", "Locație"), `${job.city}, ${job.country}`],
+    [t("Location", "Locație"), `${job.city}, ${countryName}`],
     [t("Pay", "Salariu"), job.pay],
     [t("Contract", "Contract"), job.contract],
     [t("Schedule", "Program"), job.schedule],
@@ -73,7 +77,7 @@ function JobDetail() {
     [t("Housing", "Cazare"), job.housing],
     [t("Transport", "Transport"), job.transport],
     [t("Language", "Limbă"), job.language],
-    [t("Openings", "Locuri libere"), String(job.openings)],
+    [t("Openings", "Locuri libere"), job.openings > 0 ? String(job.openings) : t("Not specified", "Nu este precizat")],
   ];
 
   return (
@@ -95,13 +99,14 @@ function JobDetail() {
             {job.sector}
           </span>
           <span className="rounded-full bg-brand/10 px-3 py-1 text-xs font-bold text-brand/70">
-            {job.country}
+            {countryName}
           </span>
         </div>
         <h1 className="mt-4 max-w-3xl font-display text-4xl font-extrabold leading-tight md:text-5xl">
           {job.title} — {job.city}
         </h1>
         <p className="mt-4 max-w-2xl text-sm text-brand/60">{job.summary}</p>
+        {job.sourceUrl && <div className="mt-5 max-w-2xl space-y-2 text-sm text-brand/75"><a href={job.sourceUrl} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">{t("Original vacancy on Triangle", "Anunțul original pe Triangle")}</a><p>{t("Published from Triangle's listing. Availability, candidate eligibility and all employer terms must be confirmed before travel. Housing and international transport are not included unless explicitly confirmed for this role.", "Publicat pe baza anunțului Triangle. Disponibilitatea, eligibilitatea candidatului și toate condițiile angajatorului trebuie confirmate înainte de plecare. Cazarea și transportul internațional nu sunt incluse decât dacă sunt confirmate explicit pentru acest post.")}</p></div>}
         {job.image && <img src={job.image} alt={job.title} className="mt-6 max-h-96 w-full max-w-3xl rounded-[1.75rem] object-cover" />}
       </header>
 

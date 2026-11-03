@@ -92,6 +92,13 @@
       "when": 1792722963585,
       "tag": "0012_allow_admins_to_permanently_delete_staff_profile_entries",
       "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1793680881196,
+      "tag": "0013_job_source_and_translations",
+      "breakpoints": true
     }
   ]
 }

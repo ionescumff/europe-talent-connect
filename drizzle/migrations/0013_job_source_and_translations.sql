@@ -1,0 +1,3 @@
+ALTER TABLE public.job_posts ADD COLUMN IF NOT EXISTS translations jsonb NOT NULL DEFAULT '{}'::jsonb, ADD COLUMN IF NOT EXISTS source_url text, ADD COLUMN IF NOT EXISTS source_checked_at timestamptz;
+COMMENT ON COLUMN public.job_posts.translations IS 'Candidate-facing translations keyed by language; canonical job fields remain English for CRM.';
+COMMENT ON COLUMN public.job_posts.source_url IS 'Original public vacancy URL used to verify imported conditions.';
