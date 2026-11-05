@@ -31,12 +31,12 @@ export const Route = createFileRoute("/")({
 function Index() {
   const jobs = Route.useLoaderData();
   return (
-    <div id="top" className="candidate-site people-home relative min-h-screen overflow-x-clip text-brand">
+    <div id="top" className="candidate-site bg-page-glow relative min-h-screen overflow-x-clip text-brand">
       <Nav />
       <Hero />
-      <CandidateBand />
       <Sectors />
       <Process />
+      <CandidateBand />
       <CvForm availableJobs={jobs} />
       <VacancyForm />
       <Footer />

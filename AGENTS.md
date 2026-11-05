@@ -16,4 +16,3 @@
 - Candidate accounts use public.profiles without staff roles; a restricted status RPC resolves applications only from the authenticated user's confirmed email and projects no internal notes or CV paths.
 - Ship bilingual editable CV templates as same-origin static downloads to keep document generation out of the server runtime.
 - Keep canonical vacancy fields in English for CRM and matching; store candidate translations and source provenance on the same job record so language changes preserve application identity.
-- Keep people-led homepage visuals scoped to `.people-home` and reuse the existing candidate form and published-job flow; illustrative portraits must not imply agency staff or testimonials.
