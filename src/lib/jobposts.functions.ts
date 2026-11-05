@@ -107,5 +107,15 @@ function publicClient() {
 export const listPublishedJobs = createServerFn({ method: "GET" }).handler(async (): Promise<Job[]> => {
   const { data, error } = await publicClient().from("job_posts").select("*").eq("published", true).eq("status", "open").order("created_at", { ascending: false });
   if (error) { console.error(error); return []; }
-  return (data ?? []).map(rowToJob);
+  // Full Dutch→EN/RO translations of imported Triangle vacancies; loaded server-side only.
+  const { default: full } = await import("@/data/triangle-translations.json");
+  const extra = full as Record<string, { en?: Record<string, unknown>; ro?: Record<string, unknown> }>;
+  return (data ?? []).map(rowToJob).map(job => {
+    const t = extra[job.slug];
+    if (!t) return job;
+    return { ...job, translations: {
+      en: { ...job.translations?.en, ...t.en } as NonNullable<NonNullable<Job["translations"]>["en"]>,
+      ro: { ...job.translations?.ro, ...t.ro } as NonNullable<NonNullable<Job["translations"]>["ro"]>,
+    } };
+  });
 });

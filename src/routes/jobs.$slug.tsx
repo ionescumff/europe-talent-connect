@@ -25,9 +25,9 @@ export const Route = createFileRoute("/jobs/$slug")({
     return {
       meta: [
         { title },
-        { name: "description", content: job.summary },
+        { name: "description", content: job.summary.slice(0, 160) },
         { property: "og:title", content: title },
-        { property: "og:description", content: job.summary },
+        { property: "og:description", content: job.summary.slice(0, 200) },
         { property: "og:type", content: "article" },
         { name: "twitter:card", content: "summary_large_image" },
         ...(job.image?.startsWith("https://") ? [{ property: "og:image", content: job.image }, { name: "twitter:image", content: job.image }] : []),
@@ -105,7 +105,7 @@ function JobDetail() {
         <h1 className="mt-4 max-w-3xl font-display text-4xl font-extrabold leading-tight md:text-5xl">
           {job.title} — {job.city}
         </h1>
-        <p className="mt-4 max-w-2xl text-sm text-brand/60">{job.summary}</p>
+        <p className="mt-4 max-w-2xl text-sm text-brand/60 whitespace-pre-line">{job.summary}</p>
         {job.sourceUrl && <div className="mt-5 max-w-2xl space-y-2 text-sm text-brand/75"><a href={job.sourceUrl} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">{t("Original vacancy on Triangle", "Anunțul original pe Triangle")}</a><p>{t("Published from Triangle's listing. Availability, candidate eligibility and all employer terms must be confirmed before travel. Housing and international transport are not included unless explicitly confirmed for this role.", "Publicat pe baza anunțului Triangle. Disponibilitatea, eligibilitatea candidatului și toate condițiile angajatorului trebuie confirmate înainte de plecare. Cazarea și transportul internațional nu sunt incluse decât dacă sunt confirmate explicit pentru acest post.")}</p></div>}
         {job.image && <img src={job.image} alt={job.title} className="mt-6 max-h-96 w-full max-w-3xl rounded-[1.75rem] object-cover" />}
       </header>
