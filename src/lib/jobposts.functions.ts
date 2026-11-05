@@ -114,7 +114,7 @@ export const listPublishedJobs = createServerFn({ method: "GET" }).handler(async
     const t = extra[job.slug];
     if (!t) return job;
     return { ...job, translations: {
-      en: { ...job.translations?.en, ...t.en } as Job["translations"] extends infer _ ? NonNullable<NonNullable<Job["translations"]>["en"]> : never,
+      en: { ...job.translations?.en, ...t.en } as NonNullable<NonNullable<Job["translations"]>["en"]>,
       ro: { ...job.translations?.ro, ...t.ro } as NonNullable<NonNullable<Job["translations"]>["ro"]>,
     } };
   });
