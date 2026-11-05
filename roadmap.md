@@ -1,4 +1,5 @@
 # Roadmap
+- [ ] Update candidate homepage with AB2PRO-inspired standing-person visuals, younger and older adults, and clear bilingual candidate information; verify phone and desktop
 - [x] Candidate portal: basic profiles, email sign-in, private application status, bilingual CV template, and authenticated access/download checks
 - [x] Public site: Romanian by default, polished candidate copy, spacing and phone/computer layout review; preserve English employer sections and CRM
 - [x] Audit public and CRM text for English-only wording and English date formatting
