@@ -457,7 +457,7 @@
 }
 @media (max-width: 767px) {
   .people-home .people-hero { height: auto; min-height: 0; display: block; padding: 0; }
-  .people-hero-image { position: relative; height: 270px; object-position: right 38%; }
+  .people-hero-image { position: relative; height: 220px; object-position: right 38%; }
   .people-hero::after { display: none; }
   .people-hero-content { width: 100%; max-width: none; padding: 28px 20px 30px; }
   .people-hero .people-eyebrow { margin-bottom: 16px; }
@@ -465,7 +465,7 @@
   .people-hero h2 { font-size: 20px; margin-top: 16px; }
   .people-hero-description { margin-top: 12px; }
   .people-hero-content .mt-7 { margin-top: 20px; }
-  .people-image-caption { right: 12px; top: 244px; bottom: auto; }
+  .people-image-caption { right: 12px; top: 194px; bottom: auto; }
   .people-scroll { display: none; }
   .people-home .people-candidates { padding: 40px 20px; }
   .people-support-intro, .people-support-layout, .people-faq { grid-template-columns: minmax(0, 1fr); gap: 24px; }
