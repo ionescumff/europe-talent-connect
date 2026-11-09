@@ -81,9 +81,13 @@ function CandidateDetail() {
 
   async function openCv() {
     if (!cand.data?.cv_path) return;
-    const { data, error } = await supabase.storage.from("cvs").createSignedUrl(cand.data.cv_path, 300);
-    if (error || !data) { toast.error("Could not open CV"); return; }
-    window.open(data.signedUrl, "_blank", "noopener");
+    // Download through the authenticated client so storage access rules are checked on every open (no shareable bearer link).
+    const win = window.open("", "_blank");
+    const { data, error } = await supabase.storage.from("cvs").download(cand.data.cv_path);
+    if (error || !data) { win?.close(); toast.error("Could not open CV"); return; }
+    const url = URL.createObjectURL(data);
+    if (win) win.location.href = url; else window.open(url, "_blank", "noopener");
+    setTimeout(() => URL.revokeObjectURL(url), 60_000);
   }
 
   if (cand.isLoading) return <p className="text-muted-foreground">Loading…</p>;

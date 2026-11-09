@@ -240,7 +240,12 @@ async function exportCsv(table: "candidates" | "vacancy_enquiries" | "job_posts"
   if (!data.length) { toast.info("Nothing to download yet"); return; }
   const rows = data as Record<string, unknown>[];
   const cols = Object.keys(rows[0]!);
-  const esc = (v: unknown) => `"${String(Array.isArray(v) ? v.join("; ") : (v ?? "")).replace(/"/g, '""')}"`;
+  const esc = (v: unknown) => {
+    let t = String(Array.isArray(v) ? v.join("; ") : (v ?? ""));
+    // Neutralize spreadsheet formula injection (=, +, -, @, tab, CR).
+    if (/^[=+\-@\t\r]/.test(t)) t = "'" + t;
+    return `"${t.replace(/"/g, '""')}"`;
+  };
   const csv = [cols.join(","), ...rows.map((r) => cols.map((c) => esc(r[c])).join(","))].join("\n");
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob(["\ufeff" + csv], { type: "text/csv" }));
