@@ -99,6 +99,13 @@
       "when": 1793680881196,
       "tag": "0013_job_source_and_translations",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1794240637020,
+      "tag": "0014_restrict_job_post_events",
+      "breakpoints": true
     }
   ]
 }
