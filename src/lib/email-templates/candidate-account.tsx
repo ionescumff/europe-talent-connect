@@ -44,7 +44,7 @@ const Email = ({ name, email, password, loginUrl }: Props) => (
         </Text>
         <Text style={small}>
           Recrutarea este gratuită pentru candidați, întotdeauna. Ai întrebări? Scrie-ne la{' '}
-          <Link href="mailto:contact@vreaujobs.eu" style={link}>contact@vreaujobs.eu</Link>
+          <Link href="mailto:matei@vreaujobs.eu" style={link}>matei@vreaujobs.eu</Link>
         </Text>
       </Container>
     </Body>

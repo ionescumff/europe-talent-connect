@@ -45,7 +45,7 @@ export function Footer() {
         <div>
           <p className="font-display text-xs font-bold uppercase tracking-[0.16em] text-brand">{t("Contact", "Contact")}</p>
           <div className="mt-3 flex flex-col items-start gap-2">
-            <a href="mailto:contact@vreaujobs.eu" className="hover:text-brand">contact@vreaujobs.eu</a>
+            <a href="mailto:matei@vreaujobs.eu" className="hover:text-brand">matei@vreaujobs.eu</a>
             <a href="tel:+40741699011" className="whitespace-nowrap hover:text-brand">+40 741 699 011 · {t("Phone", "Telefon")}</a>
             <a href="https://wa.me/40741699011" target="_blank" rel="noopener noreferrer" className="hover:text-brand">WhatsApp</a>
           </div>

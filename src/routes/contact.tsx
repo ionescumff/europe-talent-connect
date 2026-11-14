@@ -32,10 +32,10 @@ function ContactPage() {
     >
       <section className="grid gap-4 sm:grid-cols-2">
         <ContactItem icon={<Mail className="size-5" />} label={t("General & Employers", "General și angajatori")}>
-          <a href="mailto:contact@vreaujobs.eu" className="font-semibold hover:underline">contact@vreaujobs.eu</a>
+          <a href="mailto:matei@vreaujobs.eu" className="font-semibold hover:underline">matei@vreaujobs.eu</a>
         </ContactItem>
         <ContactItem icon={<Mail className="size-5" />} label={t("Recruitment", "Recrutare")}>
-          <a href="mailto:contact@vreaujobs.eu" className="font-semibold hover:underline">contact@vreaujobs.eu</a>
+          <a href="mailto:matei@vreaujobs.eu" className="font-semibold hover:underline">matei@vreaujobs.eu</a>
         </ContactItem>
         <ContactItem icon={<Phone className="size-5" />} label={t("Phone & WhatsApp", "Telefon și WhatsApp")}>
           <a href="tel:+40741699011" className="font-semibold hover:underline">+40 741 699 011</a>
