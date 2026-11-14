@@ -31,6 +31,7 @@ import { Route as AuthenticatedCrmJobsRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedCrmMyRouteImport } from './routes/_authenticated/crm.my'
 import { Route as AuthenticatedCrmApplicantsJobIdRouteImport } from './routes/_authenticated/crm.applicants.$jobId'
 import { Route as AuthenticatedCrmCandidatesIdRouteImport } from './routes/_authenticated/crm.candidates.$id'
+import { Route as ApiPublicJobsSendAlertsRouteImport } from './routes/api/public/jobs/send-alerts'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
 import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
@@ -148,6 +149,11 @@ const AuthenticatedCrmCandidatesIdRoute =
     path: '/candidates/$id',
     getParentRoute: () => AuthenticatedCrmRoute,
   } as any)
+const ApiPublicJobsSendAlertsRoute = ApiPublicJobsSendAlertsRouteImport.update({
+  id: '/api/public/jobs/send-alerts',
+  path: '/api/public/jobs/send-alerts',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LovableEmailAuthPreviewRoute = LovableEmailAuthPreviewRouteImport.update({
   id: '/lovable/email/auth/preview',
   path: '/lovable/email/auth/preview',
@@ -187,6 +193,7 @@ export interface FileRoutesByFullPath {
   '/crm/': typeof AuthenticatedCrmIndexRoute
   '/crm/applicants/$jobId': typeof AuthenticatedCrmApplicantsJobIdRoute
   '/crm/candidates/$id': typeof AuthenticatedCrmCandidatesIdRoute
+  '/api/public/jobs/send-alerts': typeof ApiPublicJobsSendAlertsRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -212,6 +219,7 @@ export interface FileRoutesByTo {
   '/crm': typeof AuthenticatedCrmIndexRoute
   '/crm/applicants/$jobId': typeof AuthenticatedCrmApplicantsJobIdRoute
   '/crm/candidates/$id': typeof AuthenticatedCrmCandidatesIdRoute
+  '/api/public/jobs/send-alerts': typeof ApiPublicJobsSendAlertsRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -240,6 +248,7 @@ export interface FileRoutesById {
   '/_authenticated/crm/': typeof AuthenticatedCrmIndexRoute
   '/_authenticated/crm/applicants/$jobId': typeof AuthenticatedCrmApplicantsJobIdRoute
   '/_authenticated/crm/candidates/$id': typeof AuthenticatedCrmCandidatesIdRoute
+  '/api/public/jobs/send-alerts': typeof ApiPublicJobsSendAlertsRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -268,6 +277,7 @@ export interface FileRouteTypes {
     | '/crm/'
     | '/crm/applicants/$jobId'
     | '/crm/candidates/$id'
+    | '/api/public/jobs/send-alerts'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/lovable/email/transactional/preview'
@@ -293,6 +303,7 @@ export interface FileRouteTypes {
     | '/crm'
     | '/crm/applicants/$jobId'
     | '/crm/candidates/$id'
+    | '/api/public/jobs/send-alerts'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/lovable/email/transactional/preview'
@@ -320,6 +331,7 @@ export interface FileRouteTypes {
     | '/_authenticated/crm/'
     | '/_authenticated/crm/applicants/$jobId'
     | '/_authenticated/crm/candidates/$id'
+    | '/api/public/jobs/send-alerts'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/lovable/email/transactional/preview'
@@ -338,6 +350,7 @@ export interface RootRouteChildren {
   TestRoute: typeof TestRoute
   JobsSlugRoute: typeof JobsSlugRoute
   JobsIndexRoute: typeof JobsIndexRoute
+  ApiPublicJobsSendAlertsRoute: typeof ApiPublicJobsSendAlertsRoute
   LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
   LovableEmailAuthWebhookRoute: typeof LovableEmailAuthWebhookRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
@@ -499,6 +512,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCrmCandidatesIdRouteImport
       parentRoute: typeof AuthenticatedCrmRoute
     }
+    '/api/public/jobs/send-alerts': {
+      id: '/api/public/jobs/send-alerts'
+      path: '/api/public/jobs/send-alerts'
+      fullPath: '/api/public/jobs/send-alerts'
+      preLoaderRoute: typeof ApiPublicJobsSendAlertsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lovable/email/auth/preview': {
       id: '/lovable/email/auth/preview'
       path: '/lovable/email/auth/preview'
@@ -574,6 +594,7 @@ const rootRouteChildren: RootRouteChildren = {
   TestRoute: TestRoute,
   JobsSlugRoute: JobsSlugRoute,
   JobsIndexRoute: JobsIndexRoute,
+  ApiPublicJobsSendAlertsRoute: ApiPublicJobsSendAlertsRoute,
   LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,
   LovableEmailAuthWebhookRoute: LovableEmailAuthWebhookRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,

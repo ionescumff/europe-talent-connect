@@ -1,0 +1,10 @@
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import { matchesAlert } from "./job-alerts.ts";
+const base = { sectors: [], city: null, last_sent_at: "2026-11-01T00:00:00Z" };
+const job = { sector: "Logistics", city: "Utrecht", created_at: "2026-11-10T00:00:00Z", company_name: "Triangle Intérim" };
+test("matches new Triangle job in chosen sector", () => assert.equal(matchesAlert({ ...base, sectors: ["Logistics"] }, job), true));
+test("ignores jobs from other companies", () => assert.equal(matchesAlert(base, { ...job, company_name: "Other BV" }), false));
+test("ignores jobs posted before last alert", () => assert.equal(matchesAlert(base, { ...job, created_at: "2026-10-01T00:00:00Z" }), false));
+test("ignores other sectors", () => assert.equal(matchesAlert({ ...base, sectors: ["Construction"] }, job), false));
+test("filters by city", () => { assert.equal(matchesAlert({ ...base, city: "utrecht" }, job), true); assert.equal(matchesAlert({ ...base, city: "Venlo" }, job), false); });
