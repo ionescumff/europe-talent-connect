@@ -13,7 +13,7 @@ export function JobAlertForm({ userId }: { userId: string }) {
   const fetchAlert = useServerFn(getJobAlert); const saveAlert = useServerFn(saveJobAlert);
   const alert = useQuery({ queryKey: ["job-alert", userId], queryFn: () => fetchAlert() });
   const save = useMutation({
-    mutationFn: (data: Parameters<typeof saveAlert>[0]["data"]) => saveAlert({ data }),
+    mutationFn: (data: { sectors: never; city: string | null; lang: "ro" | "en"; active: boolean }) => saveAlert({ data }),
     onSuccess: () => { void qc.invalidateQueries({ queryKey: ["job-alert"] }); toast.success(t("Job alert saved", "Alerta a fost salvată")); },
     onError: () => toast.error(t("Couldn't save your alert. Try again.", "Alerta nu a putut fi salvată. Încearcă din nou.")),
   });

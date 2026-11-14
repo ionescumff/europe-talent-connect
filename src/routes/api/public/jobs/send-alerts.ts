@@ -18,7 +18,7 @@ export const Route = createFileRoute('/api/public/jobs/send-alerts')({
         if (aErr) return Response.json({ error: 'alerts' }, { status: 500 })
         if (!alerts?.length) return Response.json({ sent: 0 })
 
-        const oldest = alerts.reduce((m, a) => (a.last_sent_at < m ? a.last_sent_at : m), alerts[0].last_sent_at)
+        const oldest = alerts.reduce((m, a) => (a.last_sent_at < m ? a.last_sent_at : m), alerts[0]!.last_sent_at)
         const { data: jobs, error: jErr } = await supabaseAdmin
           .from('job_posts')
           .select('id, slug, title, sector, city, salary, created_at, company_name, translations')
@@ -29,7 +29,8 @@ export const Route = createFileRoute('/api/public/jobs/send-alerts')({
         let sent = 0
         for (const alert of alerts) {
           const matches = (jobs ?? []).filter((j) => matchesAlert(alert, j)).slice(0, 15)
-          if (!matches.length) continue
+          const newest = matches[0]
+          if (!newest) continue
           const items = matches.map((j) => {
             const tr = (j.translations as Record<string, any> | null)?.[alert.lang] ?? {}
             return { title: tr.title ?? j.title, city: j.city, pay: tr.pay ?? j.salary, url: `${SITE}/jobs/${j.slug ?? j.id}` }
@@ -37,14 +38,14 @@ export const Route = createFileRoute('/api/public/jobs/send-alerts')({
           try {
             await sendTemplateEmail('job-alert', alert.email, {
               templateData: { lang: alert.lang, jobs: items, accountUrl: `${SITE}/candidate-account` },
-              idempotencyKey: `job-alert-${alert.id}-${matches[0].id}`,
+              idempotencyKey: `job-alert-${alert.id}-${newest.id}`,
             })
             sent++
           } catch (e) {
             console.error('job alert send failed', alert.id, e)
             continue
           }
-          await supabaseAdmin.from('job_alerts').update({ last_sent_at: matches[0].created_at }).eq('id', alert.id)
+          await supabaseAdmin.from('job_alerts').update({ last_sent_at: newest.created_at }).eq('id', alert.id)
         }
         return Response.json({ sent })
       },

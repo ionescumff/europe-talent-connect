@@ -35,7 +35,7 @@ const Email = ({ lang = 'ro', jobs = [], accountUrl = 'https://www.vreaujobs.com
 
 export const template = {
   component: Email,
-  subject: (d: Record<string, any>) => d.lang === 'en' ? `New jobs matching your alert (${d.jobs?.length ?? 0})` : `Posturi noi pentru tine (${d.jobs?.length ?? 0})`,
+  subject: (d: Record<string, any>) => d['lang'] === 'en' ? `New jobs matching your alert (${d['jobs']?.length ?? 0})` : `Posturi noi pentru tine (${d['jobs']?.length ?? 0})`,
   displayName: 'Job alert',
   previewData: { lang: 'ro', jobs: [{ title: 'Operator depozit', city: 'Utrecht', pay: '€14–16/oră', url: 'https://www.vreaujobs.com/jobs/example' }] },
 } satisfies TemplateEntry
