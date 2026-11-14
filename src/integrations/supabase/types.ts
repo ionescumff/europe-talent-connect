@@ -187,6 +187,42 @@ export type Database = {
         }
         Relationships: []
       }
+      job_alerts: {
+        Row: {
+          active: boolean
+          city: string | null
+          created_at: string
+          email: string
+          id: string
+          lang: string
+          last_sent_at: string
+          sectors: string[]
+          user_id: string
+        }
+        Insert: {
+          active?: boolean
+          city?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          lang?: string
+          last_sent_at?: string
+          sectors?: string[]
+          user_id: string
+        }
+        Update: {
+          active?: boolean
+          city?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          lang?: string
+          last_sent_at?: string
+          sectors?: string[]
+          user_id?: string
+        }
+        Relationships: []
+      }
       job_post_candidates: {
         Row: {
           candidate_id: string
