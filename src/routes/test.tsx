@@ -109,7 +109,7 @@ function TestPage() {
       </main>
       <footer className="mx-auto max-w-7xl px-6 py-12 md:px-12 lg:px-16">
         <div className="flex flex-col justify-between gap-7 md:flex-row"><Link to="/" className="test-wordmark text-2xl">ION MAN<span>WORKFORCE</span></Link><div className="flex flex-wrap gap-x-7 gap-y-4 text-xs"><Link to="/contact">{t("Contact", "Contact")}</Link><Link to="/privacy">{t("Privacy & cookies", "Confidențialitate")}</Link><Link to="/terms">{t("Terms", "Termeni")}</Link><Link to="/">{t("Main website", "Site principal")}</Link></div></div>
-        <div className="test-divider test-muted mt-8 flex flex-wrap justify-between gap-4 border-t pt-6 text-[11px]"><span>© {new Date().getFullYear()} ION MAN WORKFORCE S.R.L.</span><a href="mailto:contact@vreaujobs.eu">contact@vreaujobs.eu</a></div>
+        <div className="test-divider test-muted mt-8 flex flex-wrap justify-between gap-4 border-t pt-6 text-[11px]"><span>© {new Date().getFullYear()} ION MAN WORKFORCE S.R.L.</span><a href="mailto:matei@vreaujobs.eu">matei@vreaujobs.eu</a></div>
       </footer>
       <Button asChild size="icon" className="test-contact fixed bottom-5 right-5 z-30 size-12 rounded-full" title={t("Contact our team", "Contactează echipa")}><Link to="/contact" aria-label={t("Contact our team", "Contactează echipa")}><MessageCircle /></Link></Button>
     </div>

@@ -57,7 +57,7 @@ function CandidateAccount() {
               {app.status !== "rejected" && <ol className="mt-6 grid grid-cols-5 gap-1 border-t border-border pt-5" aria-label={t("Application progress", "Progresul candidaturii")}>{applicationStages.map((value, index) => <li key={value} className="min-w-0 text-center"><span className={`mx-auto grid size-7 place-items-center rounded-full ${index <= stage ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}>{index < stage ? <Check className="size-4" /> : index + 1}</span><span className="mt-2 block break-words text-[10px] leading-4 sm:text-xs">{t(statusLabels[value]?.[0] ?? value, statusLabels[value]?.[1] ?? value)}</span></li>)}</ol>}
             </article>;
           })}</div>
-          <p className="mt-7 text-sm text-muted-foreground"><a href="mailto:contact@vreaujobs.eu" className="underline">{t("Questions? Contact our team", "Ai întrebări? Contactează echipa")}</a></p>
+          <p className="mt-7 text-sm text-muted-foreground"><a href="mailto:matei@vreaujobs.eu" className="underline">{t("Questions? Contact our team", "Ai întrebări? Contactează echipa")}</a></p>
         </section>
         <aside className="min-w-0 space-y-10 lg:border-l lg:border-border lg:pl-8">
           <section><div className="flex items-center gap-3"><UserRound className="size-5" /><h2 className="font-display text-xl font-bold">{t("My profile", "Profilul meu")}</h2></div>{data && <form key={`${data.profile?.full_name}-${data.profile?.phone}`} className="mt-5 space-y-4" onSubmit={e => { e.preventDefault(); const f = new FormData(e.currentTarget); save.mutate({ full_name: String(f.get("full_name")), phone: String(f.get("phone")) }); }}>
