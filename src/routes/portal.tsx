@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Logo } from "@/components/site/Logo";
 
 export const Route = createFileRoute("/portal")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Staff portal — IONMAN Workforce" },

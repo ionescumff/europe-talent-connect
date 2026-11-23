@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { fetchMyRoles, fetchTeam, isAdminRole, memberName, ROLE_LABELS } from "@/lib/crm";
 
 export const Route = createFileRoute("/_authenticated/crm/my")({
+  staticData: { sitemap: false },
   component: MyWork,
 });
 

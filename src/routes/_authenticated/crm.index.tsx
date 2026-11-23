@@ -7,6 +7,7 @@ import { CandidateImport } from "@/components/crm/CandidateImport";
 import { getJob, suggestedJobs } from "@/lib/jobs";
 
 export const Route = createFileRoute("/_authenticated/crm/")({
+  staticData: { sitemap: false },
   component: Candidates,
 });
 

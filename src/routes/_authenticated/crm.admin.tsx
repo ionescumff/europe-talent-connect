@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { CANDIDATE_STATUSES, fetchMyRoles, fetchTeam, isAdminRole, memberName, ROLE_LABELS, ROLES, type Role } from "@/lib/crm";
 
 export const Route = createFileRoute("/_authenticated/crm/admin")({
+  staticData: { sitemap: false },
   component: Admin,
 });
 

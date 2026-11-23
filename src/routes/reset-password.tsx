@@ -7,6 +7,7 @@ import { useLang } from "@/lib/i18n";
 import { Logo } from "@/components/site/Logo";
 
 export const Route = createFileRoute("/reset-password")({
+  staticData: { sitemap: false },
   ssr: false,
   validateSearch: (search: Record<string, unknown>) => ({ candidate: search["candidate"] === true || search["candidate"] === "true" }),
   head: () => ({

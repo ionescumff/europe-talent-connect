@@ -88,7 +88,7 @@ export const submitCv = createServerFn({ method: "POST" })
     return { ok: true as const, accountCreated };
   });
 
-const SITE_URL = "https://europe-talent-connect.lovable.app";
+const SITE_URL = "https://www.vreaujobs.com";
 
 function generatePassword(): string {
   const upper = "ABCDEFGHJKLMNPQRSTUVWXYZ";

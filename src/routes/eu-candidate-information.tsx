@@ -6,7 +6,9 @@ const title = "Munca în Europa: informații pentru candidați — IONMAN Workfo
 const description = "Ce trebuie să verifici înainte de a lucra în Germania sau Olanda: contract, salariu, cazare și formalități pentru candidații din UE.";
 
 export const Route = createFileRoute("/eu-candidate-information")({
-  head: () => ({ meta: [
+  staticData: { sitemap: true },
+  head: () => ({
+    links: [{ rel: "canonical", href: "https://www.vreaujobs.com/eu-candidate-information" }], meta: [
     { title }, { name: "description", content: description },
     { property: "og:title", content: title }, { property: "og:description", content: description },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },

@@ -17,6 +17,7 @@ import { Route as EuCandidateInformationRouteImport } from './routes/eu-candidat
 import { Route as PortalRouteImport } from './routes/portal'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as TestRouteImport } from './routes/test'
 import { Route as AuthenticatedCandidateAccountRouteImport } from './routes/_authenticated/candidate-account'
@@ -25,6 +26,7 @@ import { Route as JobsIndexRouteImport } from './routes/jobs.index'
 import { Route as JobsSlugRouteImport } from './routes/jobs.$slug'
 import { Route as AuthenticatedCrmIndexRouteImport } from './routes/_authenticated/crm.index'
 import { Route as AuthenticatedCrmAdminRouteImport } from './routes/_authenticated/crm.admin'
+import { Route as AuthenticatedCrmApplicationsRouteImport } from './routes/_authenticated/crm.applications'
 import { Route as AuthenticatedCrmAssignRouteImport } from './routes/_authenticated/crm.assign'
 import { Route as AuthenticatedCrmEmployersRouteImport } from './routes/_authenticated/crm.employers'
 import { Route as AuthenticatedCrmJobsRouteImport } from './routes/_authenticated/crm.jobs'
@@ -75,6 +77,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
   path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
@@ -116,6 +123,12 @@ const AuthenticatedCrmAdminRoute = AuthenticatedCrmAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AuthenticatedCrmRoute,
 } as any)
+const AuthenticatedCrmApplicationsRoute =
+  AuthenticatedCrmApplicationsRouteImport.update({
+    id: '/applications',
+    path: '/applications',
+    getParentRoute: () => AuthenticatedCrmRoute,
+  } as any)
 const AuthenticatedCrmAssignRoute = AuthenticatedCrmAssignRouteImport.update({
   id: '/assign',
   path: '/assign',
@@ -179,6 +192,7 @@ export interface FileRoutesByFullPath {
   '/portal': typeof PortalRoute
   '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/test': typeof TestRoute
   '/candidate-account': typeof AuthenticatedCandidateAccountRoute
@@ -186,6 +200,7 @@ export interface FileRoutesByFullPath {
   '/jobs/$slug': typeof JobsSlugRoute
   '/jobs/': typeof JobsIndexRoute
   '/crm/admin': typeof AuthenticatedCrmAdminRoute
+  '/crm/applications': typeof AuthenticatedCrmApplicationsRoute
   '/crm/assign': typeof AuthenticatedCrmAssignRoute
   '/crm/employers': typeof AuthenticatedCrmEmployersRoute
   '/crm/jobs': typeof AuthenticatedCrmJobsRoute
@@ -206,12 +221,14 @@ export interface FileRoutesByTo {
   '/portal': typeof PortalRoute
   '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/test': typeof TestRoute
   '/candidate-account': typeof AuthenticatedCandidateAccountRoute
   '/jobs/$slug': typeof JobsSlugRoute
   '/jobs': typeof JobsIndexRoute
   '/crm/admin': typeof AuthenticatedCrmAdminRoute
+  '/crm/applications': typeof AuthenticatedCrmApplicationsRoute
   '/crm/assign': typeof AuthenticatedCrmAssignRoute
   '/crm/employers': typeof AuthenticatedCrmEmployersRoute
   '/crm/jobs': typeof AuthenticatedCrmJobsRoute
@@ -234,6 +251,7 @@ export interface FileRoutesById {
   '/portal': typeof PortalRoute
   '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/test': typeof TestRoute
   '/_authenticated/candidate-account': typeof AuthenticatedCandidateAccountRoute
@@ -241,6 +259,7 @@ export interface FileRoutesById {
   '/jobs/$slug': typeof JobsSlugRoute
   '/jobs/': typeof JobsIndexRoute
   '/_authenticated/crm/admin': typeof AuthenticatedCrmAdminRoute
+  '/_authenticated/crm/applications': typeof AuthenticatedCrmApplicationsRoute
   '/_authenticated/crm/assign': typeof AuthenticatedCrmAssignRoute
   '/_authenticated/crm/employers': typeof AuthenticatedCrmEmployersRoute
   '/_authenticated/crm/jobs': typeof AuthenticatedCrmJobsRoute
@@ -263,6 +282,7 @@ export interface FileRouteTypes {
     | '/portal'
     | '/privacy'
     | '/reset-password'
+    | '/sitemap.xml'
     | '/terms'
     | '/test'
     | '/candidate-account'
@@ -270,6 +290,7 @@ export interface FileRouteTypes {
     | '/jobs/$slug'
     | '/jobs/'
     | '/crm/admin'
+    | '/crm/applications'
     | '/crm/assign'
     | '/crm/employers'
     | '/crm/jobs'
@@ -290,12 +311,14 @@ export interface FileRouteTypes {
     | '/portal'
     | '/privacy'
     | '/reset-password'
+    | '/sitemap.xml'
     | '/terms'
     | '/test'
     | '/candidate-account'
     | '/jobs/$slug'
     | '/jobs'
     | '/crm/admin'
+    | '/crm/applications'
     | '/crm/assign'
     | '/crm/employers'
     | '/crm/jobs'
@@ -317,6 +340,7 @@ export interface FileRouteTypes {
     | '/portal'
     | '/privacy'
     | '/reset-password'
+    | '/sitemap.xml'
     | '/terms'
     | '/test'
     | '/_authenticated/candidate-account'
@@ -324,6 +348,7 @@ export interface FileRouteTypes {
     | '/jobs/$slug'
     | '/jobs/'
     | '/_authenticated/crm/admin'
+    | '/_authenticated/crm/applications'
     | '/_authenticated/crm/assign'
     | '/_authenticated/crm/employers'
     | '/_authenticated/crm/jobs'
@@ -346,6 +371,7 @@ export interface RootRouteChildren {
   PortalRoute: typeof PortalRoute
   PrivacyRoute: typeof PrivacyRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   TestRoute: typeof TestRoute
   JobsSlugRoute: typeof JobsSlugRoute
@@ -414,6 +440,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/terms': {
       id: '/terms'
       path: '/terms'
@@ -468,6 +501,13 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/crm/admin'
       preLoaderRoute: typeof AuthenticatedCrmAdminRouteImport
+      parentRoute: typeof AuthenticatedCrmRoute
+    }
+    '/_authenticated/crm/applications': {
+      id: '/_authenticated/crm/applications'
+      path: '/applications'
+      fullPath: '/crm/applications'
+      preLoaderRoute: typeof AuthenticatedCrmApplicationsRouteImport
       parentRoute: typeof AuthenticatedCrmRoute
     }
     '/_authenticated/crm/assign': {
@@ -545,6 +585,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedCrmRouteChildren {
   AuthenticatedCrmAdminRoute: typeof AuthenticatedCrmAdminRoute
+  AuthenticatedCrmApplicationsRoute: typeof AuthenticatedCrmApplicationsRoute
   AuthenticatedCrmAssignRoute: typeof AuthenticatedCrmAssignRoute
   AuthenticatedCrmEmployersRoute: typeof AuthenticatedCrmEmployersRoute
   AuthenticatedCrmJobsRoute: typeof AuthenticatedCrmJobsRoute
@@ -556,6 +597,7 @@ interface AuthenticatedCrmRouteChildren {
 
 const AuthenticatedCrmRouteChildren: AuthenticatedCrmRouteChildren = {
   AuthenticatedCrmAdminRoute: AuthenticatedCrmAdminRoute,
+  AuthenticatedCrmApplicationsRoute: AuthenticatedCrmApplicationsRoute,
   AuthenticatedCrmAssignRoute: AuthenticatedCrmAssignRoute,
   AuthenticatedCrmEmployersRoute: AuthenticatedCrmEmployersRoute,
   AuthenticatedCrmJobsRoute: AuthenticatedCrmJobsRoute,
@@ -590,6 +632,7 @@ const rootRouteChildren: RootRouteChildren = {
   PortalRoute: PortalRoute,
   PrivacyRoute: PrivacyRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   TestRoute: TestRoute,
   JobsSlugRoute: JobsSlugRoute,

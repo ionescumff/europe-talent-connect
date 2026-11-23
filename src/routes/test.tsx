@@ -11,6 +11,7 @@ const title = "ION MAN WORKFORCE — Recruitment design test";
 const description = "Explore an editorial recruitment experience for Romanian candidates and employers in Germany and the Netherlands.";
 
 export const Route = createFileRoute("/test")({
+  staticData: { sitemap: false },
   head: () => ({ meta: [
     { title }, { name: "description", content: description },
     { property: "og:title", content: title }, { property: "og:description", content: description },

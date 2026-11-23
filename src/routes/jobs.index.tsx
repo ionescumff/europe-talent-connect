@@ -12,7 +12,9 @@ import { localizeJob } from "@/lib/jobs";
 const title = "Locuri de muncă în Germania și Olanda — IONMAN Workforce";
 const description = "Vezi ofertele de muncă publicate în construcții, depozite, logistică și producție. Aplicarea este gratuită pentru candidați.";
 export const Route = createFileRoute("/jobs/")({
-  head: () => ({ meta: [{ title }, { name: "description", content: description }, { property: "og:title", content: title }, { property: "og:description", content: description }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
+  staticData: { sitemap: true },
+  head: () => ({
+    links: [{ rel: "canonical", href: "https://www.vreaujobs.com/jobs" }], meta: [{ title }, { name: "description", content: description }, { property: "og:title", content: title }, { property: "og:description", content: description }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
   loader: () => listPublishedJobs(), component: JobsPage,
 });
 function JobsPage() {

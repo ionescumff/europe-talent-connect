@@ -6,6 +6,7 @@ import { Logo } from "@/components/site/Logo";
 import { NotificationBell } from "@/components/crm/NotificationBell";
 
 export const Route = createFileRoute("/_authenticated/crm")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "CRM — IONMAN Workforce" },
@@ -42,6 +43,9 @@ function CrmLayout() {
             </Link>
             <Link to="/crm" activeOptions={{ exact: true }} className={link} activeProps={{ className: "bg-glass-strong" }}>
               Candidates
+            </Link>
+            <Link to="/crm/applications" className={link} activeProps={{ className: "bg-glass-strong" }}>
+              Applications
             </Link>
             <Link to="/crm/employers" className={link} activeProps={{ className: "bg-glass-strong" }}>
               Employer leads

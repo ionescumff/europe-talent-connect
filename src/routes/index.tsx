@@ -6,15 +6,18 @@ import { Process } from "@/components/site/Process";
 import { CandidateBand } from "@/components/site/CandidateBand";
 import { CvForm } from "@/components/site/CvForm";
 import { VacancyForm } from "@/components/site/VacancyForm";
+import { SeoIntro } from "@/components/site/SeoIntro";
 import { Footer } from "@/components/site/Footer";
 import { listPublishedJobs } from "@/lib/jobposts.functions";
 
-const title = "IONMAN Workforce — Locuri de muncă în Germania și Olanda";
+const title = "Muncitori în Olanda și Germania — Locuri de muncă | IONMAN Workforce";
 const description =
-  "Trimite CV-ul pentru oportunități de muncă în Germania și Olanda. Recrutare pentru depozite, producție, logistică și construcții, fără taxe pentru candidați.";
+  "Căutăm muncitori din România pentru Olanda și Germania: depozite, producție, logistică și construcții. Trimite CV-ul gratuit, fără taxe pentru candidați.";
 
 export const Route = createFileRoute("/")({
+  staticData: { sitemap: true },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://www.vreaujobs.com/" }],
     meta: [
       { title },
       { name: "description", content: description },
@@ -37,6 +40,7 @@ function Index() {
       <Sectors />
       <Process />
       <CandidateBand />
+      <SeoIntro />
       <CvForm availableJobs={jobs} />
       <VacancyForm />
       <Footer />

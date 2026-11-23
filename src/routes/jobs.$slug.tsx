@@ -4,11 +4,13 @@ import { ArrowLeft, Check } from "lucide-react";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 
+import { JobApplyForm } from "@/components/site/JobApplyForm";
 import { listPublishedJobs } from "@/lib/jobposts.functions";
 import { localizeJob } from "@/lib/jobs";
 import { jobPostingSchema, jobPageUrl, serializeJobSchema } from "@/lib/job-schema";
 
 export const Route = createFileRoute("/jobs/$slug")({
+  staticData: { sitemap: true },
   loader: async ({ params }) => {
     const published = await listPublishedJobs();
     const job = published.find((j) => j.slug === params.slug);
@@ -22,11 +24,12 @@ export const Route = createFileRoute("/jobs/$slug")({
       };
     }
     const job = localizeJob(loaderData.job, "ro");
-    const title = `${job.title} în ${job.city} — IONMAN Workforce`;
+    const countryRo = job.country === "Germany" ? "Germania" : "Olanda";
+    const title = `${job.title} în ${job.city}, ${countryRo} — muncitori români | IONMAN Workforce`;
     return {
       meta: [
         { title },
-        { name: "description", content: job.summary.slice(0, 160) },
+        { name: "description", content: `Loc de muncă pentru muncitori în ${countryRo}: ${job.summary}`.slice(0, 160) },
         { property: "og:title", content: title },
         { property: "og:description", content: job.summary.slice(0, 200) },
         { property: "og:type", content: "article" },
@@ -171,15 +174,7 @@ function JobDetail() {
                 </div>
               ))}
             </dl>
-            <a
-              href={`/?job=${job.slug}#cv`}
-              className="mt-6 block rounded-xl bg-accent px-6 py-3.5 text-center text-sm font-semibold text-accent-foreground shadow-accent transition-transform hover:-translate-y-0.5"
-            >
-              {t("Apply — leave your CV", "Aplică — trimite CV-ul")}
-            </a>
-            <p className="mt-3 text-center text-xs text-brand/50">
-              {t("Free for candidates. Mention this job and we'll call you back.", "Gratuit pentru candidați. Trimite CV-ul pentru acest post, iar echipa noastră te va contacta.")}
-            </p>
+            <div className="mt-6 border-t border-border pt-6"><JobApplyForm job={data.job} /></div>
           </div>
 
           {related.length > 0 && (

@@ -6,7 +6,9 @@ const title = "Termeni și condiții — IONMAN Workforce";
 const description = "Condiții pentru utilizarea site-ului IONMAN Workforce, a informațiilor despre posturi și a serviciilor de recrutare.";
 
 export const Route = createFileRoute("/terms")({
-  head: () => ({ meta: [
+  staticData: { sitemap: true },
+  head: () => ({
+    links: [{ rel: "canonical", href: "https://www.vreaujobs.com/terms" }], meta: [
     { title }, { name: "description", content: description },
     { property: "og:title", content: title }, { property: "og:description", content: description },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },

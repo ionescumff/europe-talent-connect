@@ -10,6 +10,7 @@ import { CandidateImport } from "@/components/crm/CandidateImport";
 import { JobBulkImport } from "@/components/crm/JobBulkImport";
 
 export const Route = createFileRoute("/_authenticated/crm/jobs")({
+  staticData: { sitemap: false },
   head: () => ({ meta: [{ title: "Job posts — IONMAN Workforce CRM" }, { name: "description", content: "Manage and review employer-approved IONMAN Workforce vacancies and bulk spreadsheet imports." }, { property: "og:title", content: "Job posts — IONMAN Workforce CRM" }, { property: "og:description", content: "Manage employer-approved vacancies in the IONMAN Workforce staff area." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex, nofollow" }] }),
   component: JobsAdmin,
 });

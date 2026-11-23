@@ -9,7 +9,9 @@ const title = "Contact și informații pentru candidați — IONMAN Workforce";
 const description = "Contactează echipa IONMAN Workforce. Datele companiei și informații esențiale pentru candidații care caută un loc de muncă în Europa.";
 
 export const Route = createFileRoute("/contact")({
+  staticData: { sitemap: true },
   head: () => ({
+    links: [{ rel: "canonical", href: "https://www.vreaujobs.com/contact" }],
     meta: [
       { title },
       { name: "description", content: description },

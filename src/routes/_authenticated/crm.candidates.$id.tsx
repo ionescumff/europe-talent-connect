@@ -10,6 +10,7 @@ import { getJob, suggestedJobs } from "@/lib/jobs";
 import { CandidateCvUpload } from "@/components/crm/CandidateCvUpload";
 
 export const Route = createFileRoute("/_authenticated/crm/candidates/$id")({
+  staticData: { sitemap: false },
   component: CandidateDetail,
 });
 

@@ -6,7 +6,9 @@ const title = "Confidențialitate și cookie-uri — IONMAN Workforce";
 const description = "Cum gestionează ION MAN WORKFORCE S.R.L. datele candidaților și angajatorilor, conform normelor europene de protecție a datelor.";
 
 export const Route = createFileRoute("/privacy")({
-  head: () => ({ meta: [
+  staticData: { sitemap: true },
+  head: () => ({
+    links: [{ rel: "canonical", href: "https://www.vreaujobs.com/privacy" }], meta: [
     { title }, { name: "description", content: description },
     { property: "og:title", content: title }, { property: "og:description", content: description },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },

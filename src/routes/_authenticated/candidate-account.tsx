@@ -12,6 +12,7 @@ import { getCandidatePortal, saveCandidateProfile } from "@/lib/candidate-portal
 import { applicationProgress, applicationStages, statusLabels } from "@/lib/candidate-portal";
 
 export const Route = createFileRoute("/_authenticated/candidate-account")({
+  staticData: { sitemap: false },
   head: () => ({ meta: [
     { title: "My applications — IONMAN Workforce" },
     { name: "description", content: "Your private candidate profile, application status and editable CV templates." },

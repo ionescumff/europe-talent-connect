@@ -5,6 +5,7 @@ import { matchesAlert } from '@/lib/job-alerts'
 const SITE = 'https://www.vreaujobs.com'
 
 export const Route = createFileRoute('/api/public/jobs/send-alerts')({
+  staticData: { sitemap: false },
   server: {
     handlers: {
       POST: async ({ request }) => {

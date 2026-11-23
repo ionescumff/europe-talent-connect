@@ -8,6 +8,7 @@ import { Logo } from "@/components/site/Logo";
 import { LangSwitch, useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/candidate-portal")({
+  staticData: { sitemap: false },
   head: () => ({ meta: [
     { title: "Candidate sign-in — IONMAN Workforce" },
     { name: "description", content: "Sign in to your candidate account to follow your application and access a CV template." },

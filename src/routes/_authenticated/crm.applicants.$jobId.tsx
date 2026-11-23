@@ -7,6 +7,7 @@ import { CandidateImport } from "@/components/crm/CandidateImport";
 import { CandidateCvUpload } from "@/components/crm/CandidateCvUpload";
 
 export const Route = createFileRoute("/_authenticated/crm/applicants/$jobId")({
+  staticData: { sitemap: false },
   head: () => ({ meta: [{ title: "Job applicants — CRM" }, { name: "robots", content: "noindex, nofollow" }] }),
   component: Applicants,
 });
