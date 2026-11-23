@@ -7,9 +7,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { fetchMyRoles, isAdminRole } from "@/lib/crm";
 import { extractJobPosts, type JobDraft } from "@/lib/jobposts.functions";
 import { CandidateImport } from "@/components/crm/CandidateImport";
+import { JobBulkImport } from "@/components/crm/JobBulkImport";
 
 export const Route = createFileRoute("/_authenticated/crm/jobs")({
-  head: () => ({ meta: [{ title: "Job posts — CRM" }, { name: "robots", content: "noindex, nofollow" }] }),
+  head: () => ({ meta: [{ title: "Job posts — IONMAN Workforce CRM" }, { name: "description", content: "Manage and review employer-approved IONMAN Workforce vacancies and bulk spreadsheet imports." }, { property: "og:title", content: "Job posts — IONMAN Workforce CRM" }, { property: "og:description", content: "Manage employer-approved vacancies in the IONMAN Workforce staff area." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }, { name: "robots", content: "noindex, nofollow" }] }),
   component: JobsAdmin,
 });
 
@@ -40,7 +41,9 @@ function resizeImage(file: File, max = 1400): Promise<string> {
       const k = Math.min(1, max / Math.max(img.width, img.height));
       const c = document.createElement("canvas");
       c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
-      c.getContext("2d")!.drawImage(img, 0, 0, c.width, c.height);
+      const context = c.getContext("2d");
+      if (!context) { URL.revokeObjectURL(img.src); reject(new Error("Image preview is unavailable")); return; }
+      context.drawImage(img, 0, 0, c.width, c.height);
       URL.revokeObjectURL(img.src);
       resolve(c.toDataURL("image/jpeg", 0.8));
     };
@@ -108,7 +111,7 @@ function JobsManager() {
     onSuccess: () => { setForm(empty); setShowForm(false); refresh(); },
   });
   const accept = useMutation({
-    mutationFn: async (i: number) => { await saveForm({ ...drafts[i]!, published: true }); return i; },
+    mutationFn: async (i: number) => { const draft = drafts[i]; if (!draft) throw new Error("Draft no longer exists"); await saveForm({ ...draft, published: true }); return i; },
     onSuccess: (i) => { setDrafts((d) => d.filter((_, k) => k !== i)); refresh(); },
   });
   const remove = useMutation({
@@ -145,7 +148,7 @@ function JobsManager() {
         if (f.type.startsWith("image/")) images.push(await resizeImage(f));
         else if (/\.(xlsx|xls|csv)$/i.test(f.name)) {
           const wb = XLSX.read(await f.arrayBuffer());
-          for (const name of wb.SheetNames) text += `\n# ${name}\n${XLSX.utils.sheet_to_csv(wb.Sheets[name]!)}`;
+          for (const name of wb.SheetNames) { const sheet = wb.Sheets[name]; if (sheet) text += `\n# ${name}\n${XLSX.utils.sheet_to_csv(sheet)}`; }
         }
       }
       if (!images.length && !text) throw new Error("Upload photos (JPG/PNG) or spreadsheets (XLSX/CSV)");
@@ -168,6 +171,8 @@ function JobsManager() {
           + Add manually
         </button>
       </div>
+
+      <JobBulkImport existing={jobs.data ?? []} ready={jobs.isSuccess} onImported={refresh} />
 
       {/* Import */}
       <section className="glass-card p-6">

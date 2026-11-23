@@ -17,3 +17,4 @@
 - Ship bilingual editable CV templates as same-origin static downloads to keep document generation out of the server runtime.
 - Keep canonical vacancy fields in English for CRM and matching; store candidate translations and source provenance on the same job record so language changes preserve application identity.
 - Job alerts: candidates store criteria in job_alerts; an hourly authenticated cron route matches new Triangle jobs and sends one email per alert, advancing last_sent_at so jobs are never re-sent.
+- Bulk job spreadsheets are parsed in the browser with explicit column mapping; authenticated admin-only server functions validate and duplicate-check the full batch before one insert, keeping drafts private and optional translations on the same job record to preserve identity.
