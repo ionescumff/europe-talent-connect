@@ -18,3 +18,4 @@
 - Keep canonical vacancy fields in English for CRM and matching; store candidate translations and source provenance on the same job record so language changes preserve application identity.
 - Job alerts: candidates store criteria in job_alerts; an hourly authenticated cron route matches new Triangle jobs and sends one email per alert, advancing last_sent_at so jobs are never re-sent.
 - Bulk job spreadsheets are parsed in the browser with explicit column mapping; authenticated admin-only server functions validate and duplicate-check the full batch before one insert, keeping drafts private and optional translations on the same job record to preserve identity.
+- JobPosting JSON-LD is generated only on public vacancy detail routes from the Romanian page content; imported dates must come from source evidence, unknown expiry/employer facts are omitted, and the recruiter never emits employer-only baseSalary.

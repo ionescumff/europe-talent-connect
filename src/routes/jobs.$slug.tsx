@@ -6,6 +6,7 @@ import { Footer } from "@/components/site/Footer";
 
 import { listPublishedJobs } from "@/lib/jobposts.functions";
 import { localizeJob } from "@/lib/jobs";
+import { jobPostingSchema, jobPageUrl, serializeJobSchema } from "@/lib/job-schema";
 
 export const Route = createFileRoute("/jobs/$slug")({
   loader: async ({ params }) => {
@@ -29,9 +30,12 @@ export const Route = createFileRoute("/jobs/$slug")({
         { property: "og:title", content: title },
         { property: "og:description", content: job.summary.slice(0, 200) },
         { property: "og:type", content: "article" },
+        { property: "og:url", content: jobPageUrl(job.slug) },
         { name: "twitter:card", content: "summary_large_image" },
         ...(job.image?.startsWith("https://") ? [{ property: "og:image", content: job.image }, { name: "twitter:image", content: job.image }] : []),
       ],
+      links: [{ rel: "canonical", href: jobPageUrl(job.slug) }],
+      scripts: [{ type: "application/ld+json", children: serializeJobSchema(jobPostingSchema(loaderData.job)) }],
     };
   },
   notFoundComponent: JobNotFound,
@@ -70,6 +74,7 @@ function JobDetail() {
   const facts: [string, string][] = [
     ...(job.company ? [[t("Employer", "Angajator"), job.company] as [string, string]] : []),
     [t("Location", "Locație"), `${job.city}, ${countryName}`],
+    ...(job.datePosted ? [[t("Posted", "Data publicării"), new Intl.DateTimeFormat(lang === "ro" ? "ro-RO" : "en-GB", { dateStyle: "long", timeZone: "UTC" }).format(new Date(job.datePosted))] as [string, string]] : []),
     [t("Pay", "Salariu"), job.pay],
     [t("Contract", "Contract"), job.contract],
     [t("Schedule", "Program"), job.schedule],

@@ -1,4 +1,6 @@
 # Roadmap
+- [x] Add Romanian Google JobPosting metadata to all 35 job detail pages and verify rendered metadata; 31 have verified source posting dates, four still need original dates for Google eligibility
+- [ ] Create the additional requested page — blocked: page subject/content not yet specified
 - [x] Add Excel/CSV bulk job upload: template, column mapping, editable review, duplicate checks, drafts/publishing and signed-in verification
 - [x] Candidate portal: basic profiles, email sign-in, private application status, bilingual CV template, and authenticated access/download checks
 - [x] Public site: Romanian by default, polished candidate copy, spacing and phone/computer layout review; preserve English employer sections and CRM

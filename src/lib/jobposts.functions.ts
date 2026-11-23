@@ -87,7 +87,8 @@ export function rowToJob(r: Row): Job {
     transport: r.transport || "", language: r.language || "",
     openings: r.openings, summary: r.description || "", tasks: r.tasks, requirements: r.requirements, offer: r.benefits,
     image: r.image_url ?? undefined, company: r.company_name ?? undefined, companyDetails: r.company_details ?? undefined,
-    sourceUrl: r.source_url ?? undefined, translations: translations.success ? translations.data : undefined,
+    sourceUrl: r.source_url ?? undefined, datePosted: r.source_url ? undefined : r.created_at,
+    translations: translations.success ? translations.data : undefined,
   };
 }
 
@@ -109,8 +110,12 @@ export const listPublishedJobs = createServerFn({ method: "GET" }).handler(async
   if (error) { console.error(error); return []; }
   // Full Dutch→EN/RO translations of imported Triangle vacancies; loaded server-side only.
   const { default: full } = await import("@/data/triangle-translations.json");
+  const { default: dates } = await import("@/data/triangle-posting-dates.json");
+  const sourceDates = dates as Record<string, { datePosted: string; sourceUrl: string }>;
   const extra = full as Record<string, { en?: Record<string, unknown>; ro?: Record<string, unknown> }>;
   return (data ?? []).map(rowToJob).map(job => {
+    const sourceDate = sourceDates[job.slug];
+    if (sourceDate && sourceDate.sourceUrl === job.sourceUrl) job = { ...job, datePosted: sourceDate.datePosted };
     const t = extra[job.slug];
     if (!t) return job;
     return { ...job, translations: {

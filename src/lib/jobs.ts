@@ -20,6 +20,7 @@ export type Job = {
   company?: string | undefined;
   companyDetails?: string | undefined;
   sourceUrl?: string | undefined;
+  datePosted?: string | undefined;
   translations?: { ro?: JobTranslation | undefined; en?: JobTranslation | undefined } | undefined;
 };
 
