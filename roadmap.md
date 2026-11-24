@@ -1,4 +1,5 @@
 # Roadmap
+- [ ] Add Netherlands/Germany city job search, active-vacancy city pages, Google Maps and city sitemap entries
 - [x] Add Romanian Google JobPosting metadata to all 35 job detail pages and verify rendered metadata; 31 have verified source posting dates, four still need original dates for Google eligibility
 - [ ] Create the additional requested page — blocked: page subject/content not yet specified
 - [x] Add Excel/CSV bulk job upload: template, column mapping, editable review, duplicate checks, drafts/publishing and signed-in verification

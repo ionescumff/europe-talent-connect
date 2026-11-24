@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { getRouterInstance } from "@tanstack/react-start";
 import { isSitemapRouteIncluded, sitemapPathForLocation, sitemapStaticPaths, sitemapXML, type SitemapEntry } from "@/lib/sitemap";
+import { vacancyCities } from "@/lib/city-jobs";
 
 const BASE_URL = "https://www.vreaujobs.com";
 
@@ -25,17 +26,27 @@ export const Route = createFileRoute("/sitemap.xml")({
             } },
           });
           const pageSize = 1000;
+          const cityJobs: { city: string; country: "Netherlands" | "Germany" }[] = [];
           for (let offset = 0; ; ) {
-            const { data, error } = await supabase.from("job_posts").select("slug")
+            const { data, error } = await supabase.from("job_posts").select("slug, city, country")
               .eq("published", true).eq("status", "open").order("id").range(offset, offset + pageSize - 1);
             if (error) throw error;
             if (data.length === 0) break;
             for (const row of data) {
+              if (row.country === "Netherlands" || row.country === "Germany") cityJobs.push({ city: row.city, country: row.country });
               const location = router.buildLocation({ to: "/jobs/$slug", params: { slug: row.slug }, search: () => ({}), hash: "" });
               const path = sitemapPathForLocation(router, location, routeId);
               if (path) entries.push({ path });
             }
             offset += data.length;
+          }
+          const cityRouteId = "/jobs/cities/$country/$city";
+          if (isSitemapRouteIncluded(router.routesById[cityRouteId])) {
+            for (const city of vacancyCities(cityJobs)) {
+              const location = router.buildLocation({ to: "/jobs/cities/$country/$city", params: { country: city.country, city: city.slug }, search: () => ({}), hash: "" });
+              const path = sitemapPathForLocation(router, location, cityRouteId);
+              if (path) entries.push({ path });
+            }
           }
         }
         return new Response(sitemapXML(BASE_URL, entries), {

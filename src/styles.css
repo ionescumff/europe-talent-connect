@@ -322,6 +322,7 @@
 @media (prefers-reduced-motion: reduce) { .public-site .public-job { transition: none; } }
 
 /* Candidate presentation refinements are intentionally isolated from the CRM. */
+.public-site .city-map-frame { height: 380px; width: 100%; min-width: 200px; }
 .candidate-site, .public-site { overflow-wrap: break-word; }
 .candidate-site :is(h1,h2,h3,h4,a,button), .public-site :is(h1,h2,h3,h4,a,button) { letter-spacing: 0; }
 .candidate-site :is(input,select,textarea), .public-site :is(input,select,textarea) { min-width: 0; font-size: 16px; }

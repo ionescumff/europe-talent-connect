@@ -31,9 +31,11 @@ import { Route as AuthenticatedCrmAssignRouteImport } from './routes/_authentica
 import { Route as AuthenticatedCrmEmployersRouteImport } from './routes/_authenticated/crm.employers'
 import { Route as AuthenticatedCrmJobsRouteImport } from './routes/_authenticated/crm.jobs'
 import { Route as AuthenticatedCrmMyRouteImport } from './routes/_authenticated/crm.my'
+import { Route as JobsCitiesIndexRouteImport } from './routes/jobs.cities.index'
 import { Route as AuthenticatedCrmApplicantsJobIdRouteImport } from './routes/_authenticated/crm.applicants.$jobId'
 import { Route as AuthenticatedCrmCandidatesIdRouteImport } from './routes/_authenticated/crm.candidates.$id'
 import { Route as ApiPublicJobsSendAlertsRouteImport } from './routes/api/public/jobs/send-alerts'
+import { Route as JobsCitiesCountryCityRouteImport } from './routes/jobs.cities.$country.$city'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
 import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
@@ -150,6 +152,11 @@ const AuthenticatedCrmMyRoute = AuthenticatedCrmMyRouteImport.update({
   path: '/my',
   getParentRoute: () => AuthenticatedCrmRoute,
 } as any)
+const JobsCitiesIndexRoute = JobsCitiesIndexRouteImport.update({
+  id: '/jobs/cities/',
+  path: '/jobs/cities/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedCrmApplicantsJobIdRoute =
   AuthenticatedCrmApplicantsJobIdRouteImport.update({
     id: '/applicants/$jobId',
@@ -165,6 +172,11 @@ const AuthenticatedCrmCandidatesIdRoute =
 const ApiPublicJobsSendAlertsRoute = ApiPublicJobsSendAlertsRouteImport.update({
   id: '/api/public/jobs/send-alerts',
   path: '/api/public/jobs/send-alerts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JobsCitiesCountryCityRoute = JobsCitiesCountryCityRouteImport.update({
+  id: '/jobs/cities/$country/$city',
+  path: '/jobs/cities/$country/$city',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LovableEmailAuthPreviewRoute = LovableEmailAuthPreviewRouteImport.update({
@@ -206,9 +218,11 @@ export interface FileRoutesByFullPath {
   '/crm/jobs': typeof AuthenticatedCrmJobsRoute
   '/crm/my': typeof AuthenticatedCrmMyRoute
   '/crm/': typeof AuthenticatedCrmIndexRoute
+  '/jobs/cities/': typeof JobsCitiesIndexRoute
   '/crm/applicants/$jobId': typeof AuthenticatedCrmApplicantsJobIdRoute
   '/crm/candidates/$id': typeof AuthenticatedCrmCandidatesIdRoute
   '/api/public/jobs/send-alerts': typeof ApiPublicJobsSendAlertsRoute
+  '/jobs/cities/$country/$city': typeof JobsCitiesCountryCityRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -234,9 +248,11 @@ export interface FileRoutesByTo {
   '/crm/jobs': typeof AuthenticatedCrmJobsRoute
   '/crm/my': typeof AuthenticatedCrmMyRoute
   '/crm': typeof AuthenticatedCrmIndexRoute
+  '/jobs/cities': typeof JobsCitiesIndexRoute
   '/crm/applicants/$jobId': typeof AuthenticatedCrmApplicantsJobIdRoute
   '/crm/candidates/$id': typeof AuthenticatedCrmCandidatesIdRoute
   '/api/public/jobs/send-alerts': typeof ApiPublicJobsSendAlertsRoute
+  '/jobs/cities/$country/$city': typeof JobsCitiesCountryCityRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -265,9 +281,11 @@ export interface FileRoutesById {
   '/_authenticated/crm/jobs': typeof AuthenticatedCrmJobsRoute
   '/_authenticated/crm/my': typeof AuthenticatedCrmMyRoute
   '/_authenticated/crm/': typeof AuthenticatedCrmIndexRoute
+  '/jobs/cities/': typeof JobsCitiesIndexRoute
   '/_authenticated/crm/applicants/$jobId': typeof AuthenticatedCrmApplicantsJobIdRoute
   '/_authenticated/crm/candidates/$id': typeof AuthenticatedCrmCandidatesIdRoute
   '/api/public/jobs/send-alerts': typeof ApiPublicJobsSendAlertsRoute
+  '/jobs/cities/$country/$city': typeof JobsCitiesCountryCityRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
   '/lovable/email/transactional/preview': typeof LovableEmailTransactionalPreviewRoute
@@ -296,9 +314,11 @@ export interface FileRouteTypes {
     | '/crm/jobs'
     | '/crm/my'
     | '/crm/'
+    | '/jobs/cities/'
     | '/crm/applicants/$jobId'
     | '/crm/candidates/$id'
     | '/api/public/jobs/send-alerts'
+    | '/jobs/cities/$country/$city'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/lovable/email/transactional/preview'
@@ -324,9 +344,11 @@ export interface FileRouteTypes {
     | '/crm/jobs'
     | '/crm/my'
     | '/crm'
+    | '/jobs/cities'
     | '/crm/applicants/$jobId'
     | '/crm/candidates/$id'
     | '/api/public/jobs/send-alerts'
+    | '/jobs/cities/$country/$city'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/lovable/email/transactional/preview'
@@ -354,9 +376,11 @@ export interface FileRouteTypes {
     | '/_authenticated/crm/jobs'
     | '/_authenticated/crm/my'
     | '/_authenticated/crm/'
+    | '/jobs/cities/'
     | '/_authenticated/crm/applicants/$jobId'
     | '/_authenticated/crm/candidates/$id'
     | '/api/public/jobs/send-alerts'
+    | '/jobs/cities/$country/$city'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
     | '/lovable/email/transactional/preview'
@@ -376,7 +400,9 @@ export interface RootRouteChildren {
   TestRoute: typeof TestRoute
   JobsSlugRoute: typeof JobsSlugRoute
   JobsIndexRoute: typeof JobsIndexRoute
+  JobsCitiesIndexRoute: typeof JobsCitiesIndexRoute
   ApiPublicJobsSendAlertsRoute: typeof ApiPublicJobsSendAlertsRoute
+  JobsCitiesCountryCityRoute: typeof JobsCitiesCountryCityRoute
   LovableEmailAuthPreviewRoute: typeof LovableEmailAuthPreviewRoute
   LovableEmailAuthWebhookRoute: typeof LovableEmailAuthWebhookRoute
   LovableEmailTransactionalPreviewRoute: typeof LovableEmailTransactionalPreviewRoute
@@ -538,6 +564,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCrmMyRouteImport
       parentRoute: typeof AuthenticatedCrmRoute
     }
+    '/jobs/cities/': {
+      id: '/jobs/cities/'
+      path: '/jobs/cities'
+      fullPath: '/jobs/cities/'
+      preLoaderRoute: typeof JobsCitiesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/crm/applicants/$jobId': {
       id: '/_authenticated/crm/applicants/$jobId'
       path: '/applicants/$jobId'
@@ -557,6 +590,13 @@ declare module '@tanstack/react-router' {
       path: '/api/public/jobs/send-alerts'
       fullPath: '/api/public/jobs/send-alerts'
       preLoaderRoute: typeof ApiPublicJobsSendAlertsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/jobs/cities/$country/$city': {
+      id: '/jobs/cities/$country/$city'
+      path: '/jobs/cities/$country/$city'
+      fullPath: '/jobs/cities/$country/$city'
+      preLoaderRoute: typeof JobsCitiesCountryCityRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lovable/email/auth/preview': {
@@ -637,7 +677,9 @@ const rootRouteChildren: RootRouteChildren = {
   TestRoute: TestRoute,
   JobsSlugRoute: JobsSlugRoute,
   JobsIndexRoute: JobsIndexRoute,
+  JobsCitiesIndexRoute: JobsCitiesIndexRoute,
   ApiPublicJobsSendAlertsRoute: ApiPublicJobsSendAlertsRoute,
+  JobsCitiesCountryCityRoute: JobsCitiesCountryCityRoute,
   LovableEmailAuthPreviewRoute: LovableEmailAuthPreviewRoute,
   LovableEmailAuthWebhookRoute: LovableEmailAuthWebhookRoute,
   LovableEmailTransactionalPreviewRoute: LovableEmailTransactionalPreviewRoute,

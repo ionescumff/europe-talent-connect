@@ -21,3 +21,5 @@
 - JobPosting JSON-LD is generated only on public vacancy detail routes from the Romanian page content; imported dates must come from source evidence, unknown expiry/employer facts are omitted, and the recruiter never emits employer-only baseSalary.
 - Sitemap is router-derived (`staticData.sitemap` required on every route) plus published open job slugs read with the public client; canonical/og:url always use the single primary domain so Google indexes one authoritative host.
 - Job-page applications reuse `submitCv` with the vacancy slug as `applied_job`, so the existing trigger links applicants and the CRM "Applications" view lists status `new` rows.
+- City search derives country-scoped exact city matches from the existing published-open vacancy reader; sitemap includes only cities with active jobs, and empty city pages are noindex.
+- City maps use opt-in Maps Embed city views, never fabricated worksite coordinates; managed keys are blocked on custom and credential-bearing hosts until a domain-authorized user-owned connection is linked.
